@@ -71,7 +71,7 @@ This plugin is CakePHP Security component compatible.
 
 2. Load the plugin in app/Config/bootstrap.php:
 
-	`CakePlugin::load('FeedbackIt');`
+	`Plugin::load('FeedbackIt');`
 
 3. Copy the default feedbackit-config file:
 

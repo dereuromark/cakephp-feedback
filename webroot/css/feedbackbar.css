@@ -64,19 +64,19 @@
 
 /* Feedback highlight image and its holder */
 
-#feedbackit-highlight-holder{
+#feedbackit-highlight-holder {
   position:absolute;
   display:none;
   width:150px;
   height: 150px;
-  z-index:1000;
+  z-index:2000;
 }
 
-    #feedbackit-highlight-holder img{
-      width:150px;
-      height: 150px;
-      opacity:0.5;
-    }
+#feedbackit-highlight-holder img {
+  width:150px;
+  height: 150px;
+  opacity:0.5;
+}
 
 /* Feedback images in filesystem stored display */
 
@@ -86,3 +86,6 @@
   border:1px solid black;
 }
 
+#feedbackit-submit {
+    margin-right: 4px;
+}

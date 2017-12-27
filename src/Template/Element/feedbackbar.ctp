@@ -1,28 +1,32 @@
 <?php
 /**
- * @var $this view
+ * @var $this \App\View\AppView
  */
 
 /*
 Load CSS
 */
-echo $this->Html->css(array('FeedbackIt.feedbackbar'));
+
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
+
+echo $this->Html->css(array('Feedback.feedbackbar'), ['block' => false]);
 
 /*
 Load JavaScript
 */
 echo $this->Html->script(
     array(
-        'FeedbackIt.html2canvas/html2canvas', //html2canvas.js for screenshot function
-        'FeedbackIt.feedbackit-functions' //Specific FeedbackIt functions
-    )
+        'Feedback.html2canvas/html2canvas', //html2canvas.js for screenshot function
+        'Feedback.feedbackit-functions' //Specific FeedbackIt functions
+    ), ['block' => true]
 );
 
 /*
  Read config settings
 */
 //Config file location (if you use it)
-$configfile = CakePlugin::path('FeedbackIt').'Config'.DS.'feedbackit-config.php';
+$configfile = Plugin::path('Feedback').'config'.DS.'config.php';
 
 //Defaults in case config file cannot be loaded for some reason
 $forceauthusername	= false;
@@ -34,21 +38,21 @@ $email              = '';
 $termstext          = '';
 
 //Check if a config file exists:
-if( file_exists($configfile) AND is_readable($configfile) ){
+if( file_exists($configfile) && is_readable($configfile)) {
     //Load config file into CakePHP config
-    Configure::load('FeedbackIt.feedbackit-config');
+    Configure::load('Feedback.config');
 
     //Get config vars used in this view
-    $forceauthusername	= Configure::read('FeedbackIt.forceauthusername');
-    $forceemail	        = Configure::read('FeedbackIt.forceemail');
+    $forceauthusername	= Configure::read('Feedback.forceauthusername');
+    $forceemail	        = Configure::read('Feedback.forceemail');
 
-    $enablecopybyemail	= Configure::read('FeedbackIt.enablecopybyemail');
+    $enablecopybyemail	= Configure::read('Feedback.enablecopybyemail');
 
-    $enableacceptterms	= Configure::read('FeedbackIt.enableacceptterms');
-    $termstext	        = Configure::read('FeedbackIt.termstext');
+    $enableacceptterms	= Configure::read('Feedback.enableacceptterms');
+    $termstext	        = Configure::read('Feedback.termstext');
 
     //Assemble optional vars if AuthComponent is loaded
-    if( class_exists('AuthComponent','user') ){
+    if( class_exists('AuthComponent')) {
         $username = AuthComponent::user('name') ?: AuthComponent::user('username') ?: AuthComponent::user('account') ?: '';
         $email = AuthComponent::user('mail') ?: AuthComponent::user('email') ?: '';
     }
@@ -57,17 +61,17 @@ if( file_exists($configfile) AND is_readable($configfile) ){
 
 <script>
     //Create URL using cake's url helper, this is used in feedbackit-functions.js
-    <?php $formposturl = $this->Html->url(array("plugin"=>"feedback_it","controller"=>"feedback","action"=>"savefeedback"),true); ?>
+    <?php $formposturl = $this->Url->build(array("plugin"=>"Feedback", "controller"=>"Feedback", "action"=>"save"),true); ?>
     window.formURL = '<?php echo $formposturl; ?>';
 </script>
 
 <div id="feedbackit-slideout">
-    <?php echo $this->Html->image('FeedbackIt.feedback.png');?>
+    <?php echo $this->Html->image('Feedback.feedback.png');?>
 </div>
 <div id="feedbackit-slideout_inner">
     <div class="feedbackit-form-elements">
         <p>
-            <?php echo __d('feedback_it','Send your feedback or bugreport!');?>
+            <?php echo __d('feedback','Send your feedback or bugreport!');?>
         </p>
         <form id="feedbackit-form" autocomplete="off">
             <div class="form-group">
@@ -77,7 +81,7 @@ if( file_exists($configfile) AND is_readable($configfile) ){
                     id="feedbackit-name"
                     class="<?php if( !empty($username) ) echo 'feedbackit-input"'; ?> form-control"
                     value="<?php echo $username; ?>"
-                    placeholder="<?php echo __d('feedback_it','Your name '); if( !$forceauthusername ) echo '(optional)"'; ?>"
+                    placeholder="<?php echo __d('feedback','Your name '); if( !$forceauthusername ) echo '(optional)"'; ?>"
                     <?php if( $forceauthusername AND !empty($username) ) echo 'readonly="readonly"'; ?>
                     >
             </div>
@@ -88,7 +92,7 @@ if( file_exists($configfile) AND is_readable($configfile) ){
                     id="feedbackit-email"
                     class="<?php if( !empty($email) ) echo 'feedbackit-input"'; ?> form-control"
                     value="<?php echo $email; ?>"
-                    placeholder="<?php echo __d('feedback_it','Your e-mail '); if( !$forceemail ) echo '(optional)"'; ?>"
+                    placeholder="<?php echo __d('feedback','Your e-mail '); if( !$forceemail ) echo '(optional)"'; ?>"
                     <?php if( $forceemail AND !empty($email) ) echo 'readonly="readonly"'; ?>
                     >
             </div>
@@ -99,24 +103,24 @@ if( file_exists($configfile) AND is_readable($configfile) ){
                     id="feedbackit-subject"
                     class="feedbackit-input form-control"
                     required="required"
-                    placeholder="<?php echo __d('feedback_it','Subject'); ?>"
+                    placeholder="<?php echo __d('feedback','Subject'); ?>"
                     >
             </div>
             <div class="form-group">
-                <textarea name="feedback" id="feedbackit-feedback" class="feedbackit-input form-control" required="required" placeholder="<?php echo __d('feedback_it','Feedback or suggestion'); ?>" rows="3"></textarea>
+                <textarea name="feedback" id="feedbackit-feedback" class="feedbackit-input form-control" required="required" placeholder="<?php echo __d('feedback','Feedback or suggestion'); ?>" rows="3"></textarea>
             </div>
             <div class="form-group">
-                <p>
+                <div>
                     <button
                         class="btn btn-info"
-                        data-loading-text="<?php echo __d('feedback_it','Click anywhere on website'); ?>"
+                        data-loading-text="<?php echo __d('feedback','Click anywhere on website'); ?>"
                         id="feedbackit-highlight"
                         onclick="return false;">
-                        <i class="icon-screenshot icon-white"></i><span class="glyphicon glyphicon-screenshot"></span> <?php echo __d('feedback_it','Highlight something'); ?>
+                        <i class="icon-screenshot icon-white"></i><span class="glyphicon glyphicon-screenshot"></span> <?php echo __d('feedback','Highlight something'); ?>
                     </button>
-                </p>
-                <p <?php if( ! $enableacceptterms) echo 'style="display:none;"'; ?>>
-                    <label class="checkbox">
+                </div>
+                <div class="form-group" <?php if( ! $enableacceptterms) echo 'style="display:none;"'; ?>>
+                    <label class="checkbox checkbox-inline">
                         <input type="checkbox"
                                required id="feedbackit-okay"
                                 <?php
@@ -128,33 +132,32 @@ if( file_exists($configfile) AND is_readable($configfile) ){
                                 }
                                 ?>
                             >
-                        <?php echo __d('feedback_it',"I'm okay with"); ?> <b><a id="feedbackit-okay-message" href="#" onclick="return false;" data-toggle="tooltip" title="<?php echo $termstext;?>"><?php echo __d('feedback_it','this'); ?></a></b>.
+                        <?php echo __d('feedback',"I'm okay with"); ?> <b><a id="feedbackit-okay-message" href="#" onclick="return false;" data-toggle="tooltip" title="<?php echo $termstext;?>"><?php echo __d('feedback','this'); ?></a></b>.
                     </label>
-                </p>
+                </div>
                 <?php
-                if($enablecopybyemail){
+                if($enablecopybyemail) {
                 ?>
-                <p>
-                    <label class="checkbox">
+                <div class="form-group">
+                    <label class="checkbox checkbox-inline">
                         <input type="checkbox" name="copyme" id="feedbackit-copyme" >
-                        <?php echo __d('feedback_it','E-mail me a copy'); ?>
+                        <?php echo __d('feedback','E-mail me a copy'); ?>
                     </label>
-                </p>
+                </div>
                 <?php
                 }
                 ?>
-                <p>
+
                 <div class="btn-group">
-                    <button class="btn btn-success" id="feedbackit-submit" disabled="disabled" type="submit"><i class="icon-envelope icon-white"></i><span class="glyphicon glyphicon-envelope"></span> <?php echo __d('feedback_it','Submit'); ?></button>
-                    <button class="btn btn-danger" id="feedbackit-cancel" onclick="return false;"><i class="icon-remove icon-white"></i><span class="glyphicon glyphicon-remove"></span> <?php echo __d('feedback_it','Cancel'); ?></button>
+                    <button class="btn btn-success" id="feedbackit-submit" disabled="disabled" type="submit"><i class="icon-envelope icon-white"></i><span class="glyphicon glyphicon-envelope"></span> <?php echo __d('feedback','Submit'); ?></button>
+                    <button class="btn btn-danger" id="feedbackit-cancel" onclick="return false;"><i class="icon-remove icon-white"></i><span class="glyphicon glyphicon-remove"></span> <?php echo __d('feedback','Cancel'); ?></button>
                 </div>
-                </p>
             </div>
         </form>
     </div>
 </div>
 
-<div id="feedbackit-highlight-holder"><?php echo $this->Html->image('FeedbackIt.circle.gif');?></div>
+<div id="feedbackit-highlight-holder"><?php echo $this->Html->image('Feedback.circle.gif');?></div>
 
 <!-- Modal for confirmation -->
 <div class="modal fade" id="feedbackit-modal" tabindex="-1" role="dialog" aria-labelledby="feedbackit-modalLabel" aria-hidden="true">
@@ -162,13 +165,13 @@ if( file_exists($configfile) AND is_readable($configfile) ){
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="feedbackit-modalLabel"><?php echo __d('feedback_it','Feedback submitted');?></h4>
+                <h4 class="modal-title" id="feedbackit-modalLabel"><?php echo __d('feedback','Feedback submitted');?></h4>
             </div>
             <div class="modal-body">
                 Loading...
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo __d('feedback_it','Close');?></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo __d('feedback','Close');?></button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
