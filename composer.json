@@ -1,5 +1,5 @@
 {
-    "name": "stefanvangastel/feedback-it",
+    "name": "dereuromark/cakephp-feedback",
     "description": "Feedback or bugreport (with screenshot!) tab option in your CakePHP application. Data can be posted directly to Mantis, E-mail, Github issues, filesystem, etc.",
     "license": "MIT",
     "type": "cakephp-plugin",
@@ -7,9 +7,38 @@
         {
             "name": "Stefan van Gastel",
             "email": "stefanvangastel@gmail.com"
+        },
+        {
+            "name": "Mark Scherer",
+            "email": "euromark@web.de"
         }
     ],
     "require": {
-        "composer/installers": "*"
+        "cakephp/cakephp": "^3.5"
+    },
+    "require-dev": {
+        "fig-r/psr2r-sniffer": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Feedback\\": "src/",
+            "Feedback\\Test\\Fixture\\": "tests/Fixture/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Feedback\\Test\\": "tests/",
+            "Cake\\Test\\": "vendor/cakephp/cakephp/tests/",
+            "App\\": "tests/test_app/src/"
+        }
+    },
+    "scripts": {
+        "test": "php phpunit.phar",
+        "test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-5.7.20.phar && mv phpunit-5.7.20.phar phpunit.phar || true",
+        "test-coverage" : "php phpunit.phar --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage --coverage-clover tmp/coverage/coverage.xml",
+        "phpstan": "phpstan analyse -c tests/phpstan.neon -l 3 src",
+        "phpstan-setup": "cp composer.json composer.backup && composer require --dev phpstan/phpstan && mv composer.backup composer.json",
+        "cs-check": "phpcs -p --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml --ignore=/cakephp-ide-helper/vendor/,/tmp/,/logs/ --extensions=php ./",
+        "cs-fix": "phpcbf -v --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml --ignore=/cakephp-ide-helper/vendor/,/tmp/,/logs/ --extensions=php ./"
     }
 }
