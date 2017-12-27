@@ -300,4 +300,10 @@ $(document).ready(function(){
 
     //Run update submit button to set starting state (Based on terms checkbox state)
     updateSubmitButton();
+
+    $(document).keydown(function(event) {
+        if (event.keyCode === 27) {
+            closeandreset();
+        }
+    });
 });
