@@ -89,3 +89,11 @@
 #feedbackit-submit {
     margin-right: 4px;
 }
+
+#feedbackit-slideout_inner .tooltip {
+    width: 97%;
+}
+
+.tab-hide {
+    cursor: pointer;
+}

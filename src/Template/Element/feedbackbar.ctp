@@ -70,6 +70,7 @@ if( file_exists($configfile) && is_readable($configfile)) {
 </div>
 <div id="feedbackit-slideout_inner">
     <div class="feedbackit-form-elements">
+		<div class="pull-right"><i class="tab-hide fa fa-window-close" title="<?php echo __('Hide this tab completely.'); ?>"></i></div>
         <p>
             <?php echo __d('feedback','Send your feedback or bugreport!');?>
         </p>
@@ -81,7 +82,7 @@ if( file_exists($configfile) && is_readable($configfile)) {
                     id="feedbackit-name"
                     class="<?php if( !empty($username) ) echo 'feedbackit-input"'; ?> form-control"
                     value="<?php echo $username; ?>"
-                    placeholder="<?php echo __d('feedback','Your name '); if( !$forceauthusername ) echo '(optional)"'; ?>"
+                    placeholder="<?php echo __d('feedback','Your name '); if( !$forceauthusername ) echo ' (optional)"'; ?>"
                     <?php if( $forceauthusername AND !empty($username) ) echo 'readonly="readonly"'; ?>
                     >
             </div>
@@ -92,7 +93,7 @@ if( file_exists($configfile) && is_readable($configfile)) {
                     id="feedbackit-email"
                     class="<?php if( !empty($email) ) echo 'feedbackit-input"'; ?> form-control"
                     value="<?php echo $email; ?>"
-                    placeholder="<?php echo __d('feedback','Your e-mail '); if( !$forceemail ) echo '(optional)"'; ?>"
+                    placeholder="<?php echo __d('feedback','Your e-mail '); if( !$forceemail ) echo ' (optional)"'; ?>"
                     <?php if( $forceemail AND !empty($email) ) echo 'readonly="readonly"'; ?>
                     >
             </div>
@@ -132,7 +133,7 @@ if( file_exists($configfile) && is_readable($configfile)) {
                                 }
                                 ?>
                             >
-                        <?php echo __d('feedback',"I'm okay with"); ?> <b><a id="feedbackit-okay-message" href="#" onclick="return false;" data-toggle="tooltip" title="<?php echo $termstext;?>"><?php echo __d('feedback','this'); ?></a></b>.
+                        <?php echo __d('feedback','I am okay with'); ?> <b><a id="feedbackit-okay-message" href="#" onclick="return false;" data-toggle="tooltip" title="<?php echo $termstext;?>"><?php echo __d('feedback','this'); ?></a></b>.
                     </label>
                 </div>
                 <?php
@@ -151,7 +152,7 @@ if( file_exists($configfile) && is_readable($configfile)) {
                 <div class="btn-group">
                     <button class="btn btn-success" id="feedbackit-submit" disabled="disabled" type="submit"><i class="icon-envelope icon-white"></i><span class="glyphicon glyphicon-envelope"></span> <?php echo __d('feedback','Submit'); ?></button>
                     <button class="btn btn-danger" id="feedbackit-cancel" onclick="return false;"><i class="icon-remove icon-white"></i><span class="glyphicon glyphicon-remove"></span> <?php echo __d('feedback','Cancel'); ?></button>
-                </div>
+				</div>
             </div>
         </form>
     </div>

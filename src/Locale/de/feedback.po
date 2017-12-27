@@ -52,7 +52,7 @@ msgid "View your feedback on: "
 msgstr "Hier kannst du deinen Feedback sehen:"
 
 #: Plugin/FeedbackIt/Model/Feedbackstore.php:165
-msgid "Could not save tmp file for attacment in mail"
+msgid "Could not save tmp file for attachment in mail"
 msgstr ""
 
 #: Plugin/FeedbackIt/Model/Feedbackstore.php:183
@@ -118,3 +118,9 @@ msgstr "Feedback gesendet"
 #: Plugin/FeedbackIt/View/Elements/feedbackbar.ctp:171
 msgid "Close"
 msgstr "Schließen"
+
+msgid "When you submit, a screenshot (of only this website) will be taken to aid us in processing your feedback or bugreport."
+msgstr "Ein Screenshot des aktuellen Browserfensters wird uns mit übermittelt, um dir bei deiner Anfrage zu helfen."
+
+msgid "I am okay with"
+msgstr "Ich bin einverstanden mit"

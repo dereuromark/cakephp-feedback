@@ -243,7 +243,7 @@ $(document).ready(function(){
     }
 
     /*
-	Click on closed feedback tab
+	 * Click on closed feedback tab
 	 */
     $("#feedbackit-slideout").click(function(){
 		//Open menu 
@@ -252,15 +252,23 @@ $(document).ready(function(){
 	});
 
 	/*
-	Click on cancel button
+	 * Click on cancel button
 	 */
 	$("#feedbackit-cancel").click(function(){
       	closeandreset();
-	});	
+	});
 
-	/*
-	Close and reset function
+    /*
+	 * Click on hide button
 	 */
+    $("#feedbackit-slideout_inner .tab-hide").click(function() {
+    	closeandreset();
+		$('#feedbackit-slideout').fadeOut();
+    });
+
+    /*
+    Close and reset function
+     */
 	function closeandreset(){
 		//Close menu 
       	$("#feedbackit-slideout").removeClass("feedbackit-slideout_outer");
