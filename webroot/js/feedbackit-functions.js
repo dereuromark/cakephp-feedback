@@ -1,6 +1,6 @@
-$(document).ready(function(){
+$(document).ready(function() {
 
-	var confirmMessage = 'Your feedback was submitted succesfully.';
+	var confirmMessage = 'Your feedback was submitted successfully.';
 	var errorMessage   = 'There was an error submitting your feedback. Please try again later.';
 
     //Slider object
@@ -25,9 +25,9 @@ $(document).ready(function(){
 
 		html2canvas(document.body, {
 		  onrendered: function(canvas) {
-		    
+
 		    //encode the image data as a base64 encoded PNG file and return it
-		    var strDataURI = canvas.toDataURL(); 
+		    var strDataURI = canvas.toDataURL();
 
 		    //Serialize the feedback form
 		    var postData = $('#feedbackit-form').serializeArray();
@@ -57,7 +57,7 @@ $(document).ready(function(){
 		        url : window.formURL, //Use url created in Element
 		        type: "POST",
 		        data : postData,
-		        success:function(message, textStatus, jqXHR) 
+		        success:function(message, textStatus, jqXHR)
 		        {
 		        	closeandreset();
 
@@ -71,9 +71,9 @@ $(document).ready(function(){
 		        	}else{
 		        		alert(confirmMessage);
 		        	}
-		        	
+
 		        },
-		        error: function(jqXHR, textStatus, errorThrown) 
+		        error: function(jqXHR, textStatus, errorThrown)
 		        {
 		        	//Check for error messages
 		        	if(jqXHR.responseText != ''){
@@ -92,7 +92,7 @@ $(document).ready(function(){
 		        	}
 		        }
 		    });
-		    
+
 		    //Show it again
               slider.show();
 		  }
@@ -110,7 +110,7 @@ $(document).ready(function(){
 		$("#feedbackit-highlight-holder").fadeOut();
 
 		$(this).queue(function() {
-	       
+
 	       	//Disable button and show loading text
 	       	try{
 				$('#feedbackit-highlight').button('loading');
@@ -124,11 +124,11 @@ $(document).ready(function(){
 	        $(this).dequeue();
 
 	    }).delay(250).queue(function() {
-	        
+
 	        /*
 			Highlight function
 			 */
-			$('body').mousedown(function(e){
+			$('body').mousedown(function(e) {
 				// capture the mouse position
 			    var posx = 0;
 			    var posy = 0;
@@ -143,7 +143,7 @@ $(document).ready(function(){
 			        posx = e.clientX;
 			        posy = e.clientY;
 			    }
-			 
+
 			 	//Set position, to exactly center substract half the width and height from the x and y position
                 var highlightholder = $( "#feedbackit-highlight-holder" );
                 highlightholder.css( "left", posx - 75);
@@ -158,10 +158,10 @@ $(document).ready(function(){
 				}
 
                 //Reset cursor:
-                $( "body" ).css( "cursor", 'default');
+                $(this).css( "cursor", 'default');
 
 				//Unbind click function
-				$('body').off('mousedown');
+				$(this).off('mousedown');
 
 				e.preventDefault();
 			});
@@ -245,16 +245,16 @@ $(document).ready(function(){
     /*
 	 * Click on closed feedback tab
 	 */
-    $("#feedbackit-slideout").click(function(){
-		//Open menu 
+    $("#feedbackit-slideout").click(function() {
+		//Open menu
 		$("#feedbackit-slideout").addClass("feedbackit-slideout_outer");
-		$("#feedbackit-slideout_inner").addClass("feedbackit-slideout_inner");  
+		$("#feedbackit-slideout_inner").addClass("feedbackit-slideout_inner");
 	});
 
 	/*
 	 * Click on cancel button
 	 */
-	$("#feedbackit-cancel").click(function(){
+	$("#feedbackit-cancel").click(function() {
       	closeandreset();
 	});
 
@@ -269,10 +269,10 @@ $(document).ready(function(){
     /*
     Close and reset function
      */
-	function closeandreset(){
-		//Close menu 
+	function closeandreset() {
+		//Close menu
       	$("#feedbackit-slideout").removeClass("feedbackit-slideout_outer");
-      	$("#feedbackit-slideout_inner").removeClass("feedbackit-slideout_inner"); 
+      	$("#feedbackit-slideout_inner").removeClass("feedbackit-slideout_inner");
 
       	//Reset fields
       	$('.feedbackit-input').val(''); //Reset
@@ -285,7 +285,7 @@ $(document).ready(function(){
     /*
     Function to update the submit button (based on terms checkbox)
      */
-    function updateSubmitButton(){
+    function updateSubmitButton() {
 
         var submitbutton = $("#feedbackit-submit");
 
@@ -302,7 +302,7 @@ $(document).ready(function(){
 	/*
 	Activate tooltip for screenshot approval
 	 */
-	if( $.isFunction( $.fn.modal ) ){ //This is still quite dirty. For some reason the tooltip function is always loaded, even if not the TB tooltip. So we check for modal which is TB only
+	if( $.isFunction( $.fn.modal ) ) { //This is still quite dirty. For some reason the tooltip function is always loaded, even if not the TB tooltip. So we check for modal which is TB only
 		$('#feedbackit-okay-message').tooltip();
 	}
 

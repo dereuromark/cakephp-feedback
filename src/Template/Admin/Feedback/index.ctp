@@ -1,12 +1,9 @@
 <?php
-/*
-Quick example of tmp file storage index.
+/**
+ * @var \App\View\AppView $this
+ * @var \Feedback\Model\Entity\Feedbackstore[] $feedbacks
  */
 
-/**
- * @var $this view
- * @var $feedbacks mixed
- */
 foreach ($feedbacks as $feedback) {
   ?>
 

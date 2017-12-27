@@ -121,7 +121,7 @@ msgid "Highlight something"
 msgstr "Markeer iets"
 
 #: View/Elements/feedbackbar.ctp:131
-msgid "I'm okay with"
+msgid "I am okay with"
 msgstr "Ik ga hiermee"
 
 #: View/Elements/feedbackbar.ctp:131

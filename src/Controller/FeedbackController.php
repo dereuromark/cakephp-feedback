@@ -9,6 +9,9 @@ use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Network\Exception\NotImplementedException;
 
+/**
+ * @property \Feedback\Model\Table\FeedbackstoreTable $Feedbackstore
+ */
 class FeedbackController extends AppController {
 
 	public $modelClass = 'Feedback.Feedbackstore';
@@ -29,7 +32,7 @@ class FeedbackController extends AppController {
 		$configfile = Plugin::path('Feedback') . 'config' . DS . 'config.php';
 
 		//Check if a config file exists:
-		if(file_exists($configfile) AND is_readable($configfile)){
+		if(file_exists($configfile) && is_readable($configfile)){
 			//Load config file into CakePHP config
 			Configure::load('Feedback.config');
 			return true;
@@ -73,7 +76,7 @@ class FeedbackController extends AppController {
 		foreach ($methods as $index => $method) {
 
 			//Check method exists in Model
-			if(!(method_exists($this->Feedbackstore, $method)) AND $index != 0) { //Only throw error on first method
+			if(!(method_exists($this->Feedbackstore, $method)) && $index != 0) { //Only throw error on first method
 				throw new NotImplementedException( __d('feedback', 'Method not found in Feedbackstore model:') . ' ' . $method );
 			}
 

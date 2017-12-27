@@ -8,6 +8,9 @@ use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 
+/**
+ * @property \Feedback\Model\Table\FeedbackstoreTable $Feedbackstore
+ */
 class FeedbackController extends AppController {
 
 	public $modelClass = 'Feedback.Feedbackstore';
@@ -22,7 +25,7 @@ class FeedbackController extends AppController {
 		$configfile = Plugin::path('Feedback') . 'config' . DS . 'config.php';
 
 		//Check if a config file exists:
-		if(file_exists($configfile) AND is_readable($configfile)){
+		if (file_exists($configfile) && is_readable($configfile)) {
 			//Load config file into CakePHP config
 			Configure::load('Feedback.config');
 			return true;
@@ -38,7 +41,7 @@ class FeedbackController extends AppController {
 	public function index() {
 		$methods = Configure::read('Feedback.method');
 
-		if(!in_array('filesystem', $methods)){
+		if (!in_array('filesystem', $methods)) {
 			$this->Flash->error(__d('feedback', 'This function is only available with filesystem save method'));
 			return $this->redirect($this->referer());
 		}

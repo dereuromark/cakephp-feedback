@@ -1,20 +1,13 @@
 <?php
 /**
- * @var $this \App\View\AppView
+ * @var \App\View\AppView $this
  */
-
-/*
-Load CSS
-*/
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 
 echo $this->Html->css(array('Feedback.feedbackbar'), ['block' => false]);
 
-/*
-Load JavaScript
-*/
 echo $this->Html->script(
     array(
         'Feedback.html2canvas/html2canvas', //html2canvas.js for screenshot function
@@ -22,9 +15,6 @@ echo $this->Html->script(
     ), ['block' => true]
 );
 
-/*
- Read config settings
-*/
 //Config file location (if you use it)
 $configfile = Plugin::path('Feedback').'config'.DS.'config.php';
 
@@ -80,10 +70,10 @@ if( file_exists($configfile) && is_readable($configfile)) {
                     type="text"
                     name="name"
                     id="feedbackit-name"
-                    class="<?php if( !empty($username) ) echo 'feedbackit-input"'; ?> form-control"
+                    class="<?php if (!empty($username)) echo 'feedbackit-input"'; ?> form-control"
                     value="<?php echo $username; ?>"
-                    placeholder="<?php echo __d('feedback','Your name '); if( !$forceauthusername ) echo ' (optional)"'; ?>"
-                    <?php if( $forceauthusername AND !empty($username) ) echo 'readonly="readonly"'; ?>
+                    placeholder="<?php echo __d('feedback','Your name '); if( !$forceauthusername ) echo ' (optional)'; ?>"
+                    <?php if( $forceauthusername && !empty($username) ) echo 'readonly="readonly"'; ?>
                     >
             </div>
             <div class="form-group">
@@ -91,10 +81,10 @@ if( file_exists($configfile) && is_readable($configfile)) {
                     type="email"
                     name="email"
                     id="feedbackit-email"
-                    class="<?php if( !empty($email) ) echo 'feedbackit-input"'; ?> form-control"
+                    class="<?php if (!empty($email)) echo 'feedbackit-input"'; ?> form-control"
                     value="<?php echo $email; ?>"
-                    placeholder="<?php echo __d('feedback','Your e-mail '); if( !$forceemail ) echo ' (optional)"'; ?>"
-                    <?php if( $forceemail AND !empty($email) ) echo 'readonly="readonly"'; ?>
+                    placeholder="<?php echo __d('feedback','Your e-mail '); if( !$forceemail ) echo ' (optional)'; ?>"
+                    <?php if( $forceemail && !empty($email) ) echo 'readonly="readonly"'; ?>
                     >
             </div>
             <div class="form-group">
@@ -120,24 +110,27 @@ if( file_exists($configfile) && is_readable($configfile)) {
                         <i class="icon-screenshot icon-white"></i><span class="glyphicon glyphicon-screenshot"></span> <?php echo __d('feedback','Highlight something'); ?>
                     </button>
                 </div>
-                <div class="form-group" <?php if( ! $enableacceptterms) echo 'style="display:none;"'; ?>>
+                <div class="form-group" <?php if (!$enableacceptterms) echo 'style="display:none;"'; ?>>
                     <label class="checkbox checkbox-inline">
                         <input type="checkbox"
                                required id="feedbackit-okay"
                                 <?php
-                                if( ! $enableacceptterms){
+                                if (!$enableacceptterms) {
                                    echo 'class="isinvisible"';
                                    echo 'checked="checked"';
-                                }else{
+                                } else {
                                    echo 'class="isvisible"';
                                 }
                                 ?>
                             >
-                        <?php echo __d('feedback','I am okay with'); ?> <b><a id="feedbackit-okay-message" href="#" onclick="return false;" data-toggle="tooltip" title="<?php echo $termstext;?>"><?php echo __d('feedback','this'); ?></a></b>.
+						<?php
+						$confirmation = '<b><a id="feedbackit-okay-message" href="#" onclick="return false;" data-toggle="tooltip" title="' . h($termstext) . '">'. __d('feedback','this'). '</a></b>';
+						?>
+                        <?php echo __d('feedback','I am okay with {0}.', $confirmation); ?>
                     </label>
                 </div>
                 <?php
-                if($enablecopybyemail) {
+                if ($enablecopybyemail) {
                 ?>
                 <div class="form-group">
                     <label class="checkbox checkbox-inline">

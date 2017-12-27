@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $msg string
+ * @var \App\View\AppView $this
  */
 if(isset($msg)){
     echo $msg;

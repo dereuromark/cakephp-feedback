@@ -38,7 +38,7 @@ return [
 
 			'mail' => [
 				'to' => 'foo@example.com',
-				'from' => ['noreply@' . $_SERVER['HTTP_HOST'] => 'FeedbackIt mailer'],
+				'from' => ['noreply@' . env('HTTP_HOST') => 'FeedbackIt mailer'],
 			],
 
 			'github' => [

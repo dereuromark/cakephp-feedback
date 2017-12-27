@@ -24,7 +24,7 @@ class FeedbackstoreTable extends Table {
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
-		if (empty($feedbackObject)){
+		if (empty($feedbackObject)) {
 			return $returnobject;
 		}
 
@@ -59,7 +59,7 @@ class FeedbackstoreTable extends Table {
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
-		if(empty($feedbackObject)){
+		if (empty($feedbackObject)) {
 			return $returnobject;
 		}
 
@@ -74,7 +74,7 @@ class FeedbackstoreTable extends Table {
 		//Optional HTTP credentials for bypassing Basic Auth or Kerberos
 		$soap_options = [];
 
-		if($http_username = Configure::read('Feedback.methods.mantis.http_username') AND $http_password = Configure::read('Feedback.methods.mantis.http_password')){
+		if ($http_username = Configure::read('Feedback.methods.mantis.http_username') && $http_password = Configure::read('Feedback.methods.mantis.http_password')){
 
 			$soap_options = [
 				'login' => $http_username,
@@ -150,7 +150,7 @@ class FeedbackstoreTable extends Table {
 
 		//Read settings from config if not in copy mode
 		$to = Configure::read('Feedback.methods.mail.to');
-		$from	= Configure::read('Feedback.methods.mail.from');
+		$from = Configure::read('Feedback.methods.mail.from');
 
 		// Change recipient if sending a copy
 		if($copyreporter){
@@ -158,8 +158,8 @@ class FeedbackstoreTable extends Table {
 		}
 
 		//Change the sender if any given
-		if(!empty($feedbackObject['email']) AND !empty($feedbackObject['name'])){
-			$from	= [$feedbackObject['email'] => $feedbackObject['name']];
+		if(!empty($feedbackObject['email']) && !empty($feedbackObject['name'])){
+			$from = [$feedbackObject['email'] => $feedbackObject['name']];
 		}
 
 		//Tmp store the screenshot:

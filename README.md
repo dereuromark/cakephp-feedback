@@ -13,6 +13,8 @@ Website: [http://stefanvangastel.nl/feedbackitdemo/](http://stefanvangastel.nl/f
 This CakePHP plugin provides a static feedback tab on the side of the screen that enables website visitor to submit feedback or bugreports.
 Features pure client-side screenshot function including user-placed highlight / accent.
 
+Note: For CakePHP 3.x
+
 **Currently saves the following on form submit:**
 
 * Name of sender (optional, can work with AuthComponent)
@@ -55,33 +57,23 @@ This plugin is CakePHP Security component compatible.
 <a name="installation"/>
 ## Installation and Setup
 
-1. Check out a copy of the FeedbackIt CakePHP plugin from the repository using Git :
-
-	`git clone http://github.com/stefanvangastel/CakePHP-FeedbackIt.git`
-
-	or download the archive from Github: 
-
-	`https://github.com/stefanvangastel/CakePHP-FeedbackIt/archive/master.zip`
-
-	You must place the FeedbackIt CakePHP plugin within your CakePHP 2.x app/Plugin directory.
+1. Include the Feedback CakePHP plugin with composer in your application:
 	
-	or load it with composer:
-	
-	`"stefanvangastel/feedback-it": "dev-master"`
+	composer require dereuromark/feedback": "dev-master"`
 
-2. Load the plugin in app/Config/bootstrap.php:
+2. Load the plugin in config/bootstrap.php:
 
-	`Plugin::load('FeedbackIt');`
+	`Plugin::load('Feedback');`
 
-3. Copy the default feedbackit-config file:
+3. Copy the default feedback config file into your applications config folder:
 
-	Copy `../app/Plugin/FeedbackIt/Config/feedbackit-config.php.default` to `../app/Plugin/FeedbackIt/Config/feedbackit-config.php`
+	Copy `../vendor/dereuromark/cakephpfeedback/config/config.php` to `../config/app_feedbackit.php`
 
-	And adjust it to your needs.
+	And adjust it to your needs. You can also just include the config array into your existing app.php file.
 
 4. Use the feedbackbar element in a view or layout to place the feedback tab on that (or those) pages. It doesn't matter where you place the following line since it uses absolute DOM element positioning.
 
-	`<?php echo $this->element('FeedbackIt.feedbackbar');?>`
+	`<?php echo $this->element('Feedback.feedbackbar');?>`
 
 <a name="usage"/>
 ## Usage
@@ -94,4 +86,7 @@ To testdrive this puppy; [http://stefanvangastel.nl/feedbackitdemo/](http://stef
 ![Example of form](https://raw.github.com/stefanvangastel/CakePHP-FeedbackIt/master/examples/feedbackit_1.png "Example of form")
 ![Example of result](https://raw.github.com/stefanvangastel/CakePHP-FeedbackIt/master/examples/feedbackit_2.png "Example of result")
 
-End
+
+### 2.x version
+
+https://github.com/stefanvangastel/CakePHP-FeedbackIt

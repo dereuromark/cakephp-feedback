@@ -49,7 +49,7 @@ msgstr "Vielen Dank. Dein Feedback wurde gespeichert."
 
 #: Plugin/FeedbackIt/Model/Feedbackstore.php:34;116
 msgid "View your feedback on: "
-msgstr "Hier kannst du deinen Feedback sehen:"
+msgstr "Hier kannst du dein Feedback sehen:"
 
 #: Plugin/FeedbackIt/Model/Feedbackstore.php:165
 msgid "Could not save tmp file for attachment in mail"
@@ -122,5 +122,11 @@ msgstr "Schließen"
 msgid "When you submit, a screenshot (of only this website) will be taken to aid us in processing your feedback or bugreport."
 msgstr "Ein Screenshot des aktuellen Browserfensters wird uns mit übermittelt, um dir bei deiner Anfrage zu helfen."
 
-msgid "I am okay with"
-msgstr "Ich bin einverstanden mit"
+msgid "I am okay with {0}."
+msgstr "Ich bin einverstanden {0}."
+
+msgid "this"
+msgstr "damit"
+
+msgid "Hide this tab completely."
+msgstr "Diesen Reiter komplett ausblenden."
