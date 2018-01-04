@@ -9,7 +9,7 @@ $(document).ready(function() {
 	/*
 	Hide all on IE < 9 OR Firefox <= 3.5
 	*/
-	if( (get_browser() == 'MSIE' && get_browser_version() <= 9) || (get_browser() == 'Firefox' && get_browser_version() <= 3.5)) {
+if ( (get_browser() == 'MSIE' && get_browser_version() <= 9) || (get_browser() == 'Firefox' && get_browser_version() <= 3.5)) {
 		slider.css( "display", 'none');
 	} else {
 		slider.css( "display", 'block');
@@ -197,7 +197,7 @@ $(document).ready(function() {
 	function get_browser() {
 		var N=navigator.appName, ua=navigator.userAgent, tem;
 		var M=ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
-		if(M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) M[2]= tem[1];
+	if (M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) M[2]= tem[1];
 		M=M? [M[1], M[2]]: [N, navigator.appVersion, '-?'];
 		return M[0];
 	}
@@ -208,7 +208,7 @@ $(document).ready(function() {
 	function get_browser_version() {
 		var N=navigator.appName, ua=navigator.userAgent, tem;
 		var M=ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
-		if(M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) M[2]= tem[1];
+	if (M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) M[2]= tem[1];
 		M=M? [M[1], M[2]]: [N, navigator.appVersion, '-?'];
 		return M[1];
 	}

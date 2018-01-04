@@ -37,7 +37,7 @@ msgid "Error saving feedback."
 msgstr "Fout tijdens opslaan feedback."
 
 #: Controller/FeedbackController.php:80
-msgid "Your feedback was saved succesfully."
+msgid "Your feedback was saved successfully."
 msgstr "Uw feedback is succesvol opgeslagen"
 
 #: Controller/FeedbackController.php:95

@@ -4,7 +4,7 @@ return [
 	'Feedback' => [
 
 		//Save method, multiple possible (array('filesystem','mail')): filesystem, mantis, mail, github, bitbucket. (See below)
-		'method' => ['filesystem'],	//Only the first method will be checked and reported back to user
+		'stores' => [],	// FQCN. Only the first method will be checked and reported back to user
 
 		'returnlink' => true,	//Return a link (if any) to the created ticket or report.
 		'enablecopybyemail' => false, //If set to true, visitors can check a 'send me a copy' button
@@ -18,9 +18,9 @@ return [
 		/*
 		 * Configure the different methods
 		 */
-		'methods' => [
+		'configuration' => [
 
-			'filesystem' => [
+			'Filesystem' => [
 				'location' => ROOT . DS . 'tmp' . DS . 'feedbackit' . DS, //Default is APP/tmp/feedbackit/
 			],
 

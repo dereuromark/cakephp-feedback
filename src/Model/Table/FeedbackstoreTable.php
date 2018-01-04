@@ -10,14 +10,15 @@ use SoapClient;
 
 class FeedbackstoreTable extends Table {
 
-	public $_table = 'Feedbackstore';
-
+	/**
+	 * @var bool
+	 */
 	public $useTable = false;
-
-	public $returnobject = [];
 
 	/**
 	 * Store functions for different save methods
+	 *
+	 * @deprecated
 	 *
 	 * @param array|null $feedbackObject
 	 *
@@ -112,10 +113,10 @@ class FeedbackstoreTable extends Table {
 			];
 
 	    //Try to save the issue
-		if($issueid = $c->mc_issue_add($username, $password, $issue)) {
+		if ($issueid = $c->mc_issue_add($username, $password, $issue)) {
 
 	    	//Decode image or not?
-			if($decodeimage) {
+			if ($decodeimage) {
 				$feedbackObject['screenshot'] = base64_decode($feedbackObject['screenshot']);
 			}
 
@@ -124,7 +125,7 @@ class FeedbackstoreTable extends Table {
 
 				$msg = __d('feedback', 'Thank you. Your feedback was saved.');
 
-				if(Configure::read('Feedback.returnlink')) {
+			if (Configure::read('Feedback.returnlink')) {
 					$msg .= '<br/>';
 					$msg .= __d('feedback', 'View your feedback on: ');
 
@@ -152,7 +153,7 @@ class FeedbackstoreTable extends Table {
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
-		if(empty($feedbackObject)) {
+		if (empty($feedbackObject)) {
 			return $returnobject;
 		}
 
@@ -161,20 +162,20 @@ class FeedbackstoreTable extends Table {
 		$from = Configure::read('Feedback.methods.mail.from');
 
 		// Change recipient if sending a copy
-		if($copyreporter) {
+		if ($copyreporter) {
 			$to = $feedbackObject['email'];
 		}
 
 		//Change the sender if any given
-		if(!empty($feedbackObject['email']) && !empty($feedbackObject['name'])) {
+		if (!empty($feedbackObject['email']) && !empty($feedbackObject['name'])) {
 			$from = [$feedbackObject['email'] => $feedbackObject['name']];
 		}
 
 		//Tmp store the screenshot:
 		$tmpfile = APP . 'tmp' . DS . time() . '_' . rand(1000, 9999) . '.png';
-		if(!file_put_contents($tmpfile, base64_decode($feedbackObject['screenshot']))) {
+		if (!file_put_contents($tmpfile, base64_decode($feedbackObject['screenshot']))) {
 			//Need to save tmp file
-			throw new NotFoundException( __d('feedback', 'Could not save tmp file for attachment in mail') );
+			throw new NotFoundException('Could not save tmp file for attachment in mail');
 		}
 
 		$email = new Email();
@@ -191,7 +192,7 @@ class FeedbackstoreTable extends Table {
 		]);
 
 		//Mail specific: append browser, browser version, URL, etc to feedback :
-		if($copyreporter) {
+		if ($copyreporter) {
 			$feedbackObject['feedback'] = '<p>' . __d('feedback', 'A copy of your submitted feedback:') . '</p>' . $feedbackObject['feedback'];
 		}
 		$feedbackObject['feedback'] .= '<p>';
@@ -203,7 +204,7 @@ class FeedbackstoreTable extends Table {
 		$feedbackObject['feedback'] .= '</p>';
 		$feedbackObject['feedback'] .= '<img src="cid:id-screenshot">'; //Add inline screenshot
 
-		if($email->send($feedbackObject['feedback'])) {
+		if ($email->send($feedbackObject['feedback'])) {
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
@@ -223,7 +224,7 @@ class FeedbackstoreTable extends Table {
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
-		if(empty($feedbackObject)) {
+		if (empty($feedbackObject)) {
 			return $returnobject;
 		}
 
@@ -244,7 +245,7 @@ class FeedbackstoreTable extends Table {
 		//          If the given URL is not public, Github won't display the screenshot
 		if ($localimagestore) {
 			//Create filename based on timestamp and random number (to prevent collisions)
-			if($imagename = $this->saveScreenshot($feedbackObject)) {
+		if ($imagename = $this->saveScreenshot($feedbackObject)) {
 				$viewimageUrl = Router::url("/feedback_it/img/screenshots/$imagename", true);
 
 				$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
@@ -270,7 +271,7 @@ class FeedbackstoreTable extends Table {
 		$result = curl_exec($ch);
 		$curlstatuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-		if(!$result) {
+		if (!$result) {
 			//Return curl error
 			$returnobject['msg'] = curl_error($ch);
 
@@ -284,7 +285,7 @@ class FeedbackstoreTable extends Table {
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
-			if(Configure::read('Feedback.returnlink')) {
+			if (Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
 				$returnobject['msg'] .= __d('feedback', 'View your feedback on: ');
 
@@ -335,7 +336,7 @@ class FeedbackstoreTable extends Table {
 		//          If the given URL is not public, Bitbucket won't display the screenshot
 		if ($localimagestore) {
 			//Create filename based on timestamp and random number (to prevent collisions)
-			if($imagename = $this->saveScreenshot($feedbackObject)) {
+		if ($imagename = $this->saveScreenshot($feedbackObject)) {
 				$viewimageUrl = Router::url("/feedback_it/img/screenshots/$imagename", true);
 
 				$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
@@ -352,13 +353,13 @@ class FeedbackstoreTable extends Table {
 		$result = $HttpSocket->post($api_url, $data);
 
 		// TODO: A better error management
-		if(!$result) {
+		if (!$result) {
 			$returnobject['msg'] = $HttpSocket->lastError();
 		} else {
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
-			if(Configure::read('Feedback.returnlink')) {
+		if (Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
 				$returnobject['msg'] .= __d('feedback', 'View your feedback on: ');
 
@@ -389,7 +390,7 @@ class FeedbackstoreTable extends Table {
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
-		if(empty($feedbackObject)) {
+		if (empty($feedbackObject)) {
 			return $returnobject;
 		}
 
@@ -412,7 +413,7 @@ class FeedbackstoreTable extends Table {
 		//          If the given URL is not public, Jira won't display the screenshot
 		if ($localimagestore) {
 			//Create filename based on timestamp and random number (to prevent collisions)
-			if($imagename = $this->saveScreenshot($feedbackObject)) {
+		if ($imagename = $this->saveScreenshot($feedbackObject)) {
 				$viewimageUrl = Router::url("/feedback_it/img/screenshots/$imagename", true);
 
 				$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
@@ -442,7 +443,7 @@ class FeedbackstoreTable extends Table {
 		$result = curl_exec($ch);
 		$curlstatuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-		if(!$result) {
+		if (!$result) {
 			//Return curl error
 			$returnobject['msg'] = curl_error($ch);
 
@@ -455,7 +456,7 @@ class FeedbackstoreTable extends Table {
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
-			if(Configure::read('Feedback.returnlink')) {
+		if (Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
 				$returnobject['msg'] .= __d('feedback', 'View your feedback on: ');
 
@@ -485,7 +486,7 @@ class FeedbackstoreTable extends Table {
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
-		if(empty($feedbackObject)) {
+		if (empty($feedbackObject)) {
 			return $returnobject;
 		}
 
@@ -539,7 +540,7 @@ class FeedbackstoreTable extends Table {
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
-			if(Configure::read('Feedback.returnlink')) {
+		if (Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
 				$returnobject['msg'] .= __d('feedback', 'View your feedback on: ');
 
@@ -561,10 +562,14 @@ class FeedbackstoreTable extends Table {
 		return $returnobject;
 	}
 
-	/*
-   	 * Auxiliary function that saves the file
-     */
-  	private function saveFile($feedbackObject = null) {
+			/**
+						 * Auxiliary function that saves the file
+						 *
+						 * @deprecated
+						 * @param array $feedbackObject
+						 * @return bool
+						 */
+  	private function saveFile(array $feedbackObject) {
 		//Get save path from config
 		$savepath = Configure::read('Feedback.methods.filesystem.location');
 		//Serialize and save the object to a store in the Cake's tmp dir.
@@ -582,16 +587,22 @@ class FeedbackstoreTable extends Table {
 		return false;
 	}
 
-	/*
+	/**
    	 * Auxiliary function that creates filename
-     */
+	 *
+	 * @deprecated
+	 * @return string
+	 */
 	private function generateFilename() {
 		return time() . '-' . rand(1000, 9999) . '.feedback';
 	}
 
-	/*
+	/**
    	 * Auxiliary function that creates screenshotname
-     */
+	 *
+	 * @deprecated
+	 * @return string
+	 */
 	private function generateScreenshotname() {
 		return time() . '-' . rand(1000, 9999) . '.png';
 	}
@@ -599,7 +610,12 @@ class FeedbackstoreTable extends Table {
 	/*
    	 * Auxiliary function that save screenshot as image in webroot
      */
-  	private function saveScreenshot($feedbackObject = null) {
+	/**
+	 * @param array $feedbackObject
+	 *
+	 * @return bool|string
+	 */
+	private function saveScreenshot($feedbackObject) {
 		//Get save path from config
 		$savepath = ROOT . DS . 'files' . DS . 'img' . DS . 'screenshots' . DS;
 

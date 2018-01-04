@@ -4,22 +4,24 @@ namespace Feedback\Controller;
 
 use App\Controller\AppController;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
-use Cake\Network\Exception\NotImplementedException;
+use Feedback\Store\StoreCollection;
 
 /**
  * @property \Feedback\Model\Table\FeedbackstoreTable $Feedbackstore
  */
 class FeedbackController extends AppController {
 
+	/**
+	 * @var string
+	 */
 	public $modelClass = 'Feedback.Feedbackstore';
 
 	/**
 	 * @param \Cake\Event\Event $event
 	 *
-	 * @return bool|\Cake\Http\Response|null
+	 * @return \Cake\Http\Response|null
 	 */
 	public function beforeFilter(Event $event) {
 		//Check security component loaded and disable it for this plugin:
@@ -28,18 +30,12 @@ class FeedbackController extends AppController {
 			$this->Security->validatePost = false;
 		}
 
-		//Config file location (if you use it)
-		$configfile = Plugin::path('Feedback') . 'config' . DS . 'config.php';
-
-		//Check if a config file exists:
-		if (file_exists($configfile) && is_readable($configfile)) {
-			//Load config file into CakePHP config
-			Configure::load('Feedback.config');
-			return true;
+		if (Configure::read('Feedback')) {
+			return null;
 		}
 
 		//Throw error, config file required
-		throw new NotFoundException( __d('feedback', 'No config file found. Please create one: ') . ' (' . $configfile . ')' );
+		throw new NotFoundException('No Feedback config found.');
 	}
 
 	/*
@@ -48,101 +44,77 @@ class FeedbackController extends AppController {
 	public function save() {
 	    //$this->request->allowMethod('post');
 
+		$data = $this->request->data;
+
 		//Is ajax action
 		$this->viewBuilder()->layout('ajax');
 
 		//Save screenshot:
-		$this->request->data['screenshot'] = str_replace('data:image/png;base64,', '', $this->request->data['screenshot']);
+		$data['screenshot'] = str_replace('data:image/png;base64,', '', $this->request->data['screenshot']);
 
 		//Add current time to data
-		$this->request->data['time'] = time();
+		$data['time'] = time();
 
 		//Check name
-		if (empty($this->request->data['name'])) {
-			$this->request->data['name'] = 'Anonymous';
+		if (empty($data['name'])) {
+			$data['name'] = 'Anonymous';
 		}
 
-		//Create feedbackObject
-		$feedbackObject = $this->request->data;
+		$data['sid'] = $this->request->session()->id();
 
 		//Determine method of saving
-		$methods = (array)Configure::read('Feedback.method');
+		$collection = new StoreCollection();
+		$result = $collection->save($data);
 
-		if (empty($methods)) {
-			throw new NotFoundException(__d('feedback', 'No save method found in config file'));
+		if (empty($result)) {
+			throw new NotFoundException(__d('feedback', 'No stores defined.'));
 		}
 
-		//Multiple methods possible
-		foreach ($methods as $index => $method) {
+		// Only first result is important
+		$result = array_shift($result);
 
-			//Check method exists in Model
-			if(!(method_exists($this->Feedbackstore, $method)) && $index != 0) { //Only throw error on first method
-				throw new NotImplementedException( __d('feedback', 'Method not found in Feedbackstore model:') . ' ' . $method );
+		//Prepare result
+		if (!$result['result']) {
+			$this->response->statusCode(500);
+
+			if (empty($result['msg'])) {
+				$result['msg'] = __d('feedback', 'Error saving feedback.');
 			}
-
-			//If not first method, go to next. No user feedback for methods 2 -> n
-			if($index != 0) {
-				$this->Feedbackstore->$method($feedbackObject);
-				continue;
+		} else {
+			if (empty($result['msg'])) {
+				$result['msg'] = __d('feedback', 'Your feedback was saved successfully.');
 			}
+		}
 
-			//Parse result of first method only
-			$result = $this->Feedbackstore->$method($feedbackObject);
-
-			//Prepare result
-			if (!$result['result']) {
-				$this->response->statusCode(500);
-
-				if(empty($result['msg'])) {
-					$result['msg'] = __d('feedback', 'Error saving feedback.');
-				}
-			} else {
-				if(empty($result['msg'])) {
-					$result['msg'] = __d('feedback', 'Your feedback was saved succesfully.');
-				}
-			}
-
-			$this->set('msg', $result['msg']);
-
-		} //End method loop
+		$this->set('msg', $result['msg']);
 
 		//Send a copy to the reciever:
-		if (!empty($feedbackObject['copyme'])) {
-			$this->Feedbackstore->mail($feedbackObject, true);
+		if (!empty($data['copyme'])) {
+			$this->Feedbackstore->mail($data, true);
 		}
 	}
 
-	/*
-	Example index function for current save in tmp dir solution
+	/**
+	 * Example index function for current save in tmp dir solution.
+	 * Must only display images of own session
+	 *
+	 * @return \Cake\Http\Response|null
 	 */
 	public function index() {
-		$methods = Configure::read('Feedback.method');
-
-		if (!in_array('filesystem', $methods)) {
-			$this->Flash->error(__d('feedback', 'This function is only available with filesystem save method'));
-			return $this->redirect($this->referer());
-		}
-
-		//Find all files in feedbackit dir
-		$savepath = Configure::read('Feedback.methods.filesystem.location');
+		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 
 		//Check dir
 		if (!is_dir($savepath)) {
-		    mkdir($savepath, 0770, true);
-		    if (!is_dir($savepath)) {
-				throw new NotFoundException(__d('feedback', 'Feedback location not found: ') . $savepath);
-			}
+			throw new NotFoundException('savepath not exists');
 		}
 
 		//Creat feedback array in a cake-like way
 		$feedbacks = [];
 
 		//Loop through files
-		foreach (glob($savepath . '*.feedback') as $feedbackfile) {
-
+		foreach (glob($savepath . '*-' . $this->request->session()->id() . '.feedback') as $feedbackfile) {
 			$feedbackObject = unserialize(file_get_contents($feedbackfile));
 			$feedbacks[$feedbackObject['time']] = $feedbackObject;
-
 		}
 
 		//Sort by time
@@ -155,16 +127,16 @@ class FeedbackController extends AppController {
 	Temp function to view captured image from index page
 	 */
 	public function viewimage($feedbackfile) {
-		$savepath = Configure::read('Feedback.methods.filesystem.location');
+		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 
 		if (!file_exists($savepath . $feedbackfile)) {
-			 throw new NotFoundException( __d('feedback', 'Could not find that file') );
+			 throw new NotFoundException('Could not find that file');
 		}
 
 		$feedbackobject = unserialize(file_get_contents($savepath . $feedbackfile));
 
 		if (!isset($feedbackobject['screenshot'])) {
-			throw new NotFoundException( __d('feedback', 'No screenshot found') );
+			throw new NotFoundException('No screenshot found');
 		}
 
 		$this->set('screenshot', $feedbackobject['screenshot']);
