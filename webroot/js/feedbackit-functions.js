@@ -9,7 +9,7 @@ $(document).ready(function() {
 	/*
 	Hide all on IE < 9 OR Firefox <= 3.5
 	*/
-if ( (get_browser() == 'MSIE' && get_browser_version() <= 9) || (get_browser() == 'Firefox' && get_browser_version() <= 3.5)) {
+	if ((get_browser() == 'MSIE' && get_browser_version() <= 9) || (get_browser() == 'Firefox' && get_browser_version() <= 3.5)) {
 		slider.css( "display", 'none');
 	} else {
 		slider.css( "display", 'block');
