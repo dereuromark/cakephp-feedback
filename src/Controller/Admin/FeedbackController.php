@@ -61,7 +61,7 @@ class FeedbackController extends AppController {
 		$feedbacks = [];
 
 		//Loop through files
-		foreach (glob($savepath . '*.feedback') as $feedbackfile){
+		foreach (glob($savepath . '*.feedback') as $feedbackfile) {
 
 			$feedbackObject = unserialize(file_get_contents($feedbackfile));
 			$feedbacks[$feedbackObject['time']] = $feedbackObject;
@@ -77,16 +77,16 @@ class FeedbackController extends AppController {
 	/*
 	Temp function to view captured image from index page
 	 */
-	public function viewimage($feedbackfile){
+	public function viewimage($feedbackfile) {
 		$savepath = Configure::read('Feedback.methods.filesystem.location');
 
-		if(!file_exists($savepath . $feedbackfile)){
+		if(!file_exists($savepath . $feedbackfile)) {
 			 throw new NotFoundException( __d('feedback', 'Could not find that file') );
 		}
 
 		$feedbackobject = unserialize(file_get_contents($savepath . $feedbackfile));
 
-		if(!isset($feedbackobject['screenshot'])){
+		if(!isset($feedbackobject['screenshot'])) {
 			throw new NotFoundException( __d('feedback', 'No screenshot found') );
 		}
 

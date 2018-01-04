@@ -32,7 +32,7 @@ class FeedbackController extends AppController {
 		$configfile = Plugin::path('Feedback') . 'config' . DS . 'config.php';
 
 		//Check if a config file exists:
-		if(file_exists($configfile) && is_readable($configfile)){
+		if (file_exists($configfile) && is_readable($configfile)) {
 			//Load config file into CakePHP config
 			Configure::load('Feedback.config');
 			return true;
@@ -58,7 +58,7 @@ class FeedbackController extends AppController {
 		$this->request->data['time'] = time();
 
 		//Check name
-		if(empty($this->request->data['name'])){
+		if (empty($this->request->data['name'])) {
 			$this->request->data['name'] = 'Anonymous';
 		}
 
@@ -90,14 +90,14 @@ class FeedbackController extends AppController {
 			$result = $this->Feedbackstore->$method($feedbackObject);
 
 			//Prepare result
-			if(!$result['result']) {
+			if (!$result['result']) {
 				$this->response->statusCode(500);
 
-				if(empty($result['msg'])){
+				if(empty($result['msg'])) {
 					$result['msg'] = __d('feedback', 'Error saving feedback.');
 				}
-			}else{
-				if(empty($result['msg'])){
+			} else {
+				if(empty($result['msg'])) {
 					$result['msg'] = __d('feedback', 'Your feedback was saved succesfully.');
 				}
 			}
@@ -107,7 +107,7 @@ class FeedbackController extends AppController {
 		} //End method loop
 
 		//Send a copy to the reciever:
-		if(!empty($feedbackObject['copyme'])) {
+		if (!empty($feedbackObject['copyme'])) {
 			$this->Feedbackstore->mail($feedbackObject, true);
 		}
 	}
@@ -115,10 +115,10 @@ class FeedbackController extends AppController {
 	/*
 	Example index function for current save in tmp dir solution
 	 */
-	public function index(){
+	public function index() {
 		$methods = Configure::read('Feedback.method');
 
-		if(!in_array('filesystem', $methods)){
+		if (!in_array('filesystem', $methods)) {
 			$this->Flash->error(__d('feedback', 'This function is only available with filesystem save method'));
 			return $this->redirect($this->referer());
 		}
@@ -138,7 +138,7 @@ class FeedbackController extends AppController {
 		$feedbacks = [];
 
 		//Loop through files
-		foreach (glob($savepath . '*.feedback') as $feedbackfile){
+		foreach (glob($savepath . '*.feedback') as $feedbackfile) {
 
 			$feedbackObject = unserialize(file_get_contents($feedbackfile));
 			$feedbacks[$feedbackObject['time']] = $feedbackObject;
@@ -154,16 +154,16 @@ class FeedbackController extends AppController {
 	/*
 	Temp function to view captured image from index page
 	 */
-	public function viewimage($feedbackfile){
+	public function viewimage($feedbackfile) {
 		$savepath = Configure::read('Feedback.methods.filesystem.location');
 
-		if(!file_exists($savepath . $feedbackfile)){
+		if (!file_exists($savepath . $feedbackfile)) {
 			 throw new NotFoundException( __d('feedback', 'Could not find that file') );
 		}
 
 		$feedbackobject = unserialize(file_get_contents($savepath . $feedbackfile));
 
-		if(!isset($feedbackobject['screenshot'])){
+		if (!isset($feedbackobject['screenshot'])) {
 			throw new NotFoundException( __d('feedback', 'No screenshot found') );
 		}
 

@@ -16,10 +16,14 @@ class FeedbackstoreTable extends Table {
 
 	public $returnobject = [];
 
-	/*
+	/**
 	 * Store functions for different save methods
-   	 */
-	public function filesystem($feedbackObject = null){
+	 *
+	 * @param array|null $feedbackObject
+	 *
+	 * @return array
+	 */
+	public function filesystem($feedbackObject = null) {
 		//Standard return value
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
@@ -51,10 +55,14 @@ class FeedbackstoreTable extends Table {
 		return $returnobject;
 	}
 
-	/*
-	Mantis store function
+	/**
+	 * Mantis store function
+	 *
+	 * @param array|null $feedbackObject
+	 *
+	 * @return array
 	 */
-	public function mantis($feedbackObject = null){
+	public function mantis($feedbackObject = null) {
 		//Standard return value
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
@@ -74,7 +82,7 @@ class FeedbackstoreTable extends Table {
 		//Optional HTTP credentials for bypassing Basic Auth or Kerberos
 		$soap_options = [];
 
-		if ($http_username = Configure::read('Feedback.methods.mantis.http_username') && $http_password = Configure::read('Feedback.methods.mantis.http_password')){
+		if ($http_username = Configure::read('Feedback.methods.mantis.http_username') && $http_password = Configure::read('Feedback.methods.mantis.http_password')) {
 
 			$soap_options = [
 				'login' => $http_username,
@@ -104,19 +112,19 @@ class FeedbackstoreTable extends Table {
 			];
 
 	    //Try to save the issue
-		if($issueid = $c->mc_issue_add($username, $password, $issue)){
+		if($issueid = $c->mc_issue_add($username, $password, $issue)) {
 
 	    	//Decode image or not?
-			if($decodeimage){
+			if($decodeimage) {
 				$feedbackObject['screenshot'] = base64_decode($feedbackObject['screenshot']);
 			}
 
 	    	//Add screenshot to issue (Do not send as base64 despite what de WSDL says)
-			if ($c->mc_issue_attachment_add( $username, $password, $issueid, date('d-m-Y_H-i-s') . '.png', 'image/png', $feedbackObject['screenshot'] )){
+			if ($c->mc_issue_attachment_add( $username, $password, $issueid, date('d-m-Y_H-i-s') . '.png', 'image/png', $feedbackObject['screenshot'] )) {
 
 				$msg = __d('feedback', 'Thank you. Your feedback was saved.');
 
-				if(Configure::read('Feedback.returnlink')){
+				if(Configure::read('Feedback.returnlink')) {
 					$msg .= '<br/>';
 					$msg .= __d('feedback', 'View your feedback on: ');
 
@@ -139,12 +147,12 @@ class FeedbackstoreTable extends Table {
 	Mail function
 	- Function has possibility to mail submitting user instead of target adress
 	 */
-	public function mail($feedbackObject = null, $copyreporter = false){
+	public function mail($feedbackObject = null, $copyreporter = false) {
 		//Standard return value
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
-		if(empty($feedbackObject)){
+		if(empty($feedbackObject)) {
 			return $returnobject;
 		}
 
@@ -153,18 +161,18 @@ class FeedbackstoreTable extends Table {
 		$from = Configure::read('Feedback.methods.mail.from');
 
 		// Change recipient if sending a copy
-		if($copyreporter){
+		if($copyreporter) {
 			$to = $feedbackObject['email'];
 		}
 
 		//Change the sender if any given
-		if(!empty($feedbackObject['email']) && !empty($feedbackObject['name'])){
+		if(!empty($feedbackObject['email']) && !empty($feedbackObject['name'])) {
 			$from = [$feedbackObject['email'] => $feedbackObject['name']];
 		}
 
 		//Tmp store the screenshot:
 		$tmpfile = APP . 'tmp' . DS . time() . '_' . rand(1000, 9999) . '.png';
-		if(!file_put_contents($tmpfile, base64_decode($feedbackObject['screenshot']))){
+		if(!file_put_contents($tmpfile, base64_decode($feedbackObject['screenshot']))) {
 			//Need to save tmp file
 			throw new NotFoundException( __d('feedback', 'Could not save tmp file for attachment in mail') );
 		}
@@ -183,7 +191,7 @@ class FeedbackstoreTable extends Table {
 		]);
 
 		//Mail specific: append browser, browser version, URL, etc to feedback :
-		if($copyreporter){
+		if($copyreporter) {
 			$feedbackObject['feedback'] = '<p>' . __d('feedback', 'A copy of your submitted feedback:') . '</p>' . $feedbackObject['feedback'];
 		}
 		$feedbackObject['feedback'] .= '<p>';
@@ -195,7 +203,7 @@ class FeedbackstoreTable extends Table {
 		$feedbackObject['feedback'] .= '</p>';
 		$feedbackObject['feedback'] .= '<img src="cid:id-screenshot">'; //Add inline screenshot
 
-		if($email->send($feedbackObject['feedback'])){
+		if($email->send($feedbackObject['feedback'])) {
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
@@ -210,12 +218,12 @@ class FeedbackstoreTable extends Table {
 	/*
 	Github API v3
 	 */
-	public function github($feedbackObject = null){
+	public function github($feedbackObject = null) {
 		//Standard return value
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
-		if(empty($feedbackObject)){
+		if(empty($feedbackObject)) {
 			return $returnobject;
 		}
 
@@ -234,9 +242,9 @@ class FeedbackstoreTable extends Table {
 
 		// WARNING: This may not work for sites with different domains (or dev environments)
 		//          If the given URL is not public, Github won't display the screenshot
-		if ($localimagestore){
+		if ($localimagestore) {
 			//Create filename based on timestamp and random number (to prevent collisions)
-			if($imagename = $this->saveScreenshot($feedbackObject)){
+			if($imagename = $this->saveScreenshot($feedbackObject)) {
 				$viewimageUrl = Router::url("/feedback_it/img/screenshots/$imagename", true);
 
 				$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
@@ -262,21 +270,21 @@ class FeedbackstoreTable extends Table {
 		$result = curl_exec($ch);
 		$curlstatuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-		if(!$result){
+		if(!$result) {
 			//Return curl error
 			$returnobject['msg'] = curl_error($ch);
 
-		}elseif($curlstatuscode >= 400){
+		} elseif ($curlstatuscode >= 400) {
 			//Return http error and message
 			$message = json_decode($result);
 			$returnobject['msg'] = trim($message->message); //Can contain linebreaks
 
-		}else{
+		} else {
 			//Set return value to true and return message
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
-			if(Configure::read('Feedback.returnlink')){
+			if(Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
 				$returnobject['msg'] .= __d('feedback', 'View your feedback on: ');
 
@@ -302,12 +310,12 @@ class FeedbackstoreTable extends Table {
 	/*
 	Bitbucket API
 	 */
-	public function bitbucket($feedbackObject = null){
+	public function bitbucket($feedbackObject = null) {
 		//Standard return value
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
-		if (empty($feedbackObject)){
+		if (empty($feedbackObject)) {
 			return false;
 		}
 
@@ -325,9 +333,9 @@ class FeedbackstoreTable extends Table {
 
 		// WARNING: This may not work for sites with different domains (or dev environments)
 		//          If the given URL is not public, Bitbucket won't display the screenshot
-		if ($localimagestore){
+		if ($localimagestore) {
 			//Create filename based on timestamp and random number (to prevent collisions)
-			if($imagename = $this->saveScreenshot($feedbackObject)){
+			if($imagename = $this->saveScreenshot($feedbackObject)) {
 				$viewimageUrl = Router::url("/feedback_it/img/screenshots/$imagename", true);
 
 				$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
@@ -344,13 +352,13 @@ class FeedbackstoreTable extends Table {
 		$result = $HttpSocket->post($api_url, $data);
 
 		// TODO: A better error management
-		if(!$result){
+		if(!$result) {
 			$returnobject['msg'] = $HttpSocket->lastError();
-		}else{
+		} else {
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
-			if(Configure::read('Feedback.returnlink')){
+			if(Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
 				$returnobject['msg'] .= __d('feedback', 'View your feedback on: ');
 
@@ -376,12 +384,12 @@ class FeedbackstoreTable extends Table {
 	JIRA API v2
 	https://developer.atlassian.com/display/JIRADEV/JIRA+REST+APIs
 	 */
-	public function jira($feedbackObject = null){
+	public function jira($feedbackObject = null) {
 		//Standard return value
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
-		if(empty($feedbackObject)){
+		if(empty($feedbackObject)) {
 			return $returnobject;
 		}
 
@@ -402,9 +410,9 @@ class FeedbackstoreTable extends Table {
 
 		// WARNING: This may not work for sites with different domains (or dev environments)
 		//          If the given URL is not public, Jira won't display the screenshot
-		if ($localimagestore){
+		if ($localimagestore) {
 			//Create filename based on timestamp and random number (to prevent collisions)
-			if($imagename = $this->saveScreenshot($feedbackObject)){
+			if($imagename = $this->saveScreenshot($feedbackObject)) {
 				$viewimageUrl = Router::url("/feedback_it/img/screenshots/$imagename", true);
 
 				$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
@@ -434,20 +442,20 @@ class FeedbackstoreTable extends Table {
 		$result = curl_exec($ch);
 		$curlstatuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-		if(!$result){
+		if(!$result) {
 			//Return curl error
 			$returnobject['msg'] = curl_error($ch);
 
-		}elseif($curlstatuscode >= 400){
+		} elseif ($curlstatuscode >= 400) {
 			//Return http error and message
 			$returnobject['msg'] = 'Error in Jira API call'; //Can contain linebreaks
 
-		}else{
+		} else {
 			//Set return value to true and return message
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
-			if(Configure::read('Feedback.returnlink')){
+			if(Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
 				$returnobject['msg'] .= __d('feedback', 'View your feedback on: ');
 
@@ -472,12 +480,12 @@ class FeedbackstoreTable extends Table {
 	/*
 	Redmine API
 	 */
-	public function redmine($feedbackObject = null){
+	public function redmine($feedbackObject = null) {
 		//Standard return value
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
-		if(empty($feedbackObject)){
+		if(empty($feedbackObject)) {
 			return $returnobject;
 		}
 
@@ -516,23 +524,22 @@ class FeedbackstoreTable extends Table {
 		$result = curl_exec($ch);
 		$curlstatuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-		if(!$result){
+		if (!$result) {
 			//Return curl error
 			$returnobject['msg'] = curl_error($ch);
 
-		}elseif($curlstatuscode >= 400){
+		} elseif ($curlstatuscode >= 400) {
 			//Return http error and message
 			$returnobject['msg'] = "Error in Redmine API call ($curlstatuscode)"; //Can contain linebreaks
 
-		}else{
-
+		} else {
 			//TODO: Update with image
 
 			//Set return value to true and return message
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
-			if(Configure::read('Feedback.returnlink')){
+			if(Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
 				$returnobject['msg'] .= __d('feedback', 'View your feedback on: ');
 
@@ -557,18 +564,18 @@ class FeedbackstoreTable extends Table {
 	/*
    	 * Auxiliary function that saves the file
      */
-  	private function saveFile($feedbackObject = null){
+  	private function saveFile($feedbackObject = null) {
 		//Get save path from config
 		$savepath = Configure::read('Feedback.methods.filesystem.location');
 		//Serialize and save the object to a store in the Cake's tmp dir.
-		if (!file_exists($savepath)){
+		if (!file_exists($savepath)) {
 			if (!mkdir($savepath, 0770, true)) {
 				//Throw error, directory is requird
 				throw new NotFoundException(__d('feedback', 'Could not create directory to save feedbacks in. Please provide write rights to webserver user on directory: ') . $savepath);
 			}
 		}
 
-		if (file_put_contents($savepath . $feedbackObject['filename'], serialize($feedbackObject))){
+		if (file_put_contents($savepath . $feedbackObject['filename'], serialize($feedbackObject))) {
 			//Add filename to data
 			return true;
 		}
@@ -578,27 +585,27 @@ class FeedbackstoreTable extends Table {
 	/*
    	 * Auxiliary function that creates filename
      */
-	private function generateFilename(){
+	private function generateFilename() {
 		return time() . '-' . rand(1000, 9999) . '.feedback';
 	}
 
 	/*
    	 * Auxiliary function that creates screenshotname
      */
-	private function generateScreenshotname(){
+	private function generateScreenshotname() {
 		return time() . '-' . rand(1000, 9999) . '.png';
 	}
 
 	/*
    	 * Auxiliary function that save screenshot as image in webroot
      */
-  	private function saveScreenshot($feedbackObject = null){
+  	private function saveScreenshot($feedbackObject = null) {
 		//Get save path from config
 		$savepath = ROOT . DS . 'files' . DS . 'img' . DS . 'screenshots' . DS;
 
 		//Serialize and save the object to a store in the Cake's tmp dir.
-		if (!file_exists($savepath)){
-			if (!mkdir($savepath)){
+		if (!file_exists($savepath)) {
+			if (!mkdir($savepath)) {
 				//Throw error, directory is requird
 				throw new NotFoundException(__d('feedback', 'Could not create directory to save screenshots in. Please provide write rights to webserver user on directory: ') . $savepath);
 			}
@@ -606,7 +613,7 @@ class FeedbackstoreTable extends Table {
 
 		$screenshotname = $this->generateScreenshotname();
 
-		if (file_put_contents($savepath . $screenshotname, base64_decode($feedbackObject['screenshot']))){
+		if (file_put_contents($savepath . $screenshotname, base64_decode($feedbackObject['screenshot']))) {
 			//Return the screenshotname
 			return $screenshotname;
 		}
