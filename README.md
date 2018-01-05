@@ -1,5 +1,9 @@
 # Cakephp Feedback Plugin
 
+[![Build Status](https://travis-ci.org/dereuromark/cakephp-feedback.svg?branch=master)](https://travis-ci.org/dereuromark/cakephp-feedback)
+[![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg)](https://php.net/)
+[![License](https://poser.pugx.org/dereuromark/cakephp-feedback/license.png)](https://packagist.org/packages/dereuromark/cakephp-feedback)
+
 This plugin provides a static feedback tab on the side of the screen that enables website visitor to submit feedback or bugreports.
 Features pure client-side screenshot function including user-placed highlight / accent.
 
@@ -53,7 +57,7 @@ This plugin is CakePHP Security component compatible.
 
 ## Installation and Usage
 
-See [Docs](docs).
+See **[Documentation](docs)**.
 
 ### Examples
 
