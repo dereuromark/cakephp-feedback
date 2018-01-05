@@ -18,13 +18,21 @@ Note: For CakePHP 3.x
 
 ### Save options (configurable and extendable)
 
+Out of the box:
+
 * Filesystem
+
+Easily extendable to:
+
+* Database
+* Email
 * [Mantis Bugtracker](http://www.mantisbt.org/)
 * [GitHub (repo issues)](https://help.github.com/articles/github-glossary#issue)
-* Email
 * [Bitbucket (repo issues)](https://confluence.atlassian.com/display/BITBUCKET/Use+the+issue+tracker)
 * [Jira](https://www.atlassian.com/software/jira)
 * [Redmine](http://www.redmine.org)
+
+They can also be stacked (multiple stores at once).
 
 ## Requirements
 
