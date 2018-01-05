@@ -30,7 +30,7 @@
 ### Usage and Configuration
 
 #### Stores
-By default it will use the Filesystem store. This only requires a writable directory below webroot (usually `ROOT . DS . 'files' . DS`).
+By default it will use the Filesystem store. This only requires a writable directory below webroot (usually in `ROOT . DS . 'files' . DS`).
 
 If you want to add or replace stores, you can adjust it in your config:
 ```php
@@ -48,7 +48,7 @@ If you want to add or replace stores, you can adjust it in your config:
 'Feedback' => [
 	'configuration' => [
 		'Filesystem' => [
-			...
+			'location' => ROOT . DS . 'files' . DS . 'feedback' . DS,
 		],
 		...
 	],

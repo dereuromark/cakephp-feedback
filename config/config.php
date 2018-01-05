@@ -26,7 +26,7 @@ return [
 		'configuration' => [
 
 			FilesystemStore::NAME => [
-				'location' => ROOT . DS . 'tmp' . DS . 'feedbackit' . DS, //Default is APP/tmp/feedbackit/
+				'location' => ROOT . DS . 'tmp' . DS . 'feedback' . DS,
 			],
 
 			//TODO: enable again

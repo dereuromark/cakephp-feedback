@@ -8,9 +8,6 @@ use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 use Feedback\Store\StoreCollection;
 
-/**
- * @property \Feedback\Model\Table\FeedbackstoreTable $Feedbackstore
- */
 class FeedbackController extends AppController {
 
 	/**

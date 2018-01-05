@@ -8,6 +8,9 @@ use Cake\ORM\Table;
 use Cake\Routing\Router;
 use SoapClient;
 
+/**
+ * @deprecated Make a Store class
+ */
 class FeedbackstoreTable extends Table {
 
 	/**
@@ -16,48 +19,9 @@ class FeedbackstoreTable extends Table {
 	public $useTable = false;
 
 	/**
-	 * Store functions for different save methods
-	 *
-	 * @deprecated
-	 *
-	 * @param array|null $feedbackObject
-	 *
-	 * @return array
-	 */
-	public function filesystem($feedbackObject = null) {
-		//Standard return value
-		$returnobject['result'] = false;
-		$returnobject['msg'] = '';
-
-		if (empty($feedbackObject)) {
-			return $returnobject;
-		}
-
-		//Create filename based on timestamp and random number (to prevent collisions)
-		$feedbackObject['filename'] = $this->generateFilename();
-
-		if ($this->saveFile($feedbackObject)) {
-
-			$msg = __d('feedback', 'Thank you. Your feedback was saved.');
-
-			if (Configure::read('Feedback.returnlink')) {
-				$msg .= ' ';
-				$msg .= __d('feedback', 'View your feedback on: ');
-
-				$url = Router::url(['plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'index'], true);
-
-				$msg .= '<a target="_blank" href="' . $url . '">' . $url . '</a>';
-			}
-
-			$returnobject['result'] = true;
-			$returnobject['msg'] = $msg;
-		}
-
-		return $returnobject;
-	}
-
-	/**
 	 * Mantis store function
+	 *
+	 * @deprecated Make a Store class
 	 *
 	 * @param array|null $feedbackObject
 	 *
@@ -144,11 +108,17 @@ class FeedbackstoreTable extends Table {
 		return $returnobject;
 	}
 
-	/*
-	Mail function
-	- Function has possibility to mail submitting user instead of target adress
+	/**
+	 * Mail function
+	 * - Function has possibility to mail submitting user instead of target adress
+	 *
+	 * @deprecated Make a Store class
+	 *
+	 * @param array $feedbackObject
+	 * @param bool $copyreporter
+	 * @return array
 	 */
-	public function mail($feedbackObject = null, $copyreporter = false) {
+	public function mail(array $feedbackObject, $copyreporter = false) {
 		//Standard return value
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
@@ -216,10 +186,15 @@ class FeedbackstoreTable extends Table {
 		return $returnobject;
 	}
 
-	/*
-	Github API v3
+	/**
+	 * Github API v3
+	 *
+	 * @deprecated Make a Store class
+	 *
+	 * @param array $feedbackObject
+	 * @return array
 	 */
-	public function github($feedbackObject = null) {
+	public function github(array $feedbackObject) {
 		//Standard return value
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
@@ -246,7 +221,7 @@ class FeedbackstoreTable extends Table {
 		if ($localimagestore) {
 			//Create filename based on timestamp and random number (to prevent collisions)
 		if ($imagename = $this->saveScreenshot($feedbackObject)) {
-				$viewimageUrl = Router::url("/feedback_it/img/screenshots/$imagename", true);
+				$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
 
 				$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
 			}
@@ -308,16 +283,21 @@ class FeedbackstoreTable extends Table {
 		return $returnobject;
 	}
 
-	/*
-	Bitbucket API
+	/**
+	 * Bitbucket API
+	 *
+	 * @deprecated Make a Store class
+	 *
+	 * @param array $feedbackObject
+	 * @return array
 	 */
-	public function bitbucket($feedbackObject = null) {
+	public function bitbucket(array $feedbackObject) {
 		//Standard return value
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
 		if (empty($feedbackObject)) {
-			return false;
+			return $returnobject;
 		}
 
 		//Read settings
@@ -337,7 +317,7 @@ class FeedbackstoreTable extends Table {
 		if ($localimagestore) {
 			//Create filename based on timestamp and random number (to prevent collisions)
 		if ($imagename = $this->saveScreenshot($feedbackObject)) {
-				$viewimageUrl = Router::url("/feedback_it/img/screenshots/$imagename", true);
+				$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
 
 				$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
 			}
@@ -381,11 +361,16 @@ class FeedbackstoreTable extends Table {
 		return $returnobject;
 	}
 
-	/*
-	JIRA API v2
-	https://developer.atlassian.com/display/JIRADEV/JIRA+REST+APIs
+	/**
+	 * JIRA API v2
+	 * https://developer.atlassian.com/display/JIRADEV/JIRA+REST+APIs
+	 *
+	 * @deprecated Make a Store class
+	 *
+	 * @param array $feedbackObject
+	 * @return array
 	 */
-	public function jira($feedbackObject = null) {
+	public function jira(array $feedbackObject) {
 		//Standard return value
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
@@ -414,7 +399,7 @@ class FeedbackstoreTable extends Table {
 		if ($localimagestore) {
 			//Create filename based on timestamp and random number (to prevent collisions)
 		if ($imagename = $this->saveScreenshot($feedbackObject)) {
-				$viewimageUrl = Router::url("/feedback_it/img/screenshots/$imagename", true);
+				$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
 
 				$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
 			}
@@ -478,10 +463,15 @@ class FeedbackstoreTable extends Table {
 		return $returnobject;
 	}
 
-	/*
-	Redmine API
+	/**
+	 * Redmine API
+	 *
+	 * @deprecated Make a Store class
+	 *
+	 * @param array $feedbackObject
+	 * @return array
 	 */
-	public function redmine($feedbackObject = null) {
+	public function redmine(array $feedbackObject) {
 		//Standard return value
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
@@ -562,60 +552,16 @@ class FeedbackstoreTable extends Table {
 		return $returnobject;
 	}
 
-			/**
-						 * Auxiliary function that saves the file
-						 *
-						 * @deprecated
-						 * @param array $feedbackObject
-						 * @return bool
-						 */
-  	private function saveFile(array $feedbackObject) {
-		//Get save path from config
-		$savepath = Configure::read('Feedback.methods.filesystem.location');
-		//Serialize and save the object to a store in the Cake's tmp dir.
-		if (!file_exists($savepath)) {
-			if (!mkdir($savepath, 0770, true)) {
-				//Throw error, directory is requird
-				throw new NotFoundException(__d('feedback', 'Could not create directory to save feedbacks in. Please provide write rights to webserver user on directory: ') . $savepath);
-			}
-		}
-
-		if (file_put_contents($savepath . $feedbackObject['filename'], serialize($feedbackObject))) {
-			//Add filename to data
-			return true;
-		}
-		return false;
-	}
-
 	/**
-   	 * Auxiliary function that creates filename
-	 *
-	 * @deprecated
-	 * @return string
-	 */
-	private function generateFilename() {
-		return time() . '-' . rand(1000, 9999) . '.feedback';
-	}
-
-	/**
-   	 * Auxiliary function that creates screenshotname
-	 *
-	 * @deprecated
-	 * @return string
-	 */
-	private function generateScreenshotname() {
-		return time() . '-' . rand(1000, 9999) . '.png';
-	}
-
-	/*
    	 * Auxiliary function that save screenshot as image in webroot
-     */
-	/**
+	 *
+	 * @deprecated Make part of a Store class
+	 *
 	 * @param array $feedbackObject
 	 *
-	 * @return bool|string
+	 * @return string|null
 	 */
-	private function saveScreenshot($feedbackObject) {
+	private function saveScreenshot(array $feedbackObject) {
 		//Get save path from config
 		$savepath = ROOT . DS . 'files' . DS . 'img' . DS . 'screenshots' . DS;
 
@@ -627,13 +573,25 @@ class FeedbackstoreTable extends Table {
 			}
 		}
 
-		$screenshotname = $this->generateScreenshotname();
+		$screenshotname = $this->generateScreenshotName();
 
 		if (file_put_contents($savepath . $screenshotname, base64_decode($feedbackObject['screenshot']))) {
 			//Return the screenshotname
 			return $screenshotname;
 		}
-		return false;
+
+		return null;
+	}
+
+	/**
+	 * Auxiliary function that creates screenshot name
+	 *
+	 * @deprecated Make part of a Store class
+	 *
+	 * @return string
+	 */
+	private function generateScreenshotName() {
+		return time() . '-' . rand(1000, 9999) . '.png';
 	}
 
 }
