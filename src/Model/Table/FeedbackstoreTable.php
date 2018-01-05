@@ -569,7 +569,7 @@ class FeedbackstoreTable extends Table {
 		if (!file_exists($savepath)) {
 			if (!mkdir($savepath)) {
 				//Throw error, directory is requird
-				throw new NotFoundException(__d('feedback', 'Could not create directory to save screenshots in. Please provide write rights to webserver user on directory: ') . $savepath);
+				throw new NotFoundException('Could not create directory to save screenshots in. Please provide write rights to webserver user on directory: ' . $savepath);
 			}
 		}
 

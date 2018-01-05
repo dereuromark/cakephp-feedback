@@ -21,7 +21,7 @@ class FeedbackController extends AppController {
 	 * @return \Cake\Http\Response|null
 	 */
 	public function beforeFilter(Event $event) {
-		//Check security component loaded and disable it for this plugin:
+		// Check security component loaded and disable it for this plugin:
 		if (isset($this->Security)) {
 			$this->Security->csrfCheck = false;
 			$this->Security->validatePost = false;
@@ -31,30 +31,32 @@ class FeedbackController extends AppController {
 			return null;
 		}
 
-		//Throw error, config file required
+		// Throw error, config file required
 		throw new NotFoundException('No Feedback config found.');
 	}
 
-	/*
-	Ajax function to save the feedback form. Lots of TODO's on this side.
+	/**
+	 * Ajax function to save the feedback form.
+	 *
+	 * @return \Cake\Http\Response|null
 	 */
 	public function save() {
-	    //$this->request->allowMethod('post');
+	    $this->request->allowMethod('post');
 
-		$data = $this->request->data;
+		$data = $this->request->data();
 
 		//Is ajax action
 		$this->viewBuilder()->layout('ajax');
 
 		//Save screenshot:
-		$data['screenshot'] = str_replace('data:image/png;base64,', '', $this->request->data['screenshot']);
+		$data['screenshot'] = str_replace('data:image/png;base64,', '', $this->request->data('screenshot'));
 
 		//Add current time to data
 		$data['time'] = time();
 
 		//Check name
 		if (empty($data['name'])) {
-			$data['name'] = 'Anonymous';
+			$data['name'] = __d('feedback', 'Anonymous');
 		}
 
 		$data['sid'] = $this->request->session()->id();
@@ -64,7 +66,7 @@ class FeedbackController extends AppController {
 		$result = $collection->save($data);
 
 		if (empty($result)) {
-			throw new NotFoundException(__d('feedback', 'No stores defined.'));
+			throw new NotFoundException('No stores defined.');
 		}
 
 		// Only first result is important
@@ -87,6 +89,7 @@ class FeedbackController extends AppController {
 
 		//Send a copy to the reciever:
 		if (!empty($data['copyme'])) {
+			//FIXME: Move to a store class
 			$this->Feedbackstore->mail($data, true);
 		}
 	}
@@ -120,17 +123,20 @@ class FeedbackController extends AppController {
 		$this->set('feedbacks', $feedbacks);
 	}
 
-	/*
-	Temp function to view captured image from index page
+	/**
+	 * Temp function to view captured image from index page
+	 *
+	 * @param string $file
+	 * @return \Cake\Http\Response|null
 	 */
-	public function viewimage($feedbackfile) {
+	public function viewimage($file) {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 
-		if (!file_exists($savepath . $feedbackfile)) {
+		if (!file_exists($savepath . $file)) {
 			 throw new NotFoundException('Could not find that file');
 		}
 
-		$feedbackobject = unserialize(file_get_contents($savepath . $feedbackfile));
+		$feedbackobject = unserialize(file_get_contents($savepath . $file));
 
 		if (!isset($feedbackobject['screenshot'])) {
 			throw new NotFoundException('No screenshot found');

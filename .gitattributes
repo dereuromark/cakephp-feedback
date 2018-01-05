@@ -5,6 +5,7 @@
 
 *.jpg binary
 *.png binary
+*.gif binary
 
 # Remove files for archives generated using `git archive`
 phpunit.xml.dist export-ignore
@@ -12,3 +13,4 @@ phpunit.xml.dist export-ignore
 .gitignore export-ignore
 .gitattributes export-ignore
 .editorconfig export-ignore
+tests/test_app export-ignore

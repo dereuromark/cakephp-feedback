@@ -58,7 +58,7 @@ class FilesystemStore implements StoreInterface {
 		if (!file_exists($location)) {
 			if (!mkdir($location, 0770, true)) {
 				//Throw error, directory is requird
-				throw new NotFoundException(__d('feedback', 'Could not create directory to save feedbacks in. Please provide write rights to webserver user on directory: ') . $location);
+				throw new NotFoundException('Could not create directory to save feedbacks in. Please provide write rights to webserver user on directory: ' . $location);
 			}
 		}
 

@@ -38,7 +38,7 @@ class FeedbackController extends AppController {
 		if (!is_dir($savepath)) {
 		    mkdir($savepath, 0770, true);
 		    if (!is_dir($savepath)) {
-				throw new NotFoundException(__d('feedback', 'Feedback location not found: ') . $savepath);
+				throw new NotFoundException('Feedback location not found: ' . $savepath);
 			}
 		}
 

@@ -2,6 +2,6 @@
 /**
  * @var \App\View\AppView $this
  */
-if(isset($msg)){
+if (isset($msg)) {
     echo $msg;
 }
