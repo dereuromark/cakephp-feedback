@@ -1,5 +1,7 @@
 <?php
 
+use Feedback\Store\FilesystemStore;
+
 return [
 	'Feedback' => [
 
@@ -7,11 +9,14 @@ return [
 		'stores' => [],	// FQCN. Only the first method will be checked and reported back to user
 
 		'returnlink' => true,	//Return a link (if any) to the created ticket or report.
+
+		//TODO: enable again using Email class or even store
 		'enablecopybyemail' => false, //If set to true, visitors can check a 'send me a copy' button
 
 		'enableacceptterms' => true, //If set to true, visitors have to check an accept terms checkbox
 		'termstext' => __d('feedback', 'When you submit, a screenshot (of only this website) will be taken to aid us in processing your feedback or bugreport.'), //The text to display on the terms button, using __d makes translation possible
 
+		//TODO: enable again
 		'forceauthusername' => false, //If set to true, the AuthComponent::user('name') var or equivalent is made un-editable in the form
 		'forceemail' => false, //If set to true, the AuthComponent::user('email') var or equivalent is made un-editable in the form
 
@@ -20,10 +25,11 @@ return [
 		 */
 		'configuration' => [
 
-			'Filesystem' => [
+			FilesystemStore::NAME => [
 				'location' => ROOT . DS . 'tmp' . DS . 'feedbackit' . DS, //Default is APP/tmp/feedbackit/
 			],
 
+			//TODO: enable again
 			'mantis' => [
 				'api_url' => 'http://example.com/api/soap/mantisconnect.php?wsdl', //Api url
 				'username' => 'foo', //The Mantis user to use
