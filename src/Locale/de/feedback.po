@@ -15,26 +15,6 @@ msgstr ""
 "X-Generator: Poedit 1.6.4\n"
 "Language: de_DE\n"
 
-#: Plugin/FeedbackIt/Controller/FeedbackController.php:28
-msgid "No config file found. Please create one: "
-msgstr "Keine Konfigurationsdatei gefunden. Bitte eine erstellen."
-
-#: Plugin/FeedbackIt/Controller/FeedbackController.php:58
-msgid "Method not found in Feedbackstore model:"
-msgstr ""
-
-#: Plugin/FeedbackIt/Controller/FeedbackController.php:91
-msgid "No save method found in config file"
-msgstr ""
-
-#: Plugin/FeedbackIt/Controller/FeedbackController.php:101
-msgid "This function is only available with filesystem save method"
-msgstr ""
-
-#: Plugin/FeedbackIt/Controller/FeedbackController.php:110
-msgid "Feedback location not found: "
-msgstr ""
-
 #: Plugin/FeedbackIt/Controller/FeedbackController.php:138
 msgid "Could not find that file"
 msgstr "Datei nicht gefunden"
@@ -49,27 +29,11 @@ msgstr "Vielen Dank. Dein Feedback wurde gespeichert."
 
 #: Plugin/FeedbackIt/Model/Feedbackstore.php:34;116
 msgid "View your feedback on: "
-msgstr "Hier kannst du dein Feedback sehen:"
-
-#: Plugin/FeedbackIt/Model/Feedbackstore.php:165
-msgid "Could not save tmp file for attachment in mail"
-msgstr ""
+msgstr "Hier kannst du dein Feedback sehen: "
 
 #: Plugin/FeedbackIt/Model/Feedbackstore.php:183
 msgid "A copy of your submitted feedback:"
 msgstr "Eine Kopie deines übermittelten Feedbacks:"
-
-#: Plugin/FeedbackIt/Model/Feedbackstore.php:348
-msgid ""
-"Could not create directory to save feedbacks in. Please provide write rights "
-"to webserver user on directory: "
-msgstr ""
-
-#: Plugin/FeedbackIt/Model/Feedbackstore.php:385
-msgid ""
-"Could not create directory to save screenshots in. Please provide write "
-"rights to webserver user on directory: "
-msgstr ""
 
 #: Plugin/FeedbackIt/View/Elements/feedbackbar.ctp:70
 msgid "Send your feedback or bugreport!"

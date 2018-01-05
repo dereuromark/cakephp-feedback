@@ -5,16 +5,17 @@ use Feedback\Store\FilesystemStore;
 return [
 	'Feedback' => [
 
-		//Save method, multiple possible (array('filesystem','mail')): filesystem, mantis, mail, github, bitbucket. (See below)
-		'stores' => [],	// FQCN. Only the first method will be checked and reported back to user
+		'stores' => [
+		], // FQCN. Only the first method will be checked and reported back to user
 
-		'returnlink' => true,	//Return a link (if any) to the created ticket or report.
+		'returnlink' => true, // Return a link (if any) to the created ticket or report.
+		'skipCss' => false, // For manually including stylesheet
+
+		'enableacceptterms' => true, // If set to true, visitors have to check an accept terms checkbox
+		'termstext' => true, // The text to display on the terms button, using __d makes translation possible
 
 		//TODO: enable again using Email class or even store
-		'enablecopybyemail' => false, //If set to true, visitors can check a 'send me a copy' button
-
-		'enableacceptterms' => true, //If set to true, visitors have to check an accept terms checkbox
-		'termstext' => __d('feedback', 'When you submit, a screenshot (of only this website) will be taken to aid us in processing your feedback or bugreport.'), //The text to display on the terms button, using __d makes translation possible
+		'enablecopybyemail' => false, // If set to true, visitors can check a 'send me a copy' button
 
 		//TODO: enable again
 		'forceauthusername' => false, //If set to true, the AuthComponent::user('name') var or equivalent is made un-editable in the form

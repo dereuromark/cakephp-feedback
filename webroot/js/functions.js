@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+	//FIXME: Localize
 	var confirmMessage = 'Your feedback was submitted successfully.';
 	var errorMessage = 'There was an error submitting your feedback. Please try again later.';
 
@@ -62,7 +62,7 @@ $(document).ready(function() {
 
 						// Only use modal if TwitterBootstrap Javascript is loaded
 						if ($.isFunction($.fn.modal)) {
-							modaltitle.html('Feedback submitted');
+							modaltitle.html('Feedback submitted'); //FIXME: Localize
 							modalbody.html(message);
 							$('#feedbackit-modal').modal('show');
 						} else {
