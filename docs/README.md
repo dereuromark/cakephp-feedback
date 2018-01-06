@@ -28,9 +28,9 @@
 	It is recommended to add it as one of the last elements in your layout ctp, though, shortly before the closing body tag.
 	It must however be before your `<?php echo $this->fetch('script') ?>` line that inserts the fetched JS code.
 
-### Usage and Configuration
+## Usage and Configuration
 
-#### Stores
+### Stores
 By default it will use the Filesystem store. This only requires a writable directory below webroot (usually in `ROOT . DS . 'files' . DS`).
 
 If you want to add or replace stores, you can adjust it in your config:
@@ -58,11 +58,11 @@ If you want to add or replace stores, you can adjust it in your config:
 Note that only the first store will be used for feedback. This should be the primary one.
 If the others fail the user will still get the successful feedback from the first store method.
 
-#### Other options
+### Other options
 
 See config.php file.
 
-#### Authentication
+### Authentication
 If you are using AuthComponent, you need to make sure at least `save()` method is publicly accessible.
 If you want your visitor to see the posted feedback using `'returnlink'` key, you might also want to allow the index and viewimage actions. 
 You can do that e.g. in your AppController.
