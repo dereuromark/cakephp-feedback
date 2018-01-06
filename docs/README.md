@@ -62,6 +62,15 @@ If the others fail the user will still get the successful feedback from the firs
 
 See config.php file.
 
+#### Authentication
+If you are using AuthComponent, you need to make sure at least `save()` method is publicly accessible.
+If you want your visitor to see the posted feedback using `'returnlink'` key, you might also want to allow the index and viewimage actions. 
+You can do that e.g. in your AppController.
+
+Tip: Use [TinyAuth](https://github.com/dereuromark/cakephp-tinyauth) and just set it in the auth_allow.ini file:
+```
+Feedback.Feedback = save, index, viewimage
+```
 
 ### Writing your own store
 
@@ -94,4 +103,14 @@ class DatabaseStore implements StoreInterface {
 	}
 	
 }
+```
+If you need additional configuration options, use:
+```php
+'Feedback' => [
+	'configuration' => [
+		'Database' => [
+			...
+		],
+		...
+	],
 ```
