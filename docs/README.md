@@ -4,7 +4,7 @@
 
 1. Include the Feedback CakePHP plugin with composer in your application:
 	```
-	composer require dereuromark/feedback": "dev-master"
+	composer require dereuromark/feedback:dev-master
 	```
 2. Load the plugin in config/bootstrap.php:
 	```php
