@@ -54,16 +54,12 @@ This plugin is CakePHP Security component compatible.
 
 * [html2canvas.js by niklasvh](https://github.com/niklasvh/html2canvas)
 
-
 ## Installation and Usage
 
 See **[Documentation](docs)**.
 
-### Examples
-
-![Example of form](https://raw.github.com/dereuromark/cakephp-feedback/master/docs/examples/feedbackit_1.png "Example of form")
-![Example of result](https://raw.github.com/dereuromark/cakephp-feedback/master/docs/examples/feedbackit_2.png "Example of result")
-
+## Demo
+https://sandbox.dereuromark.de/
 
 ## 2.x version
 
