@@ -26,7 +26,7 @@
 	<?php echo $this->element('Feedback.sidebar');?>`
 	```
 	It is recommended to add it as one of the last elements in your layout ctp, though, shortly before the closing body tag.
-	It must however be before your `<?php echo $this->fetch('script') ?>` line that inserts the fetched JS code.
+	It must however be before your layout's `<?php echo $this->fetch('script') ?>` line that inserts the fetched JS code.
 
 ## Usage and Configuration
 

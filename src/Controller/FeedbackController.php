@@ -59,6 +59,7 @@ class FeedbackController extends AppController {
 			$data['name'] = __d('feedback', 'Anonymous');
 		}
 
+		$this->request->session()->start();
 		$data['sid'] = $this->request->session()->id();
 
 		//Determine method of saving
@@ -112,6 +113,7 @@ class FeedbackController extends AppController {
 		$feedbacks = [];
 
 		//Loop through files
+		$this->request->session()->start();
 		foreach (glob($savepath . '*-' . $this->request->session()->id() . '.feedback') as $feedbackfile) {
 			$feedbackObject = unserialize(file_get_contents($feedbackfile));
 			$feedbacks[$feedbackObject['time']] = $feedbackObject;

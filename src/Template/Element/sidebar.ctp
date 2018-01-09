@@ -6,6 +6,10 @@
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 
+if (!Configure::read('Feedback')) {
+	throw new RuntimeException('No Feedback plugin config found.');
+}
+
 // You can also include it manually with the rest of the CSS files in head section.
 if (!Configure::read('Feedback.skipCss')) {
 	echo $this->Html->css('Feedback.sidebar', ['block' => false]);
@@ -26,6 +30,7 @@ $forceemail = Configure::read('Feedback.forceemail');
 $enablecopybyemail = Configure::read('Feedback.enablecopybyemail');
 
 $enableacceptterms = Configure::read('Feedback.enableacceptterms');
+$termstext = '';
 if ($enableacceptterms) {
 	$termstext = Configure::read('Feedback.termstext') ? __d('feedback', 'When you submit, a screenshot (of only this website) will be taken to aid us in processing your feedback or bugreport.') : '';
 }
