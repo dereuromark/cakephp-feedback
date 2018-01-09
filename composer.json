@@ -2,6 +2,7 @@
     "name": "dereuromark/cakephp-feedback",
     "description": "Feedback or bugreport (with screenshot!) tab option in your CakePHP application. Data can be posted directly to Mantis, E-mail, Github issues, filesystem, etc.",
     "license": "MIT",
+	"homepage": "https://github.com/dereuromark/cakephp-feedback",
     "type": "cakephp-plugin",
     "authors": [
         {
