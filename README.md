@@ -39,21 +39,17 @@ Easily extendable to:
 
 They can also be stacked (multiple stores at once).
 
+### Furthermore
+* This plugin is CakePHP Security component compatible.
+* Fully localizable to your language.
+
 ## Requirements
 
-This plugin is CakePHP Security component compatible.
+**Required:** [jQuery](http://jquery.com/)
 
-**Required:**
+**Optional:** [Bootstrap](http://getbootstrap.com) (Bootstrap 2 and 3 compatible)
 
-* [jQuery](http://jquery.com/)
-
-**Optional:**
-
-* [Bootstrap](http://getbootstrap.com) (Bootstrap 2 and 3 compatible)
-
-**Includes:**
-
-* [html2canvas.js by niklasvh](https://github.com/niklasvh/html2canvas)
+**Includes:** [html2canvas.js by niklasvh](https://github.com/niklasvh/html2canvas)
 
 ## Installation and Usage
 
