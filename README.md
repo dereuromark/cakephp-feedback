@@ -1,4 +1,4 @@
-# Cakephp Feedback Plugin
+# CakePHP Feedback Plugin
 
 [![Build Status](https://travis-ci.org/dereuromark/cakephp-feedback.svg?branch=master)](https://travis-ci.org/dereuromark/cakephp-feedback)
 [![Latest Stable Version](https://poser.pugx.org/dereuromark/cakephp-feedback/v/stable.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
