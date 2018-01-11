@@ -25,6 +25,11 @@ class FeedbackController extends AppController {
 		if (isset($this->Security)) {
 			$this->Security->csrfCheck = false;
 			$this->Security->validatePost = false;
+			$this->Security->config('unlockedActions', ['save']);
+		}
+
+		if (isset($this->Csrf) && $this->request->action === 'save') {
+			$this->eventManager()->off($this->Csrf);
 		}
 
 		if (Configure::read('Feedback')) {
@@ -41,7 +46,7 @@ class FeedbackController extends AppController {
 	 * @return \Cake\Http\Response|null
 	 */
 	public function save() {
-	    $this->request->allowMethod('post');
+	    $this->request->allowMethod(['post', 'ajax']);
 
 		$data = $this->request->data();
 
@@ -59,7 +64,9 @@ class FeedbackController extends AppController {
 			$data['name'] = __d('feedback', 'Anonymous');
 		}
 
-		$this->request->session()->start();
+		if (!$this->request->session()->started()) {
+			$this->request->session()->start();
+		}
 		$data['sid'] = $this->request->session()->id();
 
 		//Determine method of saving
@@ -113,7 +120,9 @@ class FeedbackController extends AppController {
 		$feedbacks = [];
 
 		//Loop through files
-		$this->request->session()->start();
+		if (!$this->request->session()->started()) {
+			$this->request->session()->start();
+		}
 		foreach (glob($savepath . '*-' . $this->request->session()->id() . '.feedback') as $feedbackfile) {
 			$feedbackObject = unserialize(file_get_contents($feedbackfile));
 			$feedbacks[$feedbackObject['time']] = $feedbackObject;
