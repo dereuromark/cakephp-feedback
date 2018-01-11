@@ -28,7 +28,7 @@ class FeedbackController extends AppController {
 			$this->Security->config('unlockedActions', ['save']);
 		}
 
-		if (isset($this->Csrf) && $this->request->action == 'save') {
+		if (isset($this->Csrf) && $this->request->action === 'save') {
 			$this->eventManager()->off($this->Csrf);
 		}
 
