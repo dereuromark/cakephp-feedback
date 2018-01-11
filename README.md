@@ -40,7 +40,7 @@ Easily extendable to:
 They can also be stacked (multiple stores at once).
 
 ### Furthermore
-* This plugin is CakePHP Security component compatible.
+* This plugin is CakePHP Security and Csrf component compatible.
 * Fully localizable to your language.
 
 ## Requirements
