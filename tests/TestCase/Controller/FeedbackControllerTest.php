@@ -23,7 +23,7 @@ class FeedbackControllerTest extends IntegrationTestCase {
 		]);
 
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
-		$files = glob($savepath .'*.*') ?: [];
+		$files = glob($savepath . '*.*') ?: [];
 		foreach ($files as $file) {
 			unlink($file);
 		}

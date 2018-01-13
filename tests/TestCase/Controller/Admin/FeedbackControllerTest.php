@@ -43,4 +43,16 @@ class FeedbackControllerTest extends IntegrationTestCase {
 		$this->assertFileNotExists($savepath . $file);
 	}
 
+	/**
+	 * @return void
+	 */
+	public function tearDown() {
+		parent::tearDown();
+
+		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
+		foreach (glob($savepath . '*-' . session_id() . '.feedback') as $feedbackfile) {
+			unlink($feedbackfile);
+		}
+	}
+
 }
