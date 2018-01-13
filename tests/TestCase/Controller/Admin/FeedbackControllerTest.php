@@ -12,6 +12,8 @@ class FeedbackControllerTest extends IntegrationTestCase {
 	 * @return void
 	 */
 	public function setUp() {
+		parent::setUp();
+
 		Configure::write('Feedback', [
 			'configuration' => [
 				FilesystemStore::NAME => [

@@ -12,6 +12,8 @@ class FeedbackControllerTest extends IntegrationTestCase {
 	 * @return void
 	 */
 	public function setUp() {
+		parent::setUp();
+
 		Configure::write('Feedback', [
 			'configuration' => [
 				FilesystemStore::NAME => [
@@ -19,6 +21,12 @@ class FeedbackControllerTest extends IntegrationTestCase {
 				],
 			],
 		]);
+
+		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
+		$files = glob($savepath .'*.*') ?: [];
+		foreach ($files as $file) {
+			unlink($file);
+		}
 	}
 
 	/**
