@@ -16,6 +16,17 @@ class FeedbackController extends AppController {
 	public $modelClass = 'Feedback.Feedbackstore';
 
 	/**
+	 * @return void
+	 */
+	public function initialize() {
+		parent::initialize();
+
+		if (!isset($this->Flash)) {
+			$this->loadComponent('Flash');
+		}
+	}
+
+	/**
 	 * @param \Cake\Event\Event $event
 	 *
 	 * @return \Cake\Http\Response|null

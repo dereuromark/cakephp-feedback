@@ -15,6 +15,17 @@ class FeedbackController extends AppController {
 	public $modelClass = 'Feedback.Feedbackstore';
 
 	/**
+	 * @return void
+	 */
+	public function initialize() {
+		parent::initialize();
+
+		if (!isset($this->Flash)) {
+			$this->loadComponent('Flash');
+		}
+	}
+
+	/**
 	 * @param \Cake\Event\Event $event
 	 *
 	 * @return bool|\Cake\Http\Response|null
@@ -28,8 +39,10 @@ class FeedbackController extends AppController {
 		throw new NotFoundException('No Feedback config found.');
 	}
 
-	/*
-	Example index function for current save in tmp dir solution
+	/**
+	 * Example index function for current save in tmp dir solution
+	 *
+	 * @return \Cake\Http\Response|null
 	 */
 	public function index() {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
@@ -59,8 +72,12 @@ class FeedbackController extends AppController {
 		$this->set('feedbacks', $feedbacks);
 	}
 
-	/*
-	Temp function to view captured image from index page
+	/**
+	 * Temp function to view captured image from index page
+	 *
+	 * @param string $feedbackfile
+	 *
+	 * @return \Cake\Http\Response|null
 	 */
 	public function viewimage($feedbackfile) {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
@@ -78,6 +95,26 @@ class FeedbackController extends AppController {
 		$this->set('screenshot', $feedbackobject['screenshot']);
 
 		$this->viewBuilder()->layout('ajax');
+	}
+
+	/**
+	 * @param string|null $feedbackfile
+	 *
+	 * @return \Cake\Http\Response|null
+	 */
+	public function remove($feedbackfile = null) {
+		$this->request->allowMethod('post');
+
+		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
+
+		if (!$feedbackfile || !file_exists($savepath . $feedbackfile)) {
+			throw new NotFoundException('Could not find that file');
+		}
+
+		unlink($savepath . $feedbackfile);
+
+		$this->Flash->success('Removed');
+		return $this->redirect($this->referer(['action' => 'index']));
 	}
 
 }
