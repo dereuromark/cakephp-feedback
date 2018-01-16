@@ -1,106 +1,110 @@
 # LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2018-01-16 14:00+0000\n"
-"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2018-01-16 15:11+0100\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.5\n"
+"Last-Translator: Ulrik Södergren <ulrik@digitalfotografen.se>\n"
+"Language: sv_SE\n"
 
 #: Controller/FeedbackController.php:59
 msgid "Anonymous"
-msgstr ""
+msgstr "Anonym"
 
 #: Controller/FeedbackController.php:81
 msgid "Error saving feedback."
-msgstr ""
+msgstr "Fel vid sparande av återkoppling."
 
 #: Controller/FeedbackController.php:85
 msgid "Your feedback was saved successfully."
-msgstr ""
+msgstr "Din återkoppling är sparad."
 
 #: Model/Table/FeedbackstoreTable.php:90;179;261;340;442;531
 #: Store/FilesystemStore.php:31
 msgid "Thank you. Your feedback was saved."
-msgstr ""
+msgstr "Tack. Din återkoppling sparades."
 
 #: Model/Table/FeedbackstoreTable.php:94;265;344;446;535
 #: Store/FilesystemStore.php:35
 msgid "View your feedback on: "
-msgstr ""
+msgstr "Se din återkoppling på: "
 
 #: Model/Table/FeedbackstoreTable.php:166
 msgid "A copy of your submitted feedback:"
-msgstr ""
+msgstr "En kopia av dina inlämnade återkoppling:"
 
 #: Template/Element/sidebar.ctp:35
-msgid "When you submit, a screenshot (of only this website) will be taken to aid us in processing your feedback or bugreport."
+msgid ""
+"When you submit, a screenshot (of only this website) will be taken to aid us "
+"in processing your feedback or bugreport."
 msgstr ""
+"När du sparar kommer en skärmdump (bara av denna webbsida) att sparas. Den "
+"hjälper oss bearbeta din återkoppling eller buggrapport."
 
 #: Template/Element/sidebar.ctp:59
 msgid "Hide this tab completely."
-msgstr ""
+msgstr "Göm denna flik helt."
 
 #: Template/Element/sidebar.ctp:61
 msgid "Send your feedback or bugreport!"
-msgstr ""
+msgstr "Skicka din återkoppling eller buggrapport!"
 
 #: Template/Element/sidebar.ctp:71
 msgid "Your name "
-msgstr ""
+msgstr "Ditt namn "
 
 #: Template/Element/sidebar.ctp:82
 msgid "Your e-mail "
-msgstr ""
+msgstr "Din epost "
 
 #: Template/Element/sidebar.ctp:93
 msgid "Subject"
-msgstr ""
+msgstr "Ämne"
 
 #: Template/Element/sidebar.ctp:97
 msgid "Feedback or suggestion"
-msgstr ""
+msgstr "Återkoppling eller förslag"
 
 #: Template/Element/sidebar.ctp:103
 msgid "Click anywhere on website"
-msgstr ""
+msgstr "Klicka var som helst på webbsidan"
 
 #: Template/Element/sidebar.ctp:106
 msgid "Highlight something"
-msgstr ""
+msgstr "Markera något"
 
 #: Template/Element/sidebar.ctp:123
 msgid "this"
-msgstr ""
+msgstr "denna"
 
 #: Template/Element/sidebar.ctp:125
 msgid "I am okay with {0}."
-msgstr ""
+msgstr "Jag är ok med {0}."
 
 #: Template/Element/sidebar.ctp:134
 msgid "E-mail me a copy"
-msgstr ""
+msgstr "E-posta mig en kopia"
 
 #: Template/Element/sidebar.ctp:142
 msgid "Submit"
-msgstr ""
+msgstr "Skicka in"
 
 #: Template/Element/sidebar.ctp:143
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #: Template/Element/sidebar.ctp:158
 msgid "Feedback submitted"
-msgstr ""
+msgstr "Återkoppling skickad"
 
 #: Template/Element/sidebar.ctp:164
 msgid "Close"
-msgstr ""
-
+msgstr "Stäng"
