@@ -16,7 +16,7 @@ class FilesystemStore implements StoreInterface {
 	 * @return array
 	 */
 	public function save($object, array $options = []) {
-		//Standard return value
+		$returnobject = [];
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 

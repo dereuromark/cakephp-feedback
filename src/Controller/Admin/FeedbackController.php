@@ -7,6 +7,9 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 
+/**
+ * @property \Feedback\Model\Table\FeedbackstoreTable $Feedbackstore
+ */
 class FeedbackController extends AppController {
 
 	/**
@@ -94,7 +97,7 @@ class FeedbackController extends AppController {
 
 		$this->set('screenshot', $feedbackobject['screenshot']);
 
-		$this->viewBuilder()->layout('ajax');
+		$this->viewBuilder()->setLayout('ajax');
 	}
 
 	/**

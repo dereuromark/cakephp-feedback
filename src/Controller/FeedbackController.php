@@ -8,6 +8,9 @@ use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 use Feedback\Store\StoreCollection;
 
+/**
+ * @property \Feedback\Model\Table\FeedbackstoreTable $Feedbackstore
+ */
 class FeedbackController extends AppController {
 
 	/**
@@ -34,13 +37,12 @@ class FeedbackController extends AppController {
 	public function beforeFilter(Event $event) {
 		// Check security component loaded and disable it for this plugin:
 		if (isset($this->Security)) {
-			$this->Security->csrfCheck = false;
-			$this->Security->validatePost = false;
-			$this->Security->config('unlockedActions', ['save']);
+			$this->Security->setConfig('validatePost', false);
+			$this->Security->setConfig('unlockedActions', ['save']);
 		}
 
-		if (isset($this->Csrf) && $this->request->action === 'save') {
-			$this->eventManager()->off($this->Csrf);
+		if (isset($this->Csrf) && $this->request->getAttribute('params')['action'] === 'save') {
+			$this->getEventManager()->off($this->Csrf);
 		}
 
 		if (Configure::read('Feedback')) {
@@ -59,13 +61,13 @@ class FeedbackController extends AppController {
 	public function save() {
 	    $this->request->allowMethod(['post', 'ajax']);
 
-		$data = $this->request->data();
+		$data = $this->request->getData();
 
 		//Is ajax action
-		$this->viewBuilder()->layout('ajax');
+		$this->viewBuilder()->setLayout('ajax');
 
 		//Save screenshot:
-		$data['screenshot'] = str_replace('data:image/png;base64,', '', $this->request->data('screenshot'));
+		$data['screenshot'] = str_replace('data:image/png;base64,', '', $this->request->getData('screenshot'));
 
 		//Add current time to data
 		$data['time'] = time();
@@ -75,10 +77,10 @@ class FeedbackController extends AppController {
 			$data['name'] = __d('feedback', 'Anonymous');
 		}
 
-		if (!$this->request->session()->started()) {
-			$this->request->session()->start();
+		if (!$this->request->getSession()->started()) {
+			$this->request->getSession()->start();
 		}
-		$data['sid'] = $this->request->session()->id();
+		$data['sid'] = $this->request->getSession()->id();
 
 		//Determine method of saving
 		$collection = new StoreCollection();
@@ -131,10 +133,10 @@ class FeedbackController extends AppController {
 		$feedbacks = [];
 
 		//Loop through files
-		if (!$this->request->session()->started()) {
-			$this->request->session()->start();
+		if (!$this->request->getSession()->started()) {
+			$this->request->getSession()->start();
 		}
-		foreach (glob($savepath . '*-' . $this->request->session()->id() . '.feedback') as $feedbackfile) {
+		foreach (glob($savepath . '*-' . $this->request->getSession()->id() . '.feedback') as $feedbackfile) {
 			$feedbackObject = unserialize(file_get_contents($feedbackfile));
 			$feedbacks[$feedbackObject['time']] = $feedbackObject;
 		}
@@ -166,7 +168,7 @@ class FeedbackController extends AppController {
 
 		$this->set('screenshot', $feedbackobject['screenshot']);
 
-		$this->viewBuilder()->layout('ajax');
+		$this->viewBuilder()->setLayout('ajax');
 	}
 
 }

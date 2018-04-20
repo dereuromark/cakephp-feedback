@@ -2,6 +2,8 @@
 namespace Feedback\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\Http\Client;
+use Cake\Http\Exception\NotImplementedException;
 use Cake\Mailer\Email;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Table;
@@ -26,9 +28,11 @@ class FeedbackstoreTable extends Table {
 	 * @param array|null $feedbackObject
 	 *
 	 * @return array
+	 *
+	 * @throws \Cake\Http\Exception\NotImplementedException
 	 */
 	public function mantis($feedbackObject = null) {
-		//Standard return value
+		$returnobject = [];
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
@@ -55,6 +59,9 @@ class FeedbackstoreTable extends Table {
 				];
 		}
 
+		throw new NotImplementedException('TODO');
+
+		/*
 		//Uncomment to debug:
 		$soap_options['cache_wsdl'] = WSDL_CACHE_NONE;
 
@@ -104,6 +111,7 @@ class FeedbackstoreTable extends Table {
 
 			}
 		}
+		*/
 
 		return $returnobject;
 	}
@@ -119,7 +127,7 @@ class FeedbackstoreTable extends Table {
 	 * @return array
 	 */
 	public function mail(array $feedbackObject, $copyreporter = false) {
-		//Standard return value
+		$returnobject = [];
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
@@ -195,7 +203,7 @@ class FeedbackstoreTable extends Table {
 	 * @return array
 	 */
 	public function github(array $feedbackObject) {
-		//Standard return value
+		$returnobject = [];
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
@@ -292,7 +300,7 @@ class FeedbackstoreTable extends Table {
 	 * @return array
 	 */
 	public function bitbucket(array $feedbackObject) {
-		//Standard return value
+		$returnobject = [];
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
@@ -328,13 +336,12 @@ class FeedbackstoreTable extends Table {
 		//Prepare data
 		$data = ['title' => $feedbackObject['subject'], 'content' => $feedbackObject['feedback']];
 
-		$HttpSocket = new Client(['ssl_verify_peer' => false]);
-		$HttpSocket->configAuth('Basic', $username, $password);
+		$HttpSocket = new Client(['ssl_verify_peer' => false, 'auth' => ['username' => $username, 'password' => $password]]);
 		$result = $HttpSocket->post($api_url, $data);
 
 		// TODO: A better error management
-		if (!$result) {
-			$returnobject['msg'] = $HttpSocket->lastError();
+		if ($result->getStatusCode() !== 200 && $result->getStatusCode() !== 201) {
+			$returnobject['msg'] = 'Error ' . $result->getStatusCode() . ':' . $result->getReasonPhrase();
 		} else {
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
@@ -344,7 +351,7 @@ class FeedbackstoreTable extends Table {
 				$returnobject['msg'] .= __d('feedback', 'View your feedback on: ');
 
 				//Get response from github api
-				$answer = json_decode($result->body);
+				$answer = json_decode($result->getBody());
 
 				//Create new url:
 				//Replace api prefix with bitbucket public domain:
@@ -371,7 +378,7 @@ class FeedbackstoreTable extends Table {
 	 * @return array
 	 */
 	public function jira(array $feedbackObject) {
-		//Standard return value
+		$returnobject = [];
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
@@ -472,7 +479,7 @@ class FeedbackstoreTable extends Table {
 	 * @return array
 	 */
 	public function redmine(array $feedbackObject) {
-		//Standard return value
+		$returnobject = [];
 		$returnobject['result'] = false;
 		$returnobject['msg'] = '';
 
