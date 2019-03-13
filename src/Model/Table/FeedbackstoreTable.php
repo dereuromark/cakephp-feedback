@@ -50,9 +50,11 @@ class FeedbackstoreTable extends Table {
 
 		//Optional HTTP credentials for bypassing Basic Auth or Kerberos
 		$soap_options = [];
-
-		if ($http_username = Configure::read('Feedback.methods.mantis.http_username') && $http_password = Configure::read('Feedback.methods.mantis.http_password')) {
-
+		
+		$http_username = Configure::read('Feedback.methods.mantis.http_username');
+		$http_password = Configure::read('Feedback.methods.mantis.http_password');
+		
+		if ($http_username && $http_password) {
 			$soap_options = [
 				'login' => $http_username,
 				'password' => $http_password,
