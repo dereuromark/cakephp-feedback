@@ -47,18 +47,18 @@ if(class_exists('AuthComponent')) {
 
 <script>
 	//Create URL using cake's url helper, this is used in feedbackit-functions.js
-	<?php $formposturl = $this->Url->build(array("plugin"=>"Feedback", "controller"=>"Feedback", "action"=>"save"),true); ?>
-	window.formURL = '<?php echo $formposturl; ?>';
+	<?php $formposturl = $this->Url->build(["plugin"=>"Feedback", "controller"=>"Feedback", "action"=>"save"], true); ?>
+	window.formURL = '<?= $formposturl; ?>';
 </script>
 
 <div id="feedbackit-slideout">
-	<?php echo $this->Html->image('Feedback.feedback.png');?>
+	<?= $this->Html->image('Feedback.feedback.png');?>
 </div>
 <div id="feedbackit-slideout_inner">
 	<div class="feedbackit-form-elements">
-		<div class="pull-right"><i class="tab-hide fa fa-window-close" title="<?php echo __d('feedback', 'Hide this tab completely.'); ?>"></i></div>
+		<div class="pull-right"><i class="tab-hide fa fa-window-close" title="<?= __d('feedback', 'Hide this tab completely.'); ?>"></i></div>
 		<p>
-			<?php echo __d('feedback','Send your feedback or bugreport!');?>
+			<?= __d('feedback','Send your feedback or bugreport!');?>
 		</p>
 		<form id="feedbackit-form" autocomplete="off">
 			<div class="form-group">
@@ -67,8 +67,8 @@ if(class_exists('AuthComponent')) {
 					name="name"
 					id="feedbackit-name"
 					class="<?php if (!empty($username)) echo 'feedbackit-input"'; ?> form-control"
-					value="<?php echo $username; ?>"
-					placeholder="<?php echo __d('feedback','Your name '); if( !$forceauthusername ) echo ' (optional)'; ?>"
+					value="<?= $username; ?>"
+					placeholder="<?= __d('feedback','Your name '); if( !$forceauthusername ) echo ' (optional)'; ?>"
 					<?php if( $forceauthusername && !empty($username) ) echo 'readonly="readonly"'; ?>
 					>
 			</div>
@@ -78,8 +78,8 @@ if(class_exists('AuthComponent')) {
 					name="email"
 					id="feedbackit-email"
 					class="<?php if (!empty($email)) echo 'feedbackit-input"'; ?> form-control"
-					value="<?php echo $email; ?>"
-					placeholder="<?php echo __d('feedback','Your e-mail '); if( !$forceemail ) echo ' (optional)'; ?>"
+					value="<?= $email; ?>"
+					placeholder="<?= __d('feedback','Your e-mail '); if( !$forceemail ) echo ' (optional)'; ?>"
 					<?php if( $forceemail && !empty($email) ) echo 'readonly="readonly"'; ?>
 					>
 			</div>
@@ -90,20 +90,20 @@ if(class_exists('AuthComponent')) {
 					id="feedbackit-subject"
 					class="feedbackit-input form-control"
 					required="required"
-					placeholder="<?php echo __d('feedback','Subject'); ?>"
+					placeholder="<?= __d('feedback','Subject'); ?>"
 					>
 			</div>
 			<div class="form-group">
-				<textarea name="feedback" id="feedbackit-feedback" class="feedbackit-input form-control" required="required" placeholder="<?php echo __d('feedback','Feedback or suggestion'); ?>" rows="3"></textarea>
+				<textarea name="feedback" id="feedbackit-feedback" class="feedbackit-input form-control" required="required" placeholder="<?= __d('feedback','Feedback or suggestion'); ?>" rows="3"></textarea>
 			</div>
 			<div class="form-group">
 				<div>
 					<button
 						class="btn btn-info"
-						data-loading-text="<?php echo __d('feedback','Click anywhere on website'); ?>"
+						data-loading-text="<?= __d('feedback','Click anywhere on website'); ?>"
 						id="feedbackit-highlight"
 						onclick="return false;">
-						<i class="icon-screenshot icon-white"></i><span class="glyphicon glyphicon-screenshot"></span> <?php echo __d('feedback','Highlight something'); ?>
+						<i class="icon-screenshot icon-white"></i><span class="glyphicon glyphicon-screenshot"></span> <?= __d('feedback','Highlight something'); ?>
 					</button>
 				</div>
 				<div class="form-group" <?php if (!$enableacceptterms) echo 'style="display:none;"'; ?>>
@@ -122,7 +122,7 @@ if(class_exists('AuthComponent')) {
 						<?php
 						$confirmation = '<b><a id="feedbackit-okay-message" href="#" onclick="return false;" data-toggle="tooltip" title="' . h($termstext) . '">'. __d('feedback','this'). '</a></b>';
 						?>
-						<?php echo __d('feedback','I am okay with {0}.', $confirmation); ?>
+						<?= __d('feedback','I am okay with {0}.', $confirmation); ?>
 					</label>
 				</div>
 				<?php
@@ -131,7 +131,7 @@ if(class_exists('AuthComponent')) {
 				<div class="form-group">
 					<label class="checkbox checkbox-inline">
 						<input type="checkbox" name="copyme" id="feedbackit-copyme" >
-						<?php echo __d('feedback','E-mail me a copy'); ?>
+						<?= __d('feedback','E-mail me a copy'); ?>
 					</label>
 				</div>
 				<?php
@@ -139,15 +139,15 @@ if(class_exists('AuthComponent')) {
 				?>
 
 				<div class="btn-group">
-					<button class="btn btn-success" id="feedbackit-submit" disabled="disabled" type="submit"><i class="icon-envelope icon-white"></i><span class="glyphicon glyphicon-envelope"></span> <?php echo __d('feedback','Submit'); ?></button>
-					<button class="btn btn-danger" id="feedbackit-cancel" onclick="return false;"><i class="icon-remove icon-white"></i><span class="glyphicon glyphicon-remove"></span> <?php echo __d('feedback','Cancel'); ?></button>
+					<button class="btn btn-success" id="feedbackit-submit" disabled="disabled" type="submit"><i class="icon-envelope icon-white"></i><span class="glyphicon glyphicon-envelope"></span> <?= __d('feedback','Submit'); ?></button>
+					<button class="btn btn-danger" id="feedbackit-cancel" onclick="return false;"><i class="icon-remove icon-white"></i><span class="glyphicon glyphicon-remove"></span> <?= __d('feedback','Cancel'); ?></button>
 				</div>
 			</div>
 		</form>
 	</div>
 </div>
 
-<div id="feedbackit-highlight-holder"><?php echo $this->Html->image('Feedback.circle.gif');?></div>
+<div id="feedbackit-highlight-holder"><?= $this->Html->image('Feedback.circle.gif');?></div>
 
 <!-- Modal for confirmation -->
 <div class="modal fade" id="feedbackit-modal" tabindex="-1" role="dialog" aria-labelledby="feedbackit-modalLabel" aria-hidden="true">
@@ -155,13 +155,13 @@ if(class_exists('AuthComponent')) {
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="feedbackit-modalLabel"><?php echo __d('feedback', 'Feedback submitted');?></h4>
+				<h4 class="modal-title" id="feedbackit-modalLabel"><?= __d('feedback', 'Feedback submitted');?></h4>
 			</div>
 			<div class="modal-body">
 				Loading...
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo __d('feedback', 'Close');?></button>
+				<button type="button" class="btn btn-default" data-dismiss="modal"><?= __d('feedback', 'Close');?></button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->

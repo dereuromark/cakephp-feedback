@@ -4,20 +4,18 @@
  * @var \Feedback\Model\Entity\Feedbackstore[] $feedbacks
  */
 
-foreach ($feedbacks as $feedback) {
-?>
-
+foreach ($feedbacks as $feedback): ?>
   <div class="media">
-    <a class="pull-left" href="<?php echo $this->Url->build(array("plugin"=>"Feedback","controller"=>"Feedback","action"=>"viewimage", $feedback['filename']),true); ?>" target="_blank">
-      <img class="media-object feedbackit-small-img" src="data:image/png;base64,<?php echo $feedback['screenshot']; ?>">
+    <a class="pull-left" href="<?= $this->Url->build(["plugin"=>"Feedback","controller"=>"Feedback","action"=>"viewimage", $feedback['filename']], true); ?>" target="_blank">
+      <img class="media-object feedbackit-small-img" src="data:image/png;base64,<?= $feedback['screenshot']; ?>">
     </a>
     <div class="media-body">
 		<div class="pull-right">
-			<?php echo $this->Form->postLink('Remove', ['action' => 'remove', $feedback['filename']], ['confirm' => 'Sure?']); ?>
+			<?= $this->Form->postLink('Remove', ['action' => 'remove', $feedback['filename']], ['confirm' => 'Sure?']); ?>
 		</div>
 
-		<h4 class="media-heading"><?php echo $feedback['subject'] . ' <i>(' . date('d-m-Y H:i:s',$feedback['time']) . ')</i>';?></h4>
-		<b><?php echo $feedback['feedback'];?></b>
+		<h4 class="media-heading"><?= $feedback['subject'] . ' <i>(' . date('d-m-Y H:i:s', $feedback['time']) . ')</i>';?></h4>
+		<b><?= $feedback['feedback']; ?></b>
 
 		<?php
 		//Unset the already displayed vars and loop throught the next. Saves us some coding when a new var is added to the feedback
@@ -35,7 +33,4 @@ foreach ($feedbacks as $feedback) {
 ?>
     </div>
   </div>
-
-  <?php
-}
-?>
+<?php endforeach; ?>
