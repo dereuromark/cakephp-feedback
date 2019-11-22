@@ -47,8 +47,8 @@ class StoreCollectionTest extends TestCase {
 			'configuration' => [
 				'Filesystem' => [
 					'location' => TMP,
-				]
-			]
+				],
+			],
 		];
 		Configure::write('Feedback', $config);
 
