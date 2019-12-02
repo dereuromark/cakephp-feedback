@@ -1,4 +1,5 @@
 <?php
+
 namespace Feedback\Store;
 
 use Cake\Core\Configure;
