@@ -1,9 +1,10 @@
-tmp/*
+tmp/
 config/feedbackit-config.php
-webroot/img/screenshots
+webroot/img/screenshots/
 !empty
-/vendor/
-/.idea/
+vendor/
+.idea/
 composer.lock
 composer.phar
 phpunit.phar
+.phpunit.result.cache

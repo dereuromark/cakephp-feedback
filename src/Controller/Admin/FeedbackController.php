@@ -5,7 +5,8 @@ namespace Feedback\Controller\Admin;
 use App\Controller\AppController;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
+use Feedback\Store\Filesystem;
 
 /**
  * @property \Feedback\Model\Table\FeedbackstoreTable $Feedbackstore
@@ -50,27 +51,7 @@ class FeedbackController extends AppController {
 	public function index() {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 
-		//Check dir
-		if (!is_dir($savepath)) {
-		    mkdir($savepath, 0770, true);
-		    if (!is_dir($savepath)) {
-				throw new NotFoundException('Feedback location not found: ' . $savepath);
-			}
-		}
-
-		//Creat feedback array in a cake-like way
-		$feedbacks = [];
-
-		//Loop through files
-		foreach (glob($savepath . '*.feedback') as $feedbackfile) {
-
-			$feedbackObject = unserialize(file_get_contents($feedbackfile));
-			$feedbacks[$feedbackObject['time']] = $feedbackObject;
-
-		}
-
-		//Sort by time
-		krsort($feedbacks);
+		$feedbacks = Filesystem::read($savepath);
 
 		$this->set('feedbacks', $feedbacks);
 	}
@@ -78,43 +59,38 @@ class FeedbackController extends AppController {
 	/**
 	 * Temp function to view captured image from index page
 	 *
-	 * @param string $feedbackfile
+	 * @param string $file
 	 *
 	 * @return \Cake\Http\Response|null
 	 */
-	public function viewimage($feedbackfile) {
+	public function viewimage($file) {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
+		$feedback = Filesystem::get($savepath . $file);
 
-		if (!file_exists($savepath . $feedbackfile)) {
-			 throw new NotFoundException('Could not find that file');
-		}
-
-		$feedbackobject = unserialize(file_get_contents($savepath . $feedbackfile));
-
-		if (!isset($feedbackobject['screenshot'])) {
+		if (!isset($feedback['screenshot'])) {
 			throw new NotFoundException('No screenshot found');
 		}
 
-		$this->set('screenshot', $feedbackobject['screenshot']);
+		$this->set('screenshot', $feedback['screenshot']);
 
 		$this->viewBuilder()->setLayout('ajax');
 	}
 
 	/**
-	 * @param string|null $feedbackfile
+	 * @param string|null $file
 	 *
 	 * @return \Cake\Http\Response|null
 	 */
-	public function remove($feedbackfile = null) {
+	public function remove($file = null) {
 		$this->request->allowMethod('post');
 
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 
-		if (!$feedbackfile || !file_exists($savepath . $feedbackfile)) {
+		if (!$file || !file_exists($savepath . $file)) {
 			throw new NotFoundException('Could not find that file');
 		}
 
-		unlink($savepath . $feedbackfile);
+		unlink($savepath . $file);
 
 		$this->Flash->success('Removed');
 		return $this->redirect($this->referer(['action' => 'index']));

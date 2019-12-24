@@ -5,10 +5,9 @@ use Cake\Core\Configure;
 use Cake\Http\Client;
 use Cake\Http\Exception\NotImplementedException;
 use Cake\Mailer\Email;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Table;
 use Cake\Routing\Router;
-use SoapClient;
 
 /**
  * @deprecated Make a Store class
@@ -50,10 +49,10 @@ class FeedbackstoreTable extends Table {
 
 		//Optional HTTP credentials for bypassing Basic Auth or Kerberos
 		$soap_options = [];
-		
+
 		$http_username = Configure::read('Feedback.methods.mantis.http_username');
 		$http_password = Configure::read('Feedback.methods.mantis.http_password');
-		
+
 		if ($http_username && $http_password) {
 			$soap_options = [
 				'login' => $http_username,
@@ -113,9 +112,9 @@ class FeedbackstoreTable extends Table {
 
 			}
 		}
-		*/
 
 		return $returnobject;
+		*/
 	}
 
 	/**
