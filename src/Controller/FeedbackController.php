@@ -5,7 +5,8 @@ namespace Feedback\Controller;
 use App\Controller\AppController;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
+use Feedback\Store\Filesystem;
 use Feedback\Store\StoreCollection;
 
 /**
@@ -108,7 +109,7 @@ class FeedbackController extends AppController {
 
 		$this->set('msg', $result['msg']);
 
-		//Send a copy to the reciever:
+		//Send a copy to the receiver:
 		if (!empty($data['copyme'])) {
 			//FIXME: Move to a store class
 			$this->Feedbackstore->mail($data, true);
@@ -124,25 +125,10 @@ class FeedbackController extends AppController {
 	public function index() {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 
-		//Check dir
-		if (!is_dir($savepath)) {
-			throw new NotFoundException('savepath not exists');
-		}
-
-		//Creat feedback array in a cake-like way
-		$feedbacks = [];
-
-		//Loop through files
 		if (!$this->request->getSession()->started()) {
 			$this->request->getSession()->start();
 		}
-		foreach (glob($savepath . '*-' . $this->request->getSession()->id() . '.feedback') as $feedbackfile) {
-			$feedbackObject = unserialize(file_get_contents($feedbackfile));
-			$feedbacks[$feedbackObject['time']] = $feedbackObject;
-		}
-
-		//Sort by time
-		krsort($feedbacks);
+		$feedbacks = Filesystem::read($savepath, $this->request->getSession()->id());
 
 		$this->set('feedbacks', $feedbacks);
 	}
@@ -156,17 +142,13 @@ class FeedbackController extends AppController {
 	public function viewimage($file) {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 
-		if (!file_exists($savepath . $file)) {
-			 throw new NotFoundException('Could not find that file');
-		}
+		$feedback = Filesystem::get($savepath . $file);
 
-		$feedbackobject = unserialize(file_get_contents($savepath . $file));
-
-		if (!isset($feedbackobject['screenshot'])) {
+		if (!isset($feedback['screenshot'])) {
 			throw new NotFoundException('No screenshot found');
 		}
 
-		$this->set('screenshot', $feedbackobject['screenshot']);
+		$this->set('screenshot', $feedback['screenshot']);
 
 		$this->viewBuilder()->setLayout('ajax');
 	}

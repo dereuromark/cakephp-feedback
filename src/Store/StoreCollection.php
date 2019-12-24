@@ -3,7 +3,6 @@
 namespace Feedback\Store;
 
 use Cake\Core\Configure;
-use Feedback\Store\FilesystemStore;
 use InvalidArgumentException;
 
 class StoreCollection {

@@ -2,7 +2,7 @@
 
 namespace Feedback\Store;
 
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\Routing\Router;
 
 class FilesystemStore implements StoreInterface {
