@@ -6,19 +6,17 @@
     ```
     composer require dereuromark/cakephp-feedback
     ```
-2. Load the plugin in config/bootstrap.php:
-    ```php
-    Plugin::load('Feedback', ['bootstrap' => true]);
+2. Load the plugin:
+    ```
+    bin/cake plugin load Feedback
     ```
 
 3. Copy the default feedback config file into your applications config folder:
 
-    Copy `../vendor/dereuromark/cakephpfeedback/config/config.php` to `../config/app_feedback.php`
+    Copy `vendor/dereuromark/cakephpfeedback/config/config.dist.php` to `config/app_feedback.php`
     and adjust it to your needs. Then include it as `Configure::load('app_feedback')`.
 
     You can also just copy-and-paste the config array into your existing app.php file.
-
-    If you `Plugin::load('Feedback', ['bootstrap' => true, ...]);`, it will load the plugin's default config.
 
 4. Use the sidebar element in a view or layout to place the feedback tab on that (or those) pages.
     It doesn't matter where you place the following line since it uses absolute DOM element positioning.
@@ -92,12 +90,12 @@ class DatabaseStore implements StoreInterface {
      *
      * @return array
      */
-    public function save($object, array $options = []) {
-        $Feedback = TableRegistry::get('Feedback');
+    public function save(array $object, array $options = []): array {
+        $Feedback = TableRegistry::getLocator()->get('Feedback');
         $feedback = $Feedback->newEntity([
             ...
         ]);
-        $result = $Feedback->save($feedback);
+        $result = $Feedback->saveOrFail($feedback);
 
         ...
     }

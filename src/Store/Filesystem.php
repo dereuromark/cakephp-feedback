@@ -13,7 +13,7 @@ class Filesystem {
 	 *
 	 * @return array
 	 */
-	public static function get($path) {
+	public static function get(string $path): array {
 		if (!file_exists($path)) {
 			throw new NotFoundException('Could not find that file');
 		}
@@ -36,7 +36,7 @@ class Filesystem {
 	 *
 	 * @return array
 	 */
-	public static function read($path, $sid = null) {
+	public static function read(string $path, ?string $sid = null): array {
 		if (!is_dir($path)) {
 			mkdir($path, 0770, true);
 			if (!is_dir($path)) {

@@ -61,7 +61,7 @@ class StoreCollection {
 	/**
 	 * @return \Feedback\Store\StoreInterface[]
 	 */
-	public function stores() {
+	public function stores(): array {
 		return $this->stores;
 	}
 
@@ -69,7 +69,7 @@ class StoreCollection {
 	 * @param array $object
 	 * @return array
 	 */
-	public function save(array $object) {
+	public function save(array $object): array {
 		$results = [];
 
 		$config = (array)Configure::read('Feedback');

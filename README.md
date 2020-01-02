@@ -54,7 +54,7 @@ They can also be stacked (multiple stores at once).
 
 ## Installation and Usage
 
-See **[Documentation](docs)**.
+See **[Documentation](docs/)**.
 
 ## Demo
 https://sandbox.dereuromark.de/

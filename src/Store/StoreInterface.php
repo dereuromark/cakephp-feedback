@@ -10,6 +10,6 @@ interface StoreInterface {
 	 *
 	 * @return array
 	 */
-	public function save($object, array $options = []);
+	public function save(array $object, array $options = []): array;
 
 }
