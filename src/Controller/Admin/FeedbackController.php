@@ -4,7 +4,7 @@ namespace Feedback\Controller\Admin;
 
 use App\Controller\AppController;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
 use Feedback\Store\Filesystem;
 
@@ -21,7 +21,7 @@ class FeedbackController extends AppController {
 	/**
 	 * @return void
 	 */
-	public function initialize() {
+	public function initialize(): void {
 		parent::initialize();
 
 		if (!isset($this->Flash)) {
@@ -34,7 +34,7 @@ class FeedbackController extends AppController {
 	 *
 	 * @return bool|\Cake\Http\Response|null
 	 */
-	public function beforeFilter(Event $event) {
+	public function beforeFilter(EventInterface $event) {
 		if (Configure::read('Feedback')) {
 			return null;
 		}
@@ -87,7 +87,7 @@ class FeedbackController extends AppController {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 
 		if (!$file || !file_exists($savepath . $file)) {
-			throw new NotFoundException('Could not find that file');
+			throw new NotFoundException('Could not find that file: ' . $savepath . $file);
 		}
 
 		unlink($savepath . $file);

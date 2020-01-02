@@ -3,6 +3,7 @@
 namespace Feedback\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
+use Cake\Http\Exception\MethodNotAllowedException;
 use Cake\TestSuite\IntegrationTestCase;
 use Feedback\Store\FilesystemStore;
 
@@ -11,7 +12,7 @@ class FeedbackControllerTest extends IntegrationTestCase {
 	/**
 	 * @return void
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		Configure::write('Feedback', [
@@ -30,11 +31,12 @@ class FeedbackControllerTest extends IntegrationTestCase {
 	}
 
 	/**
-	 * @expectedException \Cake\Network\Exception\MethodNotAllowedException
 	 * @return void
 	 */
 	public function testSaveInvalid() {
 		$this->disableErrorHandlerMiddleware();
+
+		$this->expectException(MethodNotAllowedException::class);
 
 		$this->get(['plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'save']);
 	}
@@ -114,7 +116,7 @@ class FeedbackControllerTest extends IntegrationTestCase {
 	/**
 	 * @return void
 	 */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');

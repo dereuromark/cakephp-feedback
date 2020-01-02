@@ -1,14 +1,18 @@
 <?php
 
-namespace App\Controller;
+namespace TestApp\Controller;
 
 use Cake\Controller\Controller;
 
 class AppController extends Controller {
 
 	/**
-	 * @var array
+	 * @return void
 	 */
-	public $components = ['RequestHandler'];
+	public function initialize(): void {
+		parent::initialize();
+
+		$this->loadComponent('RequestHandler');
+	}
 
 }

@@ -3,6 +3,7 @@
 namespace Feedback\Test\TestCase\Controller\Admin;
 
 use Cake\Core\Configure;
+use Cake\Http\Session;
 use Cake\TestSuite\IntegrationTestCase;
 use Feedback\Store\FilesystemStore;
 
@@ -11,7 +12,7 @@ class FeedbackControllerTest extends IntegrationTestCase {
 	/**
 	 * @return void
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		Configure::write('Feedback', [
@@ -27,7 +28,9 @@ class FeedbackControllerTest extends IntegrationTestCase {
 	 * @return void
 	 */
 	public function testRemove() {
-		$file = time() . '-' . session_id() . '.feedback';
+		$this->disableErrorHandlerMiddleware();
+
+		$file = time() . '-' . (new Session())->id() . '.feedback';
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 		$data = [
 			'screenshot' => '123',
@@ -35,10 +38,10 @@ class FeedbackControllerTest extends IntegrationTestCase {
 		file_put_contents($savepath . $file, serialize($data));
 		$this->assertFileExists($savepath . $file);
 
-		$this->post(['prefix' => 'admin', 'plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'remove', $file]);
+		$this->post(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'remove', $file]);
 
 		$this->assertResponseCode(302);
-		$this->assertRedirect(['prefix' => 'admin', 'plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'index']);
+		$this->assertRedirect(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'index']);
 
 		$this->assertFileNotExists($savepath . $file);
 	}
@@ -46,7 +49,7 @@ class FeedbackControllerTest extends IntegrationTestCase {
 	/**
 	 * @return void
 	 */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');

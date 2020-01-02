@@ -1,7 +1,5 @@
 <?php
 
-use Cake\Routing\DispatcherFactory;
-
 if (!defined('DS')) {
 	define('DS', DIRECTORY_SEPARATOR);
 }
@@ -19,6 +17,7 @@ if (!is_dir(TMP)) {
 	mkdir(TMP, 0770, true);
 }
 define('CONFIG', ROOT . DS . 'config' . DS);
+define('TESTS', ROOT . DS . 'tests' . DS);
 
 define('LOGS', TMP . 'logs' . DS);
 define('CACHE', TMP . 'cache' . DS);
@@ -31,9 +30,10 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 require CORE_PATH . 'config/bootstrap.php';
 
 Cake\Core\Configure::write('App', [
+	'encoding' => 'utf-8',
 	'namespace' => 'App',
 	'paths' => [
-		'templates' => [APP . 'Template' . DS],
+		'templates' => [TESTS . 'test_app' . DS . 'templates' . DS],
 	],
 ]);
 
@@ -61,10 +61,11 @@ $cache = [
 
 Cake\Cache\Cache::setConfig($cache);
 
-Cake\Core\Plugin::load('Feedback', ['path' => ROOT . DS, 'autoload' => true]);
+class_alias(TestApp\Application::class, 'App\Application');
+class_alias(TestApp\Controller\AppController::class, 'App\Controller\AppController');
+class_alias(Cake\ORM\Table::class, 'App\Model\Table\Table');
 
-DispatcherFactory::add('Routing');
-DispatcherFactory::add('ControllerFactory');
+Cake\Core\Plugin::getCollection()->add(new Feedback\Plugin());
 
 // Ensure default test connection is defined
 if (!getenv('db_class')) {

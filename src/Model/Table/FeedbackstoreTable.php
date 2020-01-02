@@ -6,6 +6,7 @@ use Cake\Http\Client;
 use Cake\Http\Exception\NotImplementedException;
 use Cake\Mailer\Email;
 use Cake\Http\Exception\NotFoundException;
+use Cake\Mailer\Mailer;
 use Cake\ORM\Table;
 use Cake\Routing\Router;
 
@@ -151,18 +152,18 @@ class FeedbackstoreTable extends Table {
 		}
 
 		//Tmp store the screenshot:
-		$tmpfile = APP . 'tmp' . DS . time() . '_' . rand(1000, 9999) . '.png';
+		$tmpfile = APP . 'tmp' . DS . time() . '_' . mt_rand(1000, 9999) . '.png';
 		if (!file_put_contents($tmpfile, base64_decode($feedbackObject['screenshot']))) {
 			//Need to save tmp file
 			throw new NotFoundException('Could not save tmp file for attachment in mail');
 		}
 
-		$email = new Email();
-		$email->from($from);
-		$email->to($to);
-		$email->subject($feedbackObject['subject']);
-		$email->emailFormat('html');
-		$email->attachments([
+		$email = new Mailer();
+		$email->setFrom($from);
+		$email->setTo($to);
+		$email->setSubject($feedbackObject['subject']);
+		$email->setEmailFormat('html');
+		$email->setAttachments([
 		    'screenshot.png' => [
 		        'file' => $tmpfile,
 		        'mimetype' => 'image/png',

@@ -4,7 +4,7 @@ namespace Feedback\Controller;
 
 use App\Controller\AppController;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
 use Feedback\Store\Filesystem;
 use Feedback\Store\StoreCollection;
@@ -22,7 +22,7 @@ class FeedbackController extends AppController {
 	/**
 	 * @return void
 	 */
-	public function initialize() {
+	public function initialize(): void {
 		parent::initialize();
 
 		if (!isset($this->Flash)) {
@@ -35,7 +35,7 @@ class FeedbackController extends AppController {
 	 *
 	 * @return \Cake\Http\Response|null
 	 */
-	public function beforeFilter(Event $event) {
+	public function beforeFilter(EventInterface $event) {
 		// Check security component loaded and disable it for this plugin:
 		if (isset($this->Security)) {
 			$this->Security->setConfig('validatePost', false);
@@ -96,7 +96,7 @@ class FeedbackController extends AppController {
 
 		//Prepare result
 		if (!$result['result']) {
-			$this->response->statusCode(500);
+			$this->response = $this->response->withStatus(500);
 
 			if (empty($result['msg'])) {
 				$result['msg'] = __d('feedback', 'Error saving feedback.');
