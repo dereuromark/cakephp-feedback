@@ -47,8 +47,8 @@ if(class_exists('AuthComponent')) {
 
 <script>
 	//Create URL using cake's url helper, this is used in feedbackit-functions.js
-	<?php $formposturl = $this->Url->build(['prefix' => false, 'plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'save'], true); ?>
-	window.formURL = '<?php echo $formposturl; ?>';
+	<?php $formUrl = $this->Url->build(['prefix' => false, 'plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'save'], ['fullBase' => true]); ?>
+	window.formURL = '<?php echo $formUrl; ?>';
 </script>
 
 <div id="feedbackit-slideout">

@@ -8,7 +8,7 @@ foreach ($feedbacks as $feedback) {
   ?>
 
   <div class="media">
-    <a class="pull-left" href="<?php echo $this->Url->build(['plugin'=>'Feedback','controller'=>'Feedback','action'=>'viewimage', $feedback['filename']], true); ?>" target="_blank">
+    <a class="pull-left" href="<?php echo $this->Url->build(['plugin'=>'Feedback','controller'=>'Feedback','action'=>'viewimage', $feedback['filename']]); ?>" target="_blank">
       <img class="media-object feedbackit-small-img" src="data:image/png;base64,<?php echo $feedback['screenshot']; ?>">
     </a>
     <div class="media-body">
