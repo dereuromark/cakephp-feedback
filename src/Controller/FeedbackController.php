@@ -57,7 +57,7 @@ class FeedbackController extends AppController {
 	/**
 	 * Ajax function to save the feedback form.
 	 *
-	 * @return \Cake\Http\Response|null
+	 * @return \Cake\Http\Response|null|void
 	 */
 	public function save() {
 	    $this->request->allowMethod(['post', 'ajax']);
@@ -120,7 +120,7 @@ class FeedbackController extends AppController {
 	 * Example index function for current save in tmp dir solution.
 	 * Must only display images of own session
 	 *
-	 * @return \Cake\Http\Response|null
+	 * @return \Cake\Http\Response|null|void
 	 */
 	public function index() {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
@@ -137,7 +137,7 @@ class FeedbackController extends AppController {
 	 * Temp function to view captured image from index page
 	 *
 	 * @param string $file
-	 * @return \Cake\Http\Response|null
+	 * @return \Cake\Http\Response|null|void
 	 */
 	public function viewimage($file) {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');

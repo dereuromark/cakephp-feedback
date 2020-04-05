@@ -28,7 +28,13 @@ foreach ($feedbacks as $feedback) {
 		unset($feedback['filename']);
 		unset($feedback['copyme']);
 
-		foreach ($feedback as $fieldname => $fieldvalue){
+		foreach ($feedback as $fieldname => $fieldvalue) {
+			if ($fieldname === 'url') {
+				$fieldvalue = '<a href="' . $fieldvalue . '" target="_blank">' . $fieldvalue . '</a>';
+			} else {
+				$fieldvalue = h($fieldvalue);
+			}
+
 			echo '<br/>';
 			echo "<b>" . ucfirst($fieldname) . ":</b> $fieldvalue";
 		}
