@@ -58,7 +58,7 @@ If the others fail the user will still get the successful feedback from the firs
 
 ### Other options
 
-See config.php file.
+See `config.php` file.
 
 ### Authentication
 If you are using AuthComponent, you need to make sure at least `save()` method is publicly accessible.
@@ -105,6 +105,9 @@ class DatabaseStore implements StoreInterface {
 If you need additional configuration options, use:
 ```php
 'Feedback' => [
+    'autoLink' => false,
+    ...
+
     'configuration' => [
         'Database' => [
             ...

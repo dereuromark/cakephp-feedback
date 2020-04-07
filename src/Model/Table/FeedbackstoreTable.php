@@ -4,11 +4,13 @@ namespace Feedback\Model\Table;
 use Cake\Core\Configure;
 use Cake\Http\Client;
 use Cake\Http\Exception\NotImplementedException;
+use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Mailer\Mailer;
 use Cake\ORM\Table;
 use Cake\Routing\Router;
+use Exception;
 
 /**
  * @deprecated Make a Store class
@@ -184,11 +186,15 @@ class FeedbackstoreTable extends Table {
 		$feedbackObject['feedback'] .= '</p>';
 		$feedbackObject['feedback'] .= '<img src="cid:id-screenshot">'; //Add inline screenshot
 
-		if ($email->send($feedbackObject['feedback'])) {
+		try {
+			$email->send($feedbackObject['feedback']);
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
 			return $returnobject;
+		} catch (Exception $e) {
+			// Something went wrong, lets try to log it
+			Log::write('error', 'Feedback could not be stored (' . $e->getMessage() . '): ' . json_encode($feedbackObject));
 		}
 
 		unlink($tmpfile);

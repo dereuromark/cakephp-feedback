@@ -46,7 +46,7 @@ class FeedbackController extends AppController {
 	/**
 	 * Example index function for current save in tmp dir solution
 	 *
-	 * @return \Cake\Http\Response|null
+	 * @return \Cake\Http\Response|null|void
 	 */
 	public function index() {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
@@ -61,7 +61,7 @@ class FeedbackController extends AppController {
 	 *
 	 * @param string $file
 	 *
-	 * @return \Cake\Http\Response|null
+	 * @return \Cake\Http\Response|null|void
 	 */
 	public function viewimage($file) {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');

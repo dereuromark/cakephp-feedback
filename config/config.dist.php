@@ -14,6 +14,8 @@ return [
 		'enableacceptterms' => true, // If set to true, visitors have to check an accept terms checkbox
 		'termstext' => true, // The text to display on the terms button, using __d makes translation possible
 
+		'autoLink' => true, // Auto link the URL given
+
 		//TODO: enable again using Email class or even store
 		'enablecopybyemail' => false, // If set to true, visitors can check a 'send me a copy' button
 
@@ -77,7 +79,7 @@ return [
 				'password' => 'bar', //The password of the above Redmine user
 				'project_id' => 1, //Set the project id of the project to put this feedback in
 				'tracker_id' => 1, //Set the tracker type that will be used, 1 = bug
-			]
-		]
-	]
+			],
+		],
+	],
 ];
