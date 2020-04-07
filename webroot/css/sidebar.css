@@ -16,7 +16,7 @@
 	-moz-border-radius:5px 0 0 5px;
 	border-radius:5px 0 0 5px;
 	display:none;
-	z-index:1000;
+	z-index:1800;
 }
 
 #feedbackit-slideout:hover {
@@ -39,7 +39,7 @@
 	-webkit-border-radius: 0 0 0 5px;
 	-moz-border-radius: 0 0 0 5px;
 	border-radius: 0 0 0 5px;
-	z-index:1000;
+	z-index:1800;
 }
 
 .feedbackit-slideout_outer {
@@ -69,7 +69,7 @@
 	display:none;
 	width:150px;
 	height: 150px;
-	z-index:2000;
+	z-index:1900;
 }
 
 #feedbackit-highlight-holder img {
