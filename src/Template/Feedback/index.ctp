@@ -24,9 +24,9 @@ foreach ($feedbacks as $feedback) {
       unset($feedback['filename']);
       unset($feedback['copyme']);
 
-      foreach ($feedback as $fieldname => $fieldvalue){
+      foreach ($feedback as $fieldname => $fieldvalue) {
           echo '<br/>';
-          echo "<b>".ucfirst($fieldname).":</b> " . h($fieldvalue);
+          echo '<b>' . ucfirst($fieldname) . ':</b> ' . h($fieldvalue);
       }
       ?>
     </div>

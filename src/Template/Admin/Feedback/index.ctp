@@ -4,6 +4,8 @@
  * @var \Feedback\Model\Entity\Feedbackstore[] $feedbacks
  */
 
+use Cake\Core\Configure;
+
 foreach ($feedbacks as $feedback) {
 ?>
 
@@ -29,14 +31,14 @@ foreach ($feedbacks as $feedback) {
 		unset($feedback['copyme']);
 
 		foreach ($feedback as $fieldname => $fieldvalue) {
-			if ($fieldname === 'url') {
+			if ($fieldname === 'url' && Configure::read('Feedback.autoLink')) {
 				$fieldvalue = '<a href="' . $fieldvalue . '" target="_blank">' . $fieldvalue . '</a>';
 			} else {
 				$fieldvalue = h($fieldvalue);
 			}
 
 			echo '<br/>';
-			echo "<b>" . ucfirst($fieldname) . ":</b> $fieldvalue";
+			echo '<b>' . ucfirst($fieldname) . ":</b> $fieldvalue";
 		}
 ?>
     </div>
