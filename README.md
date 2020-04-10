@@ -1,6 +1,6 @@
 # CakePHP Feedback Plugin
 
-[![Build Status](https://travis-ci.org/dereuromark/cakephp-feedback.svg?branch=master)](https://travis-ci.org/dereuromark/cakephp-feedback)
+[![Build Status](https://api.travis-ci.com/dereuromark/cakephp-feedback.svg?branch=cake3)](https://api.travis-ci.com/dereuromark/cakephp-feedback)
 [![Latest Stable Version](https://poser.pugx.org/dereuromark/cakephp-feedback/v/stable.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/dereuromark/cakephp-feedback/license.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
