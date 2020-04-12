@@ -32,11 +32,11 @@ class FilesystemStore implements StoreInterface {
 
 			if (!empty($options['returnlink'])) {
 				$msg .= ' ';
-				$msg .= __d('feedback', 'View your feedback on: ');
+				$msg .= __d('feedback', 'View your feedback on:');
 
 				$url = Router::url(['plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'index'], true);
 
-				$msg .= '<a target="_blank" href="' . $url . '">' . $url . '</a>';
+				$msg .= ' <a target="_blank" href="' . $url . '">' . $url . '</a>';
 			}
 
 			$returnobject['result'] = true;

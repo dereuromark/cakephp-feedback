@@ -61,6 +61,8 @@ $cache = [
 
 Cake\Cache\Cache::setConfig($cache);
 
+class_alias(Cake\View\View::class, 'App\View\AppView');
+
 Cake\Core\Plugin::load('Feedback', ['path' => ROOT . DS, 'autoload' => true]);
 
 DispatcherFactory::add('Routing');

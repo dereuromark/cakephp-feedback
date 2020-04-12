@@ -73,15 +73,28 @@ class FeedbackController extends AppController {
 		//Add current time to data
 		$data['time'] = time();
 
-		//Check name
-		if (empty($data['name'])) {
-			$data['name'] = __d('feedback', 'Anonymous');
-		}
-
 		if (!$this->request->getSession()->started()) {
 			$this->request->getSession()->start();
 		}
 		$data['sid'] = $this->request->getSession()->id();
+
+		$map = (array)Configure::read('Feedback.authMap');
+		if (!empty($map['username'])) {
+			$username = $this->request->getSession()->read($map['username']);
+			if (empty($data['name']) || Configure::read('Feedback.forceauthusername')) {
+				$data['name'] = $username;
+			}
+		}
+		if (!empty($map['email'])) {
+			$email = $this->request->getSession()->read($map['email']);
+			if (empty($data['email']) || Configure::read('Feedback.forceemail')) {
+				$data['email'] = $email;
+			}
+		}
+
+		if (empty($data['name'])) {
+			$data['name'] = __d('feedback', 'Anonymous');
+		}
 
 		//Determine method of saving
 		$collection = new StoreCollection();

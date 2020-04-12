@@ -34,8 +34,8 @@ msgstr "Tack. Din återkoppling sparades."
 
 #: Model/Table/FeedbackstoreTable.php:94;265;344;446;535
 #: Store/FilesystemStore.php:35
-msgid "View your feedback on: "
-msgstr "Se din återkoppling på: "
+msgid "View your feedback on:"
+msgstr "Se din återkoppling på:"
 
 #: Model/Table/FeedbackstoreTable.php:166
 msgid "A copy of your submitted feedback:"
@@ -58,12 +58,12 @@ msgid "Send your feedback or bugreport!"
 msgstr "Skicka din återkoppling eller buggrapport!"
 
 #: Template/Element/sidebar.ctp:71
-msgid "Your name "
-msgstr "Ditt namn "
+msgid "Your name"
+msgstr "Ditt namn"
 
 #: Template/Element/sidebar.ctp:82
-msgid "Your e-mail "
-msgstr "Din epost "
+msgid "Your e-mail"
+msgstr "Din epost"
 
 #: Template/Element/sidebar.ctp:93
 msgid "Subject"

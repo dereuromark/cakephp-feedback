@@ -99,7 +99,7 @@ class FeedbackstoreTable extends Table {
 
 			if (Configure::read('Feedback.returnlink')) {
 					$msg .= '<br/>';
-					$msg .= __d('feedback', 'View your feedback on: ');
+					$msg .= __d('feedback', 'View your feedback on:');
 
 					list($url, $tmp) = explode('api', $api_url );
 					$url .= 'view.php?id=' . $issueid;
@@ -271,7 +271,7 @@ class FeedbackstoreTable extends Table {
 
 			if (Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
-				$returnobject['msg'] .= __d('feedback', 'View your feedback on: ');
+				$returnobject['msg'] .= __d('feedback', 'View your feedback on:');
 
 				//Get response from github api
 				$answer = json_decode($result);
@@ -284,7 +284,7 @@ class FeedbackstoreTable extends Table {
 				//Append issue number
 				$url .= '/' . $answer->number;
 
-				$returnobject['msg'] .= '<a target="_blank" href="' . $url . '">' . $url . '</a>';
+				$returnobject['msg'] .= ' <a target="_blank" href="' . $url . '">' . $url . '</a>';
 			}
 
 		}
@@ -349,7 +349,7 @@ class FeedbackstoreTable extends Table {
 
 		if (Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
-				$returnobject['msg'] .= __d('feedback', 'View your feedback on: ');
+				$returnobject['msg'] .= __d('feedback', 'View your feedback on:');
 
 				//Get response from github api
 				$answer = json_decode($result->getBody());
@@ -362,7 +362,7 @@ class FeedbackstoreTable extends Table {
 				//Append issue number
 				$url .= '/' . $answer->local_id;
 
-				$returnobject['msg'] .= '<a target="_blank" href="' . $url . '">' . $url . '</a>';
+				$returnobject['msg'] .= ' <a target="_blank" href="' . $url . '">' . $url . '</a>';
 			}
 		}
 
@@ -451,7 +451,7 @@ class FeedbackstoreTable extends Table {
 
 		if (Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
-				$returnobject['msg'] .= __d('feedback', 'View your feedback on: ');
+				$returnobject['msg'] .= __d('feedback', 'View your feedback on:');
 
 				//Get response from jira api
 				$answer = json_decode($result);
@@ -463,7 +463,7 @@ class FeedbackstoreTable extends Table {
 				//Append issue number
 				$url .= $answer->key;
 
-				$returnobject['msg'] .= '<a target="_blank" href="' . $url . '">' . $url . '</a>';
+				$returnobject['msg'] .= ' <a target="_blank" href="' . $url . '">' . $url . '</a>';
 			}
 
 		}
@@ -540,7 +540,7 @@ class FeedbackstoreTable extends Table {
 
 		if (Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
-				$returnobject['msg'] .= __d('feedback', 'View your feedback on: ');
+				$returnobject['msg'] .= __d('feedback', 'View your feedback on:');
 
 				//Get response from jira api
 				$answer = json_decode($result);
@@ -552,7 +552,7 @@ class FeedbackstoreTable extends Table {
 				//Append issue number
 				$url .= $answer->issue->id;
 
-				$returnobject['msg'] .= '<a target="_blank" href="' . $url . '">' . $url . '</a>';
+				$returnobject['msg'] .= ' <a target="_blank" href="' . $url . '">' . $url . '</a>';
 			}
 
 		}

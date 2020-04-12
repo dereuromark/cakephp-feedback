@@ -4,7 +4,6 @@
  */
 
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 
 if (!Configure::read('Feedback')) {
 	throw new RuntimeException('No Feedback plugin config found.');
@@ -36,12 +35,14 @@ if ($enableacceptterms) {
 }
 
 //Assemble optional vars if AuthComponent is loaded
+$map = (array)Configure::read('Feedback.authMap');
 $username = '';
 $email = '';
-//FIXME $this->AuthUser->id() using TinyAuth or Session->read('Auth.User.id')
-if(class_exists('AuthComponent')) {
-	$username = AuthComponent::user('name') ?: AuthComponent::user('username') ?: AuthComponent::user('account') ?: '';
-	$email = AuthComponent::user('mail') ?: AuthComponent::user('email') ?: '';
+if (!empty($map['username'])) {
+	$username = $this->request->getSession()->read($map['username']);
+}
+if (!empty($map['email'])) {
+	$email = $this->request->getSession()->read($map['email']);
 }
 ?>
 
@@ -61,28 +62,32 @@ if(class_exists('AuthComponent')) {
 			<?php echo __d('feedback','Send your feedback or bugreport!');?>
 		</p>
 		<form id="feedbackit-form" autocomplete="off">
+			<?php if (!$username) { ?>
 			<div class="form-group">
 				<input
 					type="text"
 					name="name"
 					id="feedbackit-name"
-					class="<?php if (!empty($username)) echo 'feedbackit-input"'; ?> form-control"
+					class="<?php if (false && $username) echo 'feedbackit-input'; ?> form-control"
 					value="<?php echo $username; ?>"
-					placeholder="<?php echo __d('feedback','Your name '); if( !$forceauthusername ) echo ' (optional)'; ?>"
-					<?php if( $forceauthusername && !empty($username) ) echo 'readonly="readonly"'; ?>
+					placeholder="<?php echo __d('feedback','Your name'); if (!$forceauthusername) echo ' (optional)'; ?>"
+					<?php if ($forceauthusername) echo 'required="required"'; ?>
 					>
 			</div>
+			<?php } ?>
+			<?php if (!$email) { ?>
 			<div class="form-group">
 				<input
 					type="email"
 					name="email"
 					id="feedbackit-email"
-					class="<?php if (!empty($email)) echo 'feedbackit-input"'; ?> form-control"
+					class="<?php if (false && $email) echo 'feedbackit-input'; ?> form-control"
 					value="<?php echo $email; ?>"
-					placeholder="<?php echo __d('feedback','Your e-mail '); if( !$forceemail ) echo ' (optional)'; ?>"
-					<?php if( $forceemail && !empty($email) ) echo 'readonly="readonly"'; ?>
+					placeholder="<?php echo __d('feedback','Your e-mail'); if( !$forceemail) echo ' (optional)'; ?>"
+					<?php if ($forceemail) echo 'required="required"'; ?>
 					>
 			</div>
+			<?php } ?>
 			<div class="form-group">
 				<input
 					type="text"
