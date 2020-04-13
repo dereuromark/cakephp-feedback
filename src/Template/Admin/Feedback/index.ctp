@@ -5,7 +5,11 @@
  */
 
 use Cake\Core\Configure;
+?>
 
+<h1><?php echo count($feedbacks); ?> Feedback records</h1>
+
+<?php
 foreach ($feedbacks as $feedback) {
 ?>
 
