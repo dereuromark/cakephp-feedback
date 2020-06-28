@@ -93,6 +93,7 @@ class FeedbackController extends AppController {
 		unlink($savepath . $file);
 
 		$this->Flash->success('Removed');
+
 		return $this->redirect($this->referer(['action' => 'index']));
 	}
 

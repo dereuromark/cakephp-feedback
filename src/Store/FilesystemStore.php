@@ -7,7 +7,7 @@ use Cake\Routing\Router;
 
 class FilesystemStore implements StoreInterface {
 
-	const NAME = 'Filesystem';
+	public const NAME = 'Filesystem';
 
 	/**
 	 * @param array $object
@@ -66,6 +66,7 @@ class FilesystemStore implements StoreInterface {
 			//Add filename to data
 			return true;
 		}
+
 		return false;
 	}
 
