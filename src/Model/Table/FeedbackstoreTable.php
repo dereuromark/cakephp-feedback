@@ -154,7 +154,7 @@ class FeedbackstoreTable extends Table {
 		}
 
 		//Tmp store the screenshot:
-		$tmpfile = APP . 'tmp' . DS . time() . '_' . mt_rand(1000, 9999) . '.png';
+		$tmpfile = ROOT . DS . 'tmp' . DS . time() . '_' . mt_rand(1000, 9999) . '.png';
 		if (!file_put_contents($tmpfile, base64_decode($feedbackObject['screenshot']))) {
 			//Need to save tmp file
 			throw new NotFoundException('Could not save tmp file for attachment in mail');
