@@ -48,7 +48,7 @@ They can also be stacked (multiple stores at once).
 
 **Required:** [jQuery](http://jquery.com/)
 
-**Optional:** [Bootstrap](http://getbootstrap.com) (Bootstrap 2 and 3 compatible)
+**Optional:** [Bootstrap](http://getbootstrap.com) (Bootstrap 3/4 compatible)
 
 **Includes:** [html2canvas.js by niklasvh](https://github.com/niklasvh/html2canvas)
 
