@@ -56,7 +56,7 @@ if(class_exists('AuthComponent')) {
 </div>
 <div id="feedbackit-slideout_inner">
 	<div class="feedbackit-form-elements">
-		<div class="pull-right"><i class="tab-hide fa fa-window-close" title="<?php echo __d('feedback', 'Hide this tab completely.'); ?>"></i></div>
+		<div class="pull-right float-right"><i class="tab-hide fa fa-window-close" title="<?php echo __d('feedback', 'Hide this tab completely.'); ?>"></i></div>
 		<p>
 			<?php echo __d('feedback','Send your feedback or bugreport!');?>
 		</p>
