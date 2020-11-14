@@ -58,6 +58,7 @@ $(document).ready(function() {
 					data : postData,
 					complete: function(e, xhr, settings){
 						if (e.status === 200) {
+							closeandreset();
 							if (e.reponseText) {
 								confirmMessage = e.responseText;
 							}
