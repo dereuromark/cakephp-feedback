@@ -102,7 +102,7 @@ if (isset($this->AuthUser)) {
 					name="email"
 					id="feedbackit-email"
 					maxlength="150"
-					class="<?php if (false && $email) echo 'feedbackit-input'; ?> form-control"
+					class="<?php if (!empty($email)) echo 'feedbackit-input'; ?> form-control"
 					value="<?php echo $email; ?>"
 					placeholder="<?php echo __d('feedback','Your e-mail'); if( !$forceemail) echo ' (optional)'; ?>"
 					<?php if ($forceemail) echo 'required="required"'; ?>
@@ -122,7 +122,8 @@ if (isset($this->AuthUser)) {
 					>
 			</div>
 			<div class="form-group">
-				<textarea name="feedback" id="feedbackit-feedback" class="feedbackit-input form-control" required="required" placeholder="<?php echo __d('feedback','Feedback or suggestion'); ?>" rows="3"></textarea>
+				<textarea name="feedback" id="feedbackit-feedback" class="feedbackit-input form-control" required="required"
+					placeholder="<?php echo __d('feedback','Feedback or suggestion'); ?>" rows="3"></textarea>
 			</div>
 			<div class="form-group">
 				<p>
@@ -177,21 +178,4 @@ if (isset($this->AuthUser)) {
 
 <div id="feedbackit-highlight-holder"><?php echo $this->Html->image('Feedback.circle.gif');?></div>
 
-<!-- Modal for confirmation -->
-<div class="modal fade" id="feedbackit-modal" tabindex="-1" role="dialog" aria-labelledby="feedbackit-modalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="feedbackit-modalLabel"><?php echo __d('feedback', 'Feedback submitted');?></h4>
-			</div>
-			<div class="modal-body">
-				Loading...
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo __d('feedback', 'Close');?></button>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
+<?php echo $this->element('Feedback.sidebar_modal');?>
