@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Feedback\Model\Table;
 
@@ -26,15 +26,14 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class FeedbackItemsTable extends Table
-{
+class FeedbackItemsTable extends Table {
+
 	/**
 	 * @param \Cake\Database\Schema\TableSchema $schema
 	 *
 	 * @return \Cake\Database\Schema\TableSchema
 	 */
-	protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
-	{
+	protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface {
 		$schema->setColumnType('data', 'json');
 
 		return $schema;
@@ -46,8 +45,7 @@ class FeedbackItemsTable extends Table
 	 * @param array $config The configuration for the Table.
 	 * @return void
 	 */
-	public function initialize(array $config): void
-	{
+	public function initialize(array $config): void {
 		parent::initialize($config);
 
 		$this->setTable('feedback_items');
@@ -63,8 +61,7 @@ class FeedbackItemsTable extends Table
 	 * @param \Cake\Validation\Validator $validator Validator instance.
 	 * @return \Cake\Validation\Validator
 	 */
-	public function validationDefault(Validator $validator): Validator
-	{
+	public function validationDefault(Validator $validator): Validator {
 		$validator
 			->integer('id')
 			->allowEmptyString('id', null, 'create');
@@ -105,4 +102,5 @@ class FeedbackItemsTable extends Table
 
 		return $validator;
 	}
+
 }
