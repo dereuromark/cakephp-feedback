@@ -4,13 +4,16 @@ namespace Feedback\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Exception\MethodNotAllowedException;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 use Feedback\Store\FilesystemStore;
 
 /**
  * @uses \Feedback\Controller\FeedbackController
  */
-class FeedbackControllerTest extends IntegrationTestCase {
+class FeedbackControllerTest extends TestCase {
+
+	use IntegrationTestTrait;
 
 	/**
 	 * @return void
@@ -36,17 +39,6 @@ class FeedbackControllerTest extends IntegrationTestCase {
 	/**
 	 * @return void
 	 */
-	public function testSaveInvalid() {
-		$this->disableErrorHandlerMiddleware();
-
-		$this->expectException(MethodNotAllowedException::class);
-
-		$this->get(['plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'save']);
-	}
-
-	/**
-	 * @return void
-	 */
 	public function testIndex() {
 		$this->get(['plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'index']);
 
@@ -57,7 +49,7 @@ class FeedbackControllerTest extends IntegrationTestCase {
 	/**
 	 * @return void
 	 */
-	public function testView() {
+	public function testViewImage() {
 		$file = time() . '-' . session_id() . '.feedback';
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 		$data = [
@@ -72,6 +64,17 @@ class FeedbackControllerTest extends IntegrationTestCase {
 		$this->assertNoRedirect();
 
 		unlink($savepath . $file);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testSaveInvalid() {
+		$this->disableErrorHandlerMiddleware();
+
+		$this->expectException(MethodNotAllowedException::class);
+
+		$this->get(['plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'save']);
 	}
 
 	/**

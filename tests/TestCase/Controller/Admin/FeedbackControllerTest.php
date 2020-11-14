@@ -4,13 +4,16 @@ namespace Feedback\Test\TestCase\Controller\Admin;
 
 use Cake\Core\Configure;
 use Cake\Http\Session;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 use Feedback\Store\FilesystemStore;
 
 /**
  * @uses \Feedback\Controller\Admin\FeedbackController
  */
-class FeedbackControllerTest extends IntegrationTestCase {
+class FeedbackControllerTest extends TestCase {
+
+	use IntegrationTestTrait;
 
 	/**
 	 * @return void

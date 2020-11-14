@@ -47,28 +47,46 @@ class FeedbackItemsControllerTest extends TestCase {
 	 * @return void
 	 */
 	public function testView(): void {
-		$this->markTestIncomplete('Not implemented yet.');
+		$this->disableErrorHandlerMiddleware();
+
+		$this->get(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'FeedbackItems', 'action' => 'view', 1]);
+		$this->assertResponseCode(200);
 	}
 
 	/**
 	 * @return void
 	 */
-	public function testAdd(): void {
-		$this->markTestIncomplete('Not implemented yet.');
+	public function testViewImage(): void {
+		$this->disableErrorHandlerMiddleware();
+
+		$feedbackItem = $this->getTableLocator()->get('Feedback.FeedbackItems')->get(1);
+		$feedbackItem->data = [
+			'screenshot' => 'abc',
+		];
+		$this->getTableLocator()->get('Feedback.FeedbackItems')->saveOrFail($feedbackItem);
+
+		$this->get(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'FeedbackItems', 'action' => 'viewimage', 1]);
+		$this->assertResponseCode(200);
 	}
 
 	/**
 	 * @return void
 	 */
 	public function testEdit(): void {
-		$this->markTestIncomplete('Not implemented yet.');
+		$this->disableErrorHandlerMiddleware();
+
+		$this->get(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'FeedbackItems', 'action' => 'edit', 1]);
+		$this->assertResponseCode(200);
 	}
 
 	/**
 	 * @return void
 	 */
 	public function testDelete(): void {
-		$this->markTestIncomplete('Not implemented yet.');
+		$this->disableErrorHandlerMiddleware();
+
+		$this->post(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'FeedbackItems', 'action' => 'delete', 1]);
+		$this->assertResponseCode(302);
 	}
 
 }
