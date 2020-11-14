@@ -14,6 +14,13 @@ if (!Configure::read('Feedback.skipCss')) {
 	echo $this->Html->css('Feedback.sidebar', ['block' => false]);
 }
 
+$icons = (array)Configure::read('Feedback.icons') + [
+	'close' => 'fa fa-window-close',
+	'screenshot' => 'fa fa-crosshairs', // glyphicon glyphicon-screenshot
+	'submit' => 'glyphicon glyphicon-envelope',
+	'cancel' => 'glyphicon glyphicon-remove',
+];
+
 // This will be rendered with the rest of the JS files in the end part of body section.
 echo $this->Html->script(
 	[
@@ -26,6 +33,8 @@ echo $this->Html->script(
 $forceauthusername = Configure::read('Feedback.forceauthusername');
 $forceemail = Configure::read('Feedback.forceemail');
 
+$displayExisting = Configure::read('Feedback.displayExisting');
+
 $enablecopybyemail = Configure::read('Feedback.enablecopybyemail');
 
 $enableacceptterms = Configure::read('Feedback.enableacceptterms');
@@ -34,15 +43,22 @@ if ($enableacceptterms) {
 	$termstext = Configure::read('Feedback.termstext') ? __d('feedback', 'When you submit, a screenshot (of only this website) will be taken to aid us in processing your feedback or bugreport.') : '';
 }
 
-//Assemble optional vars if AuthComponent is loaded
-$map = (array)Configure::read('Feedback.authMap');
-$username = '';
-$email = '';
-if (!empty($map['username'])) {
-	$username = $this->request->getSession()->read($map['username']);
-}
-if (!empty($map['email'])) {
-	$email = $this->request->getSession()->read($map['email']);
+$map = (array)Configure::read('Feedback.authMap') + [
+	'username' => 'username',
+	'email' => 'email',
+];
+if (isset($this->AuthUser)) {
+	$name = $this->AuthUser->user($map['username']) ?: $this->AuthUser->user($map['username']) ?: '';
+	$email = $this->AuthUser->user($map['email']) ?: $this->AuthUser->user($map['email']) ?: '';
+} else {
+	$username = '';
+	$email = '';
+	if (!empty($map['username'])) {
+		$username = $this->request->getSession()->read($map['username']);
+	}
+	if (!empty($map['email'])) {
+		$email = $this->request->getSession()->read($map['email']);
+	}
 }
 ?>
 
@@ -57,30 +73,35 @@ if (!empty($map['email'])) {
 </div>
 <div id="feedbackit-slideout_inner">
 	<div class="feedbackit-form-elements">
-		<div class="pull-right float-right"><i class="tab-hide fa fa-window-close" title="<?php echo __d('feedback', 'Hide this tab completely.'); ?>"></i></div>
+		<div class="pull-right float-right">
+			<i class="tab-hide <?php echo $icons['close']; ?>" title="<?php echo __d('feedback', 'Hide this tab completely.'); ?>"></i>
+		</div>
 		<p>
 			<?php echo __d('feedback','Send your feedback or bugreport!');?>
 		</p>
 		<form id="feedbackit-form" autocomplete="off">
-			<?php if (!$username) { ?>
+			<?php if ($displayExisting !== false || empty($name)) { ?>
 			<div class="form-group">
 				<input
 					type="text"
 					name="name"
 					id="feedbackit-name"
-					class="<?php if (false && $username) echo 'feedbackit-input'; ?> form-control"
-					value="<?php echo $username; ?>"
-					placeholder="<?php echo __d('feedback','Your name'); if (!$forceauthusername) echo ' (optional)'; ?>"
+					maxlength="150"
+					class="<?php if (!empty($name)) echo 'feedbackit-input"'; ?> form-control"
+					value="<?php echo $name; ?>"
+					placeholder="<?php echo __d('feedback','Your name '); if( !$forceauthusername ) echo ' (optional)'; ?>"
 					<?php if ($forceauthusername) echo 'required="required"'; ?>
 					>
 			</div>
 			<?php } ?>
-			<?php if (!$email) { ?>
+
+			<?php if ($displayExisting !== false || empty($email)) { ?>
 			<div class="form-group">
 				<input
 					type="email"
 					name="email"
 					id="feedbackit-email"
+					maxlength="150"
 					class="<?php if (false && $email) echo 'feedbackit-input'; ?> form-control"
 					value="<?php echo $email; ?>"
 					placeholder="<?php echo __d('feedback','Your e-mail'); if( !$forceemail) echo ' (optional)'; ?>"
@@ -88,11 +109,13 @@ if (!empty($map['email'])) {
 					>
 			</div>
 			<?php } ?>
+
 			<div class="form-group">
 				<input
 					type="text"
 					name="subject"
 					id="feedbackit-subject"
+					maxlength="150"
 					class="feedbackit-input form-control"
 					required="required"
 					placeholder="<?php echo __d('feedback','Subject'); ?>"
@@ -102,16 +125,16 @@ if (!empty($map['email'])) {
 				<textarea name="feedback" id="feedbackit-feedback" class="feedbackit-input form-control" required="required" placeholder="<?php echo __d('feedback','Feedback or suggestion'); ?>" rows="3"></textarea>
 			</div>
 			<div class="form-group">
-				<div>
+				<p>
 					<button
 						class="btn btn-info"
 						data-loading-text="<?php echo __d('feedback','Click anywhere on website'); ?>"
 						id="feedbackit-highlight"
 						onclick="return false;">
-						<i class="icon-screenshot icon-white"></i><span class="glyphicon glyphicon-screenshot"></span> <?php echo __d('feedback','Highlight something'); ?>
+						<i class="icon-screenshot icon-white"></i><span class="icon <?php echo $icons['screenshot']; ?>"></span> <?php echo __d('feedback','Highlight something'); ?>
 					</button>
-				</div>
-				<div class="form-group" <?php if (!$enableacceptterms) echo 'style="display:none;"'; ?>>
+				</p>
+				<div <?php if (!$enableacceptterms) echo 'style="display:none;"'; ?>>
 					<label class="checkbox checkbox-inline">
 						<input type="checkbox"
 							   required id="feedbackit-okay"
@@ -144,8 +167,8 @@ if (!empty($map['email'])) {
 				?>
 
 				<div class="btn-group">
-					<button class="btn btn-success" id="feedbackit-submit" disabled="disabled" type="submit"><i class="icon-envelope icon-white"></i><span class="glyphicon glyphicon-envelope"></span> <?php echo __d('feedback','Submit'); ?></button>
-					<button class="btn btn-danger" id="feedbackit-cancel" onclick="return false;"><i class="icon-remove icon-white"></i><span class="glyphicon glyphicon-remove"></span> <?php echo __d('feedback','Cancel'); ?></button>
+					<button class="btn btn-success" id="feedbackit-submit" disabled="disabled" type="submit"><i class="icon-envelope icon-white"></i><span class="icon <?php echo $icons['submit']; ?>"></span> <?php echo __d('feedback','Submit'); ?></button>
+					<button class="btn btn-danger" id="feedbackit-cancel" onclick="return false;"><i class="icon-remove icon-white"></i><span class="icon <?php echo $icons['cancel']; ?>"></span> <?php echo __d('feedback','Cancel'); ?></button>
 				</div>
 			</div>
 		</form>

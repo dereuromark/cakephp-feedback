@@ -62,7 +62,18 @@ class FeedbackController extends AppController {
 	public function save() {
 	    $this->request->allowMethod(['post', 'ajax']);
 
-		$data = $this->request->getData();
+		if (isset($this->AuthUser)) {
+			$name = $this->AuthUser->user('name') ?: $this->AuthUser->user('username') ?: $this->AuthUser->user('account') ?: '';
+			$email = $this->AuthUser->user('mail') ?: $this->AuthUser->user('email') ?: '';
+		} else {
+			$name = $this->request->getSession()->read('Auth.User.name') ?: $this->request->getSession()->read('Auth.User.username') ?: '';
+			$email = $this->request->getSession()->read('Auth.User.mail') ?: $this->request->getSession()->read('Auth.User.email') ?: '';
+		}
+
+		$data = (array)$this->request->getData() + [
+			'name' => $name,
+			'email' => $email,
+		];
 
 		//Is ajax action
 		$this->viewBuilder()->setLayout('ajax');
@@ -96,6 +107,9 @@ class FeedbackController extends AppController {
 			$data['name'] = __d('feedback', 'Anonymous');
 		}
 
+		$copyMe = $data['copyme'] ?? false;
+		unset($data['copyme']);
+
 		//Determine method of saving
 		$collection = new StoreCollection();
 		$result = $collection->save($data);
@@ -123,7 +137,7 @@ class FeedbackController extends AppController {
 		$this->set('msg', $result['msg']);
 
 		//Send a copy to the receiver:
-		if (!empty($data['copyme'])) {
+		if ($copyMe) {
 			//FIXME: Move to a store class
 			$this->Feedbackstore->mail($data, true);
 		}

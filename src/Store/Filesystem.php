@@ -4,6 +4,9 @@ namespace Feedback\Store;
 
 use Cake\Http\Exception\NotFoundException;
 
+/**
+ * Store to filesystem. This is a simple default for single server setups on a real server.
+ */
 class Filesystem {
 
 	/**
@@ -49,8 +52,9 @@ class Filesystem {
 			$pattern = $path . '*-' . $sid . '.feedback';
 		}
 
+		$feedbackFiles = glob($pattern) ?: [];
 		$result = [];
-		foreach (glob($pattern) as $feedbackFile) {
+		foreach ($feedbackFiles as $feedbackFile) {
 			$content = file_get_contents($feedbackFile);
 			if ($content === false) {
 				continue;

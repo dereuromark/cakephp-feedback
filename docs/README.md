@@ -29,14 +29,14 @@
 ## Usage and Configuration
 
 ### Stores
-By default it will use the Filesystem store. This only requires a writable directory below webroot (usually in `ROOT . DS . 'files' . DS`).
+By default, it will use the Filesystem store. This only requires a writable directory below webroot (usually in `ROOT . DS . 'files' . DS`).
 
 If you want to add or replace stores, you can adjust it in your config:
 ```php
 'Feedback' => [
     'stores' => [
-        \Feedback\Store\FilesystemStore::store => null, // This disables the default
-        \App\Store\MyCustomStore::store => \App\Store\MyCustomStore::store,
+        \Feedback\Store\FilesystemStore::class => null, // This disables the default
+        \App\Store\MyCustomStore::class => \App\Store\MyCustomStore::class,
         ...
     ],
 ```
@@ -55,6 +55,28 @@ If you want to add or replace stores, you can adjust it in your config:
 
 Note that only the first store will be used for feedback. This should be the primary one.
 If the others fail the user will still get the successful feedback from the first store method.
+
+#### Database Store
+You can also use the built in database storage as `feedback_items` table.
+Execute the migrations (or copy and modify on app level for custom fields):
+```
+bin/cake migrations migrate -p Feedback
+```
+
+Then make sure to hook in this store:
+```php
+'Feedback' => [
+    'stores' => [
+        \Feedback\Store\DatabaseStore::class => null, // This disables the default
+    'configuration' => [
+        'Database' => [
+            ... // optional additional config
+        ],
+        ...
+    ],
+```
+It will then store the data in this database table, and in the backend you can
+paginate and display those items.
 
 ### Other options
 

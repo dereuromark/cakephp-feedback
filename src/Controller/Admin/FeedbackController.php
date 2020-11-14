@@ -44,11 +44,26 @@ class FeedbackController extends AppController {
 	}
 
 	/**
+	 * @return \Cake\Http\Response|null|void
+	 */
+	public function index() {
+		$storeConfig = (array)Configure::read('Feedback.stores');
+
+		$stores = [];
+		foreach ($storeConfig as $store) {
+			$storeName = substr($store, strrpos($store, '\\') + 1);
+			$stores[$store] = $storeName;
+		}
+
+		$this->set(compact('stores'));
+	}
+
+	/**
 	 * Example index function for current save in tmp dir solution
 	 *
 	 * @return \Cake\Http\Response|null|void
 	 */
-	public function index() {
+	public function listing() {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 
 		$feedbacks = Filesystem::read($savepath);

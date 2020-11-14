@@ -259,6 +259,7 @@ class FeedbackstoreTable extends Table {
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 
+		/** @var string|false $result */
 		$result = curl_exec($ch);
 		$curlstatuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
@@ -285,8 +286,8 @@ class FeedbackstoreTable extends Table {
 
 				//Create new url:
 				//Replace api prefix with GitHub public domain:
-				$url = str_replace('/api.', '/', $api_url);
-				$url = str_replace('/repos/', '/', $url);
+				$url = (string)str_replace('/api.', '/', $api_url);
+				$url = (string)str_replace('/repos/', '/', $url);
 
 				//Append issue number
 				$url .= '/' . $answer->number;
@@ -363,8 +364,8 @@ class FeedbackstoreTable extends Table {
 
 				//Create new url:
 				//Replace api prefix with bitbucket public domain:
-				$url = str_replace('/api/1.0/repositories/', '/', $api_url);
-				$url = str_replace('/issues', '/issue', $url);
+				$url = (string)str_replace('/api/1.0/repositories/', '/', $api_url);
+				$url = (string)str_replace('/issues', '/issue', $url);
 
 				//Append issue number
 				$url .= '/' . $answer->local_id;
@@ -440,6 +441,7 @@ class FeedbackstoreTable extends Table {
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 
+		/** @var string|false $result */
 		$result = curl_exec($ch);
 		$curlstatuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
@@ -527,6 +529,7 @@ class FeedbackstoreTable extends Table {
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 
+		/** @var string|false $result */
 		$result = curl_exec($ch);
 		$curlstatuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 

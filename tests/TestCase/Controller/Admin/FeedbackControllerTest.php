@@ -7,6 +7,9 @@ use Cake\Http\Session;
 use Cake\TestSuite\IntegrationTestCase;
 use Feedback\Store\FilesystemStore;
 
+/**
+ * @uses \Feedback\Controller\Admin\FeedbackController
+ */
 class FeedbackControllerTest extends IntegrationTestCase {
 
 	/**
@@ -22,6 +25,16 @@ class FeedbackControllerTest extends IntegrationTestCase {
 				],
 			],
 		]);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testIndex() {
+		$this->disableErrorHandlerMiddleware();
+
+		$this->get(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'index']);
+		$this->assertResponseCode(200);
 	}
 
 	/**

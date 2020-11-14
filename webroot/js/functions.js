@@ -9,7 +9,7 @@ $(document).ready(function() {
 	/*
 	Hide all on IE < 9 OR Firefox <= 3.5
 	*/
-	if ((get_browser() == 'MSIE' && get_browser_version() <= 9) || (get_browser() == 'Firefox' && get_browser_version() <= 3.5)) {
+	if ((get_browser() === 'MSIE' && get_browser_version() <= 9) || (get_browser() === 'Firefox' && get_browser_version() <= 3.5)) {
 		slider.css( "display", 'none');
 	} else {
 		slider.css( "display", 'block');
@@ -56,36 +56,33 @@ $(document).ready(function() {
 					url : window.formURL, //Use url created in Element
 					type: "POST",
 					data : postData,
-					success:function(message, textStatus, jqXHR)
-					{
-						closeandreset();
-
-						// Only use modal if TwitterBootstrap Javascript is loaded
-						if ($.isFunction($.fn.modal)) {
-							modaltitle.html('Feedback submitted'); //FIXME: Localize
-							modalbody.html(message);
-							$('#feedbackit-modal').modal('show');
+					complete: function(e, xhr, settings){
+						if (e.status === 200) {
+							if (e.reponseText) {
+								confirmMessage = e.responseText;
+							}
+							// Only use modal if TwitterBootstrap Javascript is loaded
+							if ($.isFunction($.fn.modal)) {
+								modaltitle.html('Feedback submitted'); //FIXME: Localize
+								modalbody.html(confirmMessage);
+								$('#feedbackit-modal').modal('show');
+							} else {
+								alert(confirmMessage);
+							}
 						} else {
-							alert(confirmMessage);
+							if (e.responseText) {
+								errorMessage = e.responseText;
+							}
+							// Only use modal if TwitterBootstrap Javascript is loaded
+							if ($.isFunction($.fn.modal)) {
+								modaltitle.html('Error'); //FIXME: Localize
+								modalbody.html(errorMessage);
+								$('#feedbackit-modal').modal('show');
+							} else {
+								alert(errorMessage);
+							}
 						}
-
 					},
-					error: function(jqXHR, textStatus, errorThrown)
-					{
-						// Check for error messages
-						if (jqXHR.responseText != '') {
-							errorMessage = jqXHR.responseText;
-						}
-
-						// Only use modal if TwitterBootstrap Javascript is loaded
-						if ($.isFunction($.fn.modal)) {
-							modaltitle.html('Error');
-							modalbody.html(errorMessage);
-							$('#feedbackit-modal').modal('show');
-						} else {
-							alert(errorMessage);
-						}
-					}
 				});
 
 				//Show it again
@@ -97,7 +94,7 @@ $(document).ready(function() {
 	});
 
 	/*
-	Hightlight button click
+	 * Hightlight button click
 	 */
 	$('#feedbackit-highlight').mouseup(function() {
 

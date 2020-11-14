@@ -26,6 +26,8 @@ return [
 		'forceauthusername' => false, //If set to true, the Auth user('name') var or equivalent is made un-editable in the form
 		'forceemail' => false, //If set to true, the Auth user('email') var or equivalent is made un-editable in the form
 
+		'displayExisting' => true, // Set to false to hide username/email when they are filled by session etc
+
 		/*
 		 * Configure the different methods
 		 */

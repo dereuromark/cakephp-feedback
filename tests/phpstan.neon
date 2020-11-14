@@ -1,5 +1,7 @@
 parameters:
-    autoload_files:
-        - %rootDir%/../../../tests/bootstrap.php
-    ignoreErrors:
-        - '#Access to undefined constant Feedback\\Store\\StoreInterface::NAME.#'
+	bootstrapFiles:
+		- %rootDir%/../../../tests/bootstrap.php
+	checkMissingIterableValueType: false
+	checkGenericClassInNonGenericObjectType: false
+	ignoreErrors:
+		- '#Access to undefined constant Feedback\\Store\\StoreInterface::NAME.#'

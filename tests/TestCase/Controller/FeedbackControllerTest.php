@@ -7,6 +7,9 @@ use Cake\Http\Exception\MethodNotAllowedException;
 use Cake\TestSuite\IntegrationTestCase;
 use Feedback\Store\FilesystemStore;
 
+/**
+ * @uses \Feedback\Controller\FeedbackController
+ */
 class FeedbackControllerTest extends IntegrationTestCase {
 
 	/**
