@@ -28,6 +28,9 @@
 	<filter>
 		<whitelist>
 			<directory suffix=".php">src/</directory>
+			<exclude>
+				<file>src/Model/Table/FeedbackstoreTable.php</file>
+			</exclude>
 		</whitelist>
 	</filter>
 

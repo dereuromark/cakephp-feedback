@@ -67,7 +67,8 @@
 			<div class="screenshot">
 				<?php
 				if ($screenshot) {
-					echo '<img src="image/png;base64,' . $screenshot . '"/>';
+					$img = '<img src="data:image/png;base64,' . $screenshot . '"/>';
+					echo $this->Html->link($img, ['plugin'=>'Feedback','controller'=>'FeedbackItems','action'=>'viewimage', $feedbackItem->id], ['escapeTitle' => false, 'target' => '_blank']);
 				}
 				?>
 			</div>

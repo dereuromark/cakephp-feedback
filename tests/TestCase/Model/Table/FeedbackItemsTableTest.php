@@ -54,8 +54,15 @@ class FeedbackItemsTableTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function testValidationDefault(): void {
-		$this->markTestIncomplete('Not implemented yet.');
+	public function testSave(): void {
+		$data = [
+			'url' => 'url',
+			'sid' => 'sid',
+		];
+		$feedbackItem = $this->FeedbackItems->newEntity($data);
+		$this->FeedbackItems->saveOrFail($feedbackItem);
+
+		$this->assertNotEmpty($feedbackItem->created);
 	}
 
 }

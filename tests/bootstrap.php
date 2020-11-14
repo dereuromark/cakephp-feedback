@@ -35,6 +35,7 @@ Cake\Core\Configure::write('App', [
 	'paths' => [
 		'templates' => [TESTS . 'test_app' . DS . 'templates' . DS],
 	],
+	'fullBaseUrl' => 'http://localhost',
 ]);
 
 Cake\Core\Configure::write('debug', true);

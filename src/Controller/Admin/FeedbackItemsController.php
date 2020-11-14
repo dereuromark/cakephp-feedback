@@ -67,6 +67,25 @@ class FeedbackItemsController extends AppController {
 	}
 
 	/**
+	 * Temp function to view captured image from index page
+	 *
+	 * @param string|int|null $id
+	 *
+	 * @return \Cake\Http\Response|null|void
+	 */
+	public function viewimage($id) {
+		$feedbackItem = $this->FeedbackItems->get($id);
+
+		if (!isset($feedbackItem->data['screenshot'])) {
+			throw new NotFoundException('No screenshot found');
+		}
+
+		$this->set('screenshot', $feedbackItem->data['screenshot']);
+
+		$this->viewBuilder()->setLayout('ajax');
+	}
+
+	/**
 	 * @param string|null $id Feedback Item id.
 	 * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
 	 */
