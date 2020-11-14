@@ -19,9 +19,12 @@ return [
 		//TODO: enable again using Email class or even store
 		'enablecopybyemail' => false, // If set to true, visitors can check a 'send me a copy' button
 
-		//TODO: enable again
-		'forceauthusername' => false, //If set to true, the AuthComponent::user('name') var or equivalent is made un-editable in the form
-		'forceemail' => false, //If set to true, the AuthComponent::user('email') var or equivalent is made un-editable in the form
+		'authMap' => [
+			'username' => 'Auth.User.username',
+			'email' => 'Auth.User.email',
+		],
+		'forceauthusername' => false, //If set to true, the Auth user('name') var or equivalent is made un-editable in the form
+		'forceemail' => false, //If set to true, the Auth user('email') var or equivalent is made un-editable in the form
 
 		/*
 		 * Configure the different methods

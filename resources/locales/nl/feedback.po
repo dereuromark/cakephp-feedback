@@ -65,7 +65,7 @@ msgid "Thank you. Your feedback was saved."
 msgstr "Dank u. Uw feedback is opgeslagen."
 
 #: Model/Feedbackstore.php:34;116
-msgid "View your feedback on: "
+msgid "View your feedback on:"
 msgstr "Bekijk uw feedback op:"
 
 #: Model/Feedbackstore.php:165
@@ -97,11 +97,11 @@ msgid "Send your feedback or bugreport!"
 msgstr "Stuur uw feedback of bugmelding!"
 
 #: View/Elements/feedbackbar.ctp:80
-msgid "Your name "
+msgid "Your name"
 msgstr "Uw naam"
 
 #: View/Elements/feedbackbar.ctp:91
-msgid "Your e-mail "
+msgid "Your e-mail"
 msgstr "Uw e-mail"
 
 #: View/Elements/feedbackbar.ctp:102

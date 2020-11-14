@@ -33,7 +33,7 @@ msgstr ""
 
 #: Model/Table/FeedbackstoreTable.php:94;265;344;446;535
 #: Store/FilesystemStore.php:35
-msgid "View your feedback on: "
+msgid "View your feedback on:"
 msgstr ""
 
 #: Model/Table/FeedbackstoreTable.php:166
@@ -53,11 +53,11 @@ msgid "Send your feedback or bugreport!"
 msgstr ""
 
 #: Template/Element/sidebar.ctp:71
-msgid "Your name "
+msgid "Your name"
 msgstr ""
 
 #: Template/Element/sidebar.ctp:82
-msgid "Your e-mail "
+msgid "Your e-mail"
 msgstr ""
 
 #: Template/Element/sidebar.ctp:93

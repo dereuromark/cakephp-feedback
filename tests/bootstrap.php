@@ -64,6 +64,7 @@ Cake\Cache\Cache::setConfig($cache);
 class_alias(TestApp\Application::class, 'App\Application');
 class_alias(TestApp\Controller\AppController::class, 'App\Controller\AppController');
 class_alias(Cake\ORM\Table::class, 'App\Model\Table\Table');
+class_alias(Cake\View\View::class, 'App\View\AppView');
 
 Cake\Core\Plugin::getCollection()->add(new Feedback\Plugin());
 
