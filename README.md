@@ -1,6 +1,7 @@
 # CakePHP Feedback Plugin
 
 [![Build Status](https://api.travis-ci.com/dereuromark/cakephp-feedback.svg?branch=master)](https://travis-ci.com/dereuromark/cakephp-feedback)
+[![codecov](https://codecov.io/gh/dereuromark/cakephp-feedback/branch/master/graph/badge.svg)](https://codecov.io/gh/dereuromark/cakephp-feedback)
 [![Latest Stable Version](https://poser.pugx.org/dereuromark/cakephp-feedback/v/stable.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/dereuromark/cakephp-feedback/license.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
@@ -13,24 +14,27 @@ This branch is for **CakePHP 4.0+**. For details see [version map](https://githu
 
 ### Currently saves the following on form submit
 
-* Name of sender (optional, can work with AuthComponent)
+* Name of sender (optional)
 * E-mail of sender (optional)
 * Subject
-* Message
+* Feedback message
 * Current URL
-* Screenshot of body DOM element
+* Screenshot of body DOM element (with marker as option)
 * Browser and browser version
 * User OS flavor
+
+Name and E-Mail can be auto-retreived from TinyAuth.AuthUser or plain session Auth.
 
 ### Save options (configurable and extendable)
 
 Out of the box:
 
 * Filesystem
+* Database
 
 Easily extendable to:
 
-* Database
+* Custom Database
 * Email
 * [Mantis Bugtracker](http://www.mantisbt.org/)
 * [GitHub (repo issues)](https://help.github.com/articles/github-glossary#issue)
@@ -59,7 +63,7 @@ See **[Documentation](docs/)**.
 ## Demo
 https://sandbox.dereuromark.de/
 
-## 2.x version
+## CakePHP 2.x version
 
 This is the original project:
 
