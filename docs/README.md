@@ -104,7 +104,7 @@ use Feedback\Store\StoreInterface;
 
 class DatabaseStore implements StoreInterface {
 
-    const NAME = 'Database'; // For configuration options
+    public const NAME = 'Database'; // For configuration options
 
     /**
      * @param array $object
@@ -117,7 +117,7 @@ class DatabaseStore implements StoreInterface {
         $feedback = $Feedback->newEntity([
             ...
         ]);
-        $result = $Feedback->saveOrFail($feedback);
+        $result = (bool)$Feedback->save($feedback);
 
         ...
     }
