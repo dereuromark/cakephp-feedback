@@ -7,6 +7,9 @@ use App\Controller\AppController;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
+use Feedback\Store\DatabaseStore;
+use Feedback\Store\Filesystem;
+use RuntimeException;
 
 /**
  * @property \Feedback\Model\Table\FeedbackItemsTable $FeedbackItems
@@ -119,6 +122,38 @@ class FeedbackItemsController extends AppController {
 		}
 
 		return $this->redirect(['action' => 'index']);
+	}
+
+	/**
+	 * @return \Cake\Http\Response|null|void
+	 */
+	public function importFiles() {
+		$this->request->allowMethod(['post']);
+
+		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
+		if (!$savepath || !is_dir($savepath)) {
+			$this->Flash->error('No path configured or no such directory found.');
+
+			return $this->redirect($this->referer(['action' => 'index']));
+		}
+
+		$store = new DatabaseStore();
+
+		$files = glob($savepath . '*.feedback') ?: [];
+		foreach ($files as $file) {
+			$data = Filesystem::get($file);
+
+			$result = $store->save($data);
+			if (!$result['result']) {
+				throw new RuntimeException('Import failed for ' . $file);
+			}
+
+			unlink($file);
+		}
+
+		$this->Flash->success(count($files) . ' files imported.');
+
+		return $this->redirect($this->referer(['action' => 'index']));
 	}
 
 }

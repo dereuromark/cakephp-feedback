@@ -4,6 +4,7 @@
  * @var \Feedback\Model\Entity\FeedbackItem[]|\Cake\Collection\CollectionInterface $feedbackItems
  */
 
+use Cake\Core\Configure;
 use Cake\Core\Plugin;
 
 ?>
@@ -12,6 +13,9 @@ use Cake\Core\Plugin;
 		<li class="nav-item heading"><?= __('Actions') ?></li>
 		<li class="nav-item">
 			<?= $this->Html->link(__('Back'), ['controller' => 'Feedback', 'action' => 'index'], ['class' => 'nav-link']) ?>
+			<?php if (Configure::read('Feedback.configuration.Filesystem.location')) {
+			echo $this->Form->postLink(__('Import Files'), ['action' => 'importFiles'], ['class' => 'nav-link', 'confirm' => 'Sure?']);
+			} ?>
 		</li>
 	</ul>
 </nav>

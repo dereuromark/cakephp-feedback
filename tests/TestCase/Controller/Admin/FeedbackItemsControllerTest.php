@@ -22,8 +22,20 @@ class FeedbackItemsControllerTest extends TestCase {
 
 		Configure::write('Feedback', [
 			'configuration' => [
+				'Filesystem' => [
+					'location' => TMP . 'feedback_test' . DS,
+				],
 			],
 		]);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function tearDown(): void {
+		parent::tearDown();
+
+		Configure::delete('Feedback.configuration');
 	}
 
 	/**
@@ -87,6 +99,32 @@ class FeedbackItemsControllerTest extends TestCase {
 
 		$this->post(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'FeedbackItems', 'action' => 'delete', 1]);
 		$this->assertResponseCode(302);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testImportFiles(): void {
+		$this->disableErrorHandlerMiddleware();
+
+		$array = [
+			'screenshot' => 'abc',
+			'time' => time(),
+			'sid' => '123',
+			'url' => 'http://example.org',
+			'name' => 'my-name',
+			'email' => 'my-email@test.de',
+		];
+		$content = serialize($array);
+		if (!is_dir(TMP . 'feedback_test' . DS)) {
+			mkdir(TMP . 'feedback_test' . DS, 0770, true);
+		}
+		file_put_contents(TMP . 'feedback_test' . DS . '1605397242-sid.feedback', $content);
+
+		$this->post(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'FeedbackItems', 'action' => 'importFiles']);
+		$this->assertResponseCode(302);
+
+		$this->assertFileNotExists(TMP . 'feedback_test' . DS . '1605397242-sid.feedback');
 	}
 
 }
