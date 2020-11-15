@@ -16,9 +16,9 @@ if (!Configure::read('Feedback.skipCss')) {
 
 $icons = (array)Configure::read('Feedback.icons') + [
 	'close' => 'fa fa-window-close',
-	'screenshot' => 'fa fa-crosshairs', // glyphicon glyphicon-screenshot
-	'submit' => 'glyphicon glyphicon-envelope',
-	'cancel' => 'glyphicon glyphicon-remove',
+	'screenshot' => 'fa fa-crosshairs', // formerly glyphicon glyphicon-screenshot
+	'submit' => 'fa fa-envelope-o', // formerly glyphicon glyphicon-envelope
+	'cancel' => 'fa fa-times', // formerly glyphicon glyphicon-remove
 ];
 
 // This will be rendered with the rest of the JS files in the end part of body section.
