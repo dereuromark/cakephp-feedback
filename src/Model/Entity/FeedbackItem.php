@@ -31,12 +31,12 @@ class FeedbackItem extends Entity {
 	protected static $statuses = [
 		self::STATUS_NEW => 'new',
 		self::STATUS_PROGRESS => 'in progress',
-		self::STATUS_ARCHIVE => 'archive',
+		self::STATUS_ARCHIVED => 'archived',
 	];
 
 	public const STATUS_NEW = 0;
 	public const STATUS_PROGRESS = 1;
-	public const STATUS_ARCHIVE = 2;
+	public const STATUS_ARCHIVED = 2;
 
 	/**
 	 * Fields that can be mass assigned using newEntity() or patchEntity().

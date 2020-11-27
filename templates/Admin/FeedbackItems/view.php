@@ -74,7 +74,7 @@
 				</tr>
 				<tr>
 					<th><?= __('Priority') ?></th>
-					<td><?= $feedbackItem->priority !== null ? $feedbackItem::priorities($feedbackItem->priority) : '' ?></td>
+					<td><?= $feedbackItem->priority ? $feedbackItem::priorities($feedbackItem->priority) : '' ?></td>
 				</tr>
 				<tr>
 					<th><?= __('Status') ?></th>

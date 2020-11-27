@@ -40,7 +40,7 @@ foreach ($stores as $store => $storeName) {
 		<?php foreach ($feedbackItems as $feedbackItem) { ?>
 		<li>
 			<?php
-			if ($feedbackItem->priority !== null) {
+			if ($feedbackItem->priority) {
 				echo '[' . $feedbackItem::priorities($feedbackItem->priority) . '] ';
 			}
 			echo $this->Html->link($feedbackItem->subject, ['controller' => 'FeedbackItems', 'action' => 'view', $feedbackItem->id]);
