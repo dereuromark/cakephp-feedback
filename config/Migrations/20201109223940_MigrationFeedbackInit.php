@@ -54,6 +54,11 @@ class MigrationFeedbackInit extends AbstractMigration
 				'limit' => MysqlAdapter::TEXT_MEDIUM, // Only needed for MySQL to store more than 65k
 				'null' => true,
 			])
+		   ->addColumn('priority', 'string', [
+				'default' => null,
+				'limit' => 20,
+				'null' => true,
+			])
 			->addColumn('status', 'integer', [
 				'default' => 0,
 				'limit' => 2,

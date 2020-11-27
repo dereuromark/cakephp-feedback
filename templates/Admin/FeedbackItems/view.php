@@ -15,11 +15,29 @@
 	</aside>
 	<div class="column-responsive column-80 content large-9 medium-8 col-sm-8 col-xs-12">
 		<div class="feedbackItems view content">
-			<h2><?= h($this->Text->truncate($feedbackItem->url_short)) ?></h2>
+			<h2><?= h($this->Text->truncate($feedbackItem->subject)) ?></h2>
+			<?php if ($feedbackItem->status === $feedbackItem::STATUS_NEW) { ?>
+				<?php
+				$classes = [
+					'primary',
+					'secondary',
+				];
+				$statuses = $feedbackItem::statuses();
+				?>
+				<?php foreach ($statuses as $key => $value) { ?>
+					<?php if ($key === $feedbackItem::STATUS_NEW) {
+						continue;
+					}
+					$class = array_shift($classes) ?: 'default';
+
+					echo $this->Form->postLink($value, ['action' => 'edit', $feedbackItem->id], ['data' => ['status' => $key], 'class' => 'btn btn-' . $class, 'confirm' => 'Sure?']);
+					?>
+				<?php } ?>
+			<?php } ?>
 
 			<?php
 			$screenshot = $feedbackItem->data['screenshot'] ?? null;
-			//unset($feedbackItem->data['screenshot']);
+			unset($feedbackItem->data['screenshot']);
 			?>
 
 			<div class="text">
@@ -55,8 +73,12 @@
 					<td><pre><?= print_r(h($feedbackItem->data), true); ?></pre></td>
 				</tr>
 				<tr>
+					<th><?= __('Priority') ?></th>
+					<td><?= $feedbackItem->priority !== null ? $feedbackItem::priorities($feedbackItem->priority) : '' ?></td>
+				</tr>
+				<tr>
 					<th><?= __('Status') ?></th>
-					<td><?= $this->Number->format($feedbackItem->status) ?></td>
+					<td><?= $feedbackItem->status !== null ? $feedbackItem::statuses($feedbackItem->status) : '' ?></td>
 				</tr>
 				<tr>
 					<th><?= __('Created') ?></th>
@@ -67,7 +89,7 @@
 			<div class="screenshot">
 				<?php
 				if ($screenshot) {
-					$img = '<img src="data:image/png;base64,' . $screenshot . '"/>';
+					$img = '<img class="screenshot responsive img-fluid" src="data:image/png;base64,' . $screenshot . '"/>';
 					echo $this->Html->link($img, ['plugin'=>'Feedback','controller'=>'FeedbackItems','action'=>'viewimage', $feedbackItem->id], ['escapeTitle' => false, 'target' => '_blank']);
 				}
 				?>

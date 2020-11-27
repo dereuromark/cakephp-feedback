@@ -27,9 +27,10 @@ use Cake\Core\Plugin;
 		<table class="table table-sm table-striped">
 			<thead>
 				<tr>
-					<th><?= $this->Paginator->sort('sid') ?></th>
+					<th><?= $this->Paginator->sort('priority') ?></th>
 					<th><?= $this->Paginator->sort('url') ?></th>
 					<th><?= $this->Paginator->sort('subject') ?></th>
+					<th><?= $this->Paginator->sort('email') ?></th>
 					<th><?= $this->Paginator->sort('created', null, ['direction' => 'desc']) ?></th>
 					<th class="actions"><?= __('Actions') ?></th>
 				</tr>
@@ -37,12 +38,16 @@ use Cake\Core\Plugin;
 			<tbody>
 				<?php foreach ($feedbackItems as $feedbackItem): ?>
 				<tr>
-					<td><?= h($feedbackItem->sid) ?></td>
+					<td>
+						<?= $feedbackItem->priority ? h($feedbackItem::priorities($feedbackItem->priority)) : '' ?>
+						<div><small><?php echo $feedbackItem->status !== null ? $feedbackItem::statuses($feedbackItem->status) : ''?></small></div>
+					</td>
 					<td><?= h($feedbackItem->url) ?></td>
-					<td><?= h($feedbackItem->name) ?></td>
-					<td><?= h($feedbackItem->email) ?></td>
+					<td>
+						<?= h($feedbackItem->email) ?> [<?= h($feedbackItem->name) ?>]
+						<div><small><?php echo h($feedbackItem->sid); ?></small></div>
+					</td>
 					<td><?= h($feedbackItem->subject) ?></td>
-					<td><?= $this->Number->format($feedbackItem->status) ?></td>
 					<td><?= $this->Time->nice($feedbackItem->created) ?></td>
 					<td class="actions">
 						<?php echo $this->Html->link(isset($this->Format) ? $this->Format->icon('view') : __('View'), ['action' => 'view', $feedbackItem->id], ['escapeTitle' => false]); ?>

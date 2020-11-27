@@ -84,6 +84,10 @@ class FeedbackItemsTable extends Table {
 			->allowEmptyString('name');
 
 		$validator
+			->scalar('priority')
+			->allowEmptyString('priority');
+
+		$validator
 			->email('email')
 			->allowEmptyString('email');
 

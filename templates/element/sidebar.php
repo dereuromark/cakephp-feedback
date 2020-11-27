@@ -4,6 +4,7 @@
  */
 
 use Cake\Core\Configure;
+use Feedback\Store\Priorities;
 
 if (!Configure::read('Feedback')) {
 	throw new RuntimeException('No Feedback plugin config found.');
@@ -42,6 +43,8 @@ $termstext = '';
 if ($enableacceptterms) {
 	$termstext = Configure::read('Feedback.termstext') ? __d('feedback', 'When you submit, a screenshot (of only this website) will be taken to aid us in processing your feedback or bugreport.') : '';
 }
+
+$priorities = Priorities::getList();
 
 $map = (array)Configure::read('Feedback.authMap') + [
 	'username' => 'username',
@@ -125,6 +128,13 @@ if (isset($this->AuthUser)) {
 				<textarea name="feedback" id="feedbackit-feedback" class="feedbackit-input form-control" required="required"
 					placeholder="<?php echo __d('feedback','Feedback or suggestion'); ?>" rows="3"></textarea>
 			</div>
+
+			<?php if ($priorities) { ?>
+			<div class="form-group">
+				<?php echo $this->Form->select('priority', $priorities, ['id' => 'feedbackit-priority', 'class' => 'feedbackit-input form-control']); ?>
+			</div>
+			<?php } ?>
+
 			<div class="form-group">
 				<p>
 					<button

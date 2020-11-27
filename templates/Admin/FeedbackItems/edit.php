@@ -29,7 +29,8 @@
 					echo $this->Form->control('feedback');
 					echo $this->Form->control('name');
 					echo $this->Form->control('email');
-					echo $this->Form->control('status');
+					echo $this->Form->control('priority', ['options' => $feedbackItem::priorities()]);
+					echo $this->Form->control('status', ['options' => $feedbackItem::statuses()]);
 				?>
 			</fieldset>
 			<?= $this->Form->button(__('Submit')) ?>

@@ -5,6 +5,7 @@ namespace Feedback\Model\Entity;
 
 use Cake\Core\Configure;
 use Cake\ORM\Entity;
+use Feedback\Store\Priorities;
 
 /**
  * FeedbackItem Entity
@@ -16,12 +17,26 @@ use Cake\ORM\Entity;
  * @property string|null $email
  * @property string|null $subject
  * @property string|null $feedback
+ * @property string|int|null $priority
  * @property array $data
  * @property int $status
  * @property \Cake\I18n\FrozenTime $created
  * @property string|null $url_short
  */
 class FeedbackItem extends Entity {
+
+	/**
+	 * @var string[]
+	 */
+	protected static $statuses = [
+		self::STATUS_NEW => 'new',
+		self::STATUS_PROGRESS => 'in progress',
+		self::STATUS_ARCHIVE => 'archive',
+	];
+
+	public const STATUS_NEW = 0;
+	public const STATUS_PROGRESS = 1;
+	public const STATUS_ARCHIVE = 2;
 
 	/**
 	 * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -49,6 +64,46 @@ class FeedbackItem extends Entity {
 		$base = (string)Configure::read('App.fullBaseUrl');
 
 		return str_replace($base, '', $url);
+	}
+
+	/**
+	 * @param string|null $value
+	 *
+	 * @return string|string[]|null
+	 */
+	public static function priorities($value = null) {
+		$priorities = Priorities::getList();
+		if ($value === null) {
+			return $priorities;
+		}
+
+		if (!isset($priorities[$value])) {
+			return null;
+		}
+
+		return $priorities[$value];
+	}
+
+	/**
+	 * @param string|null $value
+	 *
+	 * @return string|string[]|null
+	 */
+	public static function statuses($value = null) {
+		$statuses = static::$statuses;
+		foreach ($statuses as $key => $name) {
+			$statuses[$key] = __d('feedback', $name);
+		}
+
+		if ($value === null) {
+			return $statuses;
+		}
+
+		if (!isset($statuses[$value])) {
+			return null;
+		}
+
+		return $statuses[$value];
 	}
 
 }

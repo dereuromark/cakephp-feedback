@@ -55,6 +55,14 @@ class FeedbackController extends AppController {
 			$stores[$store] = $storeName;
 		}
 
+		if (isset($stores['Feedback\Store\DatabaseStore'])) {
+			$feedbackItemsTable = $this->getTableLocator()->get(Configure::read('Feedback.configuration.Database.table') ?? 'Feedback.FeedbackItems');
+			/** @var \Feedback\Model\Entity\FeedbackItem $entityClass */
+			$entityClass = $feedbackItemsTable->getEntityClass();
+			$feedbackItems = $feedbackItemsTable->find()->where(['status' => $entityClass::STATUS_NEW])->all()->toArray();
+			$this->set(compact('feedbackItems'));
+		}
+
 		$this->set(compact('stores'));
 	}
 
