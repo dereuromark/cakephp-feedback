@@ -90,7 +90,7 @@ if (isset($this->AuthUser)) {
 					name="name"
 					id="feedbackit-name"
 					maxlength="150"
-					class="<?php if (!empty($name)) echo 'feedbackit-input"'; ?> form-control"
+					class="<?php if (!empty($name)) echo 'feedbackit-input'; ?> form-control"
 					value="<?php echo $name; ?>"
 					placeholder="<?php echo __d('feedback','Your name '); if( !$forceauthusername ) echo ' (optional)'; ?>"
 					<?php if ($forceauthusername) echo 'required="required"'; ?>
