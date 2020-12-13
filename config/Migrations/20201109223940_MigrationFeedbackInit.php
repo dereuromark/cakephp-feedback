@@ -7,18 +7,20 @@ use Phinx\Db\Adapter\MysqlAdapter;
 /**
  * This is only an example/default table. You can use your own on app level.
  */
-class MigrationFeedbackInit extends AbstractMigration
-{
-    /**
-     * Change Method.
-     *
-     * More information on this method is available here:
-     * https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method
-     * @return void
-     */
-    public function change()
-    {
-    	$this->table('feedback_items')
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
+// phpcs:disable PSR2R.Classes.ClassFileName.NoMatch
+class MigrationFeedbackInit extends AbstractMigration {
+
+	/**
+	 * Change Method.
+	 *
+	 * More information on this method is available here:
+	 * https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method
+	 *
+	 * @return void
+	 */
+	public function change() {
+		$this->table('feedback_items')
 			->addColumn('sid', 'string', [
 				'default' => null,
 				'limit' => 128,
@@ -69,5 +71,6 @@ class MigrationFeedbackInit extends AbstractMigration
 				'null' => false,
 			])
 			->create();
-    }
+	}
+
 }
