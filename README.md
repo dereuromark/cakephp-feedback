@@ -1,7 +1,7 @@
 # CakePHP Feedback Plugin
 
 [![CI](https://github.com/dereuromark/cakephp-feedback/workflows/CI/badge.svg?branch=master)](https://github.com/dereuromark/cakephp-feedback/actions?query=workflow%3ACI+branch%3Amaster)
-[![codecov](https://codecov.io/gh/dereuromark/cakephp-feedback/branch/master/graph/badge.svg)](https://codecov.io/gh/dereuromark/cakephp-feedback)
+[![Coverage](https://img.shields.io/codecov/c/github/dereuromark/cakephp-feedback/master.svg)](https://codecov.io/gh/dereuromark/cakephp-feedback)
 [![Latest Stable Version](https://poser.pugx.org/dereuromark/cakephp-feedback/v/stable.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/dereuromark/cakephp-feedback/license.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
