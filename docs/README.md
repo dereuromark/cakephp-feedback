@@ -67,7 +67,8 @@ Then make sure to hook in this store:
 ```php
 'Feedback' => [
     'stores' => [
-        \Feedback\Store\DatabaseStore::class => null, // This disables the default
+        \Feedback\Store\FilesystemStore::class => null, // This disables the default
+        \Feedback\Store\DatabaseStore::class => \Feedback\Store\DatabaseStore::class,
     'configuration' => [
         'Database' => [
             ... // optional additional config
