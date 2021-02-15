@@ -43,11 +43,11 @@ use Cake\Core\Plugin;
 						<div><small><?php echo $feedbackItem->status !== null ? $feedbackItem::statuses($feedbackItem->status) : ''?></small></div>
 					</td>
 					<td><?= h($feedbackItem->url) ?></td>
+					<td><?= h($feedbackItem->subject) ?></td>
 					<td>
 						<?= h($feedbackItem->email) ?> [<?= h($feedbackItem->name) ?>]
 						<div><small><?php echo h($feedbackItem->sid); ?></small></div>
 					</td>
-					<td><?= h($feedbackItem->subject) ?></td>
 					<td><?= $this->Time->nice($feedbackItem->created) ?></td>
 					<td class="actions">
 						<?php echo $this->Html->link(isset($this->Format) ? $this->Format->icon('view') : __('View'), ['action' => 'view', $feedbackItem->id], ['escapeTitle' => false]); ?>
