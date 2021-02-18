@@ -15,7 +15,7 @@
 	</aside>
 	<div class="column-responsive column-80 content large-9 medium-8 col-sm-8 col-xs-12">
 		<div class="feedbackItems view content">
-			<h2><?= h($this->Text->truncate($feedbackItem->subject)) ?></h2>
+			<h1><?= h($this->Text->truncate($feedbackItem->subject)) ?></h1>
 			<?php if ($feedbackItem->status === $feedbackItem::STATUS_NEW) { ?>
 				<?php
 				$classes = [

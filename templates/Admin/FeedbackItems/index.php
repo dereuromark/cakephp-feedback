@@ -21,7 +21,7 @@ use Cake\Core\Plugin;
 </nav>
 <div class="feedbackItems index content large-9 medium-8 columns col-sm-8 col-12">
 
-	<h2><?= __('Feedback Items') ?></h2>
+	<h1><?= __('Feedback Items') ?></h1>
 
 	<div class="">
 		<table class="table table-sm table-striped">

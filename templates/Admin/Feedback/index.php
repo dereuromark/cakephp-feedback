@@ -15,7 +15,7 @@ $map = [
 ];
 ?>
 
-<h2>Active Stores</h2>
+<h1>Active Stores</h1>
 <ul>
 <?php
 foreach ($stores as $store => $storeName) {
