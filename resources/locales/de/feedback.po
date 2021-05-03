@@ -94,3 +94,15 @@ msgstr "damit"
 
 msgid "Hide this tab completely."
 msgstr "Diesen Reiter komplett ausblenden."
+
+msgid " - no priority - "
+msgstr " - keine - "
+
+msgid "low"
+msgstr "Niedrig"
+
+msgid "medium"
+msgstr "Mittel"
+
+msgid "high"
+msgstr "Hoch"

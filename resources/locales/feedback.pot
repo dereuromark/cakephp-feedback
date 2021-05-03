@@ -104,3 +104,14 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
+msgid " - no priority - "
+msgstr ""
+
+msgid "low"
+msgstr ""
+
+msgid "medium"
+msgstr ""
+
+msgid "high"
+msgstr ""
