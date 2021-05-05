@@ -32,7 +32,7 @@ use Cake\Validation\Validator;
 class FeedbackItemsTable extends Table {
 
 	/**
-	 * @var array
+	 * @var array|string
 	 */
 	protected $order = [
 		'created' => 'DESC',
