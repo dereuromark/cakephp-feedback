@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace Feedback\Model\Table;
 
+use ArrayObject;
 use Cake\Database\Schema\TableSchemaInterface;
+use Cake\Event\EventInterface;
+use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -27,6 +30,13 @@ use Cake\Validation\Validator;
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class FeedbackItemsTable extends Table {
+
+	/**
+	 * @var array
+	 */
+	protected $order = [
+		'created' => 'DESC',
+	];
 
 	/**
 	 * @param \Cake\Database\Schema\TableSchema $schema
@@ -53,6 +63,8 @@ class FeedbackItemsTable extends Table {
 		$this->setPrimaryKey('id');
 
 		$this->addBehavior('Timestamp');
+
+		$this->_prefixOrderProperty();
 	}
 
 	/**
@@ -105,6 +117,67 @@ class FeedbackItemsTable extends Table {
 			->allowEmptyString('status');
 
 		return $validator;
+	}
+
+	/**
+	 * Sets the default ordering as 2.x shim.
+	 *
+	 * If you don't want that, don't call parent when overwriting it in extending classes.
+	 *
+	 * @param \Cake\Event\EventInterface $event
+	 * @param \Cake\ORM\Query $query
+	 * @param \ArrayObject $options
+	 * @param bool $primary
+	 * @return \Cake\ORM\Query
+	 */
+	public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, bool $primary) {
+		$order = $query->clause('order');
+		if (($order === null || !count($order)) && !empty($this->order)) {
+			$query->order($this->order);
+		}
+
+		return $query;
+	}
+
+	/**
+	 * Prefixes the order property with the actual alias if its a string or array.
+	 *
+	 * The core fails on using the proper prefix when building the query with two
+	 * different tables.
+	 *
+	 * @return void
+	 */
+	protected function _prefixOrderProperty(): void {
+		if (is_string($this->order)) {
+			$this->order = $this->_prefixAlias($this->order);
+		}
+		if (is_array($this->order)) {
+			foreach ($this->order as $key => $value) {
+				if (is_numeric($key)) {
+					$this->order[$key] = $this->_prefixAlias($value);
+				} else {
+					$newKey = $this->_prefixAlias($key);
+					$this->order[$newKey] = $value;
+					if ($newKey !== $key) {
+						unset($this->order[$key]);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Checks if a string of a field name contains a dot if not it will add it and add the alias prefix.
+	 *
+	 * @param string $string
+	 * @return string
+	 */
+	protected function _prefixAlias($string) {
+		if (strpos($string, '.') === false) {
+			return $this->getAlias() . '.' . $string;
+		}
+
+		return $string;
 	}
 
 }
