@@ -30,7 +30,7 @@ class FeedbackController extends AppController {
 	}
 
 	/**
-	 * @param \Cake\Event\Event $event
+	 * @param \Cake\Event\EventInterface $event
 	 *
 	 * @return bool|\Cake\Http\Response|null
 	 */
