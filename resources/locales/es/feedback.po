@@ -1,0 +1,122 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2018-01-16 14:00+0000\n"
+"PO-Revision-Date: 2021-05-22 00:35+0100\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"Last-Translator: Hache_raw <correo@jorgeff.com>\n"
+"Language: es_ES\n"
+
+#: Controller/FeedbackController.php:59
+msgid "Anonymous"
+msgstr "Anónimo"
+
+#: Controller/FeedbackController.php:81
+msgid "Error saving feedback."
+msgstr "Error al guardar el comentario."
+
+#: Controller/FeedbackController.php:85
+msgid "Your feedback was saved successfully."
+msgstr "Tu comentario fue guardado correctamente."
+
+#: Model/Table/FeedbackstoreTable.php:90;179;261;340;442;531
+#: Store/FilesystemStore.php:31
+msgid "Thank you. Your feedback was saved."
+msgstr "Gracias. Tu comentario se ha guardado."
+
+#: Model/Table/FeedbackstoreTable.php:94;265;344;446;535
+#: Store/FilesystemStore.php:35
+msgid "View your feedback on:"
+msgstr "Ver tu comentario en:"
+
+#: Model/Table/FeedbackstoreTable.php:166
+msgid "A copy of your submitted feedback:"
+msgstr "Una copia del comentario enviado:"
+
+#: Template/Element/sidebar.ctp:35
+msgid ""
+"When you submit, a screenshot (of only this website) will be taken to aid us "
+"in processing your feedback or bugreport."
+msgstr ""
+"Al enviar, se generará una captura de pantalla (de solo este sitio) que nos "
+"ayudará a entender tu comentario o fallo."
+
+#: Template/Element/sidebar.ctp:59
+msgid "Hide this tab completely."
+msgstr "Ocultar esta pestaña por completo."
+
+#: Template/Element/sidebar.ctp:61
+msgid "Send your feedback or bugreport!"
+msgstr "¡Envía un comentario o reporta un fallo!"
+
+#: Template/Element/sidebar.ctp:71
+msgid "Your name"
+msgstr "Tu nombre"
+
+#: Template/Element/sidebar.ctp:82
+msgid "Your e-mail"
+msgstr "Tu correo"
+
+#: Template/Element/sidebar.ctp:93
+msgid "Subject"
+msgstr "Asunto"
+
+#: Template/Element/sidebar.ctp:97
+msgid "Feedback or suggestion"
+msgstr "Comentario o sugerencia"
+
+#: Template/Element/sidebar.ctp:103
+msgid "Click anywhere on website"
+msgstr "Haz clic en cualquier parte del sitio"
+
+#: Template/Element/sidebar.ctp:106
+msgid "Highlight something"
+msgstr "Resalta algo"
+
+#: Template/Element/sidebar.ctp:123
+msgid "this"
+msgstr "esto"
+
+#: Template/Element/sidebar.ctp:125
+msgid "I am okay with {0}."
+msgstr "Estoy de acuerdo con {0}."
+
+#: Template/Element/sidebar.ctp:134
+msgid "E-mail me a copy"
+msgstr "Envíame una copia"
+
+#: Template/Element/sidebar.ctp:142
+msgid "Submit"
+msgstr "Enviar"
+
+#: Template/Element/sidebar.ctp:143
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: Template/Element/sidebar.ctp:158
+msgid "Feedback submitted"
+msgstr "Comentario enviado"
+
+#: Template/Element/sidebar.ctp:164
+msgid "Close"
+msgstr "Cerrar"
+
+msgid " - no priority - "
+msgstr " - sin prioridad - "
+
+msgid "low"
+msgstr "baja"
+
+msgid "medium"
+msgstr "media"
+
+msgid "high"
+msgstr "alta"
