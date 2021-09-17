@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "cakephp/cakephp": "^4.0.0"
+        "cakephp/cakephp": "dev-4.next as 4.0.0"
     },
     "require-dev": {
 		"cakephp/migrations": "^3.0",
