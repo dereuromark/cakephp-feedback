@@ -8,7 +8,7 @@ use Feedback\Store\DatabaseStore;
 class DatabaseStoreTest extends TestCase {
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	protected $fixtures = [
 		'plugin.Feedback.FeedbackItems',

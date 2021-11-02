@@ -3,14 +3,14 @@
 [![CI](https://github.com/dereuromark/cakephp-feedback/workflows/CI/badge.svg?branch=master)](https://github.com/dereuromark/cakephp-feedback/actions?query=workflow%3ACI+branch%3Amaster)
 [![Coverage](https://img.shields.io/codecov/c/github/dereuromark/cakephp-feedback/master.svg)](https://codecov.io/gh/dereuromark/cakephp-feedback)
 [![Latest Stable Version](https://poser.pugx.org/dereuromark/cakephp-feedback/v/stable.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/dereuromark/cakephp-feedback/license.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
 [![Total Downloads](https://poser.pugx.org/dereuromark/cakephp-feedback/d/total.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
 
 This plugin provides a static feedback tab on the side of the screen that enables website visitor to submit feedback or bugreports.
 Features pure client-side screenshot function including user-placed highlight / accent.
 
-This branch is for **CakePHP 4.0+**. For details see [version map](https://github.com/dereuromark/cakephp-feedback/wiki#cakephp-version-map).
+This branch is for **CakePHP 4.2+**. For details see [version map](https://github.com/dereuromark/cakephp-feedback/wiki#cakephp-version-map).
 
 ### Currently saves the following on form submit
 

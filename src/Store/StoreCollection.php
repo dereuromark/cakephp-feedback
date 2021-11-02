@@ -15,7 +15,7 @@ class StoreCollection {
 	];
 
 	/**
-	 * @var \Feedback\Store\StoreInterface[]
+	 * @var array<\Feedback\Store\StoreInterface>
 	 */
 	protected $stores;
 
@@ -38,7 +38,7 @@ class StoreCollection {
 	/**
 	 * Adds a task to the collection.
 	 *
-	 * @param string|\Feedback\Store\StoreInterface $store The store to run.
+	 * @param \Feedback\Store\StoreInterface|string $store The store to run.
 	 * @return $this
 	 */
 	public function add($store) {
@@ -49,7 +49,7 @@ class StoreCollection {
 		$class = get_class($store);
 		if (!$store instanceof StoreInterface) {
 			throw new InvalidArgumentException(
-				"Cannot use '$class' as task, it is not implementing " . StoreInterface::class . '.'
+				"Cannot use '$class' as task, it is not implementing " . StoreInterface::class . '.',
 			);
 		}
 
@@ -59,7 +59,7 @@ class StoreCollection {
 	}
 
 	/**
-	 * @return \Feedback\Store\StoreInterface[]
+	 * @return array<\Feedback\Store\StoreInterface>
 	 */
 	public function stores(): array {
 		return $this->stores;

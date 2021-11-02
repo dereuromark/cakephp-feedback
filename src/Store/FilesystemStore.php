@@ -7,6 +7,9 @@ use Cake\Routing\Router;
 
 class FilesystemStore implements StoreInterface {
 
+	/**
+	 * @var string
+	 */
 	public const NAME = 'Filesystem';
 
 	/**

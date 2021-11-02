@@ -26,7 +26,7 @@ use Feedback\Store\Priorities;
 class FeedbackItem extends Entity {
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	protected static $statuses = [
 		self::STATUS_NEW => 'new',
@@ -34,8 +34,19 @@ class FeedbackItem extends Entity {
 		self::STATUS_ARCHIVED => 'archived',
 	];
 
+	/**
+	 * @var int
+	 */
 	public const STATUS_NEW = 0;
+
+	/**
+	 * @var int
+	 */
 	public const STATUS_PROGRESS = 1;
+
+	/**
+	 * @var int
+	 */
 	public const STATUS_ARCHIVED = 2;
 
 	/**
@@ -45,7 +56,7 @@ class FeedbackItem extends Entity {
 	 * be mass assigned. For security purposes, it is advised to set '*' to false
 	 * (or remove it), and explicitly make individual fields accessible as needed.
 	 *
-	 * @var array
+	 * @var array<string, bool>
 	 */
 	protected $_accessible = [
 		'*' => true,
@@ -69,7 +80,7 @@ class FeedbackItem extends Entity {
 	/**
 	 * @param string|null $value
 	 *
-	 * @return string|string[]|null
+	 * @return array<string>|string|null
 	 */
 	public static function priorities($value = null) {
 		$priorities = Priorities::getList();
@@ -87,7 +98,7 @@ class FeedbackItem extends Entity {
 	/**
 	 * @param string|null $value
 	 *
-	 * @return string|string[]|null
+	 * @return array<string>|string|null
 	 */
 	public static function statuses($value = null) {
 		$statuses = static::$statuses;

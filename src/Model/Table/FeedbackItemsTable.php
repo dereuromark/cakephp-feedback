@@ -15,11 +15,11 @@ use Cake\Validation\Validator;
  *
  * @method \Feedback\Model\Entity\FeedbackItem newEmptyEntity()
  * @method \Feedback\Model\Entity\FeedbackItem newEntity(array $data, array $options = [])
- * @method \Feedback\Model\Entity\FeedbackItem[] newEntities(array $data, array $options = [])
+ * @method array<\Feedback\Model\Entity\FeedbackItem> newEntities(array $data, array $options = [])
  * @method \Feedback\Model\Entity\FeedbackItem get($primaryKey, $options = [])
  * @method \Feedback\Model\Entity\FeedbackItem findOrCreate($search, ?callable $callback = null, $options = [])
  * @method \Feedback\Model\Entity\FeedbackItem patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \Feedback\Model\Entity\FeedbackItem[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method array<\Feedback\Model\Entity\FeedbackItem> patchEntities(iterable $entities, array $data, array $options = [])
  * @method \Feedback\Model\Entity\FeedbackItem|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \Feedback\Model\Entity\FeedbackItem saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \Feedback\Model\Entity\FeedbackItem[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])

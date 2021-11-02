@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <ruleset name="cakephp-feedback">
-
 	<arg value="nps"/>
 
 	<file>src/</file>
@@ -12,6 +11,13 @@
 	<exclude-pattern>/test_app/templates/</exclude-pattern>
 	<exclude-pattern>/plugins/Sandbox/src/Dto/</exclude-pattern>
 
-	<rule ref="vendor/fig-r/psr2r-sniffer"/>
+	<rule ref="vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml"/>
+
+	<rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+		<exclude-pattern>*/config/Migrations/*</exclude-pattern>
+	</rule>
+	<rule ref="Spryker.Classes.ClassFileName.NoMatch">
+		<exclude-pattern>*/config/Migrations/*</exclude-pattern>
+	</rule>
 
 </ruleset>

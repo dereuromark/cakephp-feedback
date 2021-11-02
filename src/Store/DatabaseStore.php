@@ -11,6 +11,9 @@ use Cake\Routing\Router;
  */
 class DatabaseStore implements StoreInterface {
 
+	/**
+	 * @var string
+	 */
 	public const NAME = 'Database';
 
 	/**

@@ -35,7 +35,7 @@ class FeedbackItemsController extends AppController {
 	/**
 	 * @param \Cake\Event\EventInterface $event
 	 *
-	 * @return bool|\Cake\Http\Response|null
+	 * @return \Cake\Http\Response|bool|null
 	 */
 	public function beforeFilter(EventInterface $event) {
 		if (Configure::read('Feedback')) {

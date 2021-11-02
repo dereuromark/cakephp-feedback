@@ -48,7 +48,7 @@ return [
 				'decodeimage' => true, //Decode image or not (Seems to differ in different Mantis versions?)
 
 				'http_username' => false, //Optional username for HTTP auth, use false if not used
-				'http_password' => false //Option password for HTTP auth, use false if not used
+				'http_password' => false, //Option password for HTTP auth, use false if not used
 			],
 
 			'mail' => [

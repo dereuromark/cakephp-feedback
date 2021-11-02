@@ -33,7 +33,7 @@ class Plugin extends BasePlugin {
 				$routes->connect('/', ['controller' => 'Feedback', 'action' => 'index']);
 
 				$routes->fallbacks();
-			}
+			},
 		);
 
 		$routes->prefix('Admin', function (RouteBuilder $routes) {

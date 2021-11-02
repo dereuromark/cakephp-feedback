@@ -7,7 +7,7 @@ use Cake\Core\Configure;
 class Priorities {
 
 	/**
-	 * @var string[]
+	 * @var array<string>
 	 */
 	protected static $defaults = [
 		'low' => 'low',
