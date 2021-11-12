@@ -108,7 +108,7 @@ class FeedbackControllerTest extends TestCase {
 		$this->assertResponseCode(302);
 		$this->assertRedirect(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'index']);
 
-		$this->assertFileNotExists($savepath . $file);
+		$this->assertFileDoesNotExist($savepath . $file);
 	}
 
 	/**

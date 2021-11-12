@@ -124,7 +124,7 @@ class FeedbackItemsControllerTest extends TestCase {
 		$this->post(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'FeedbackItems', 'action' => 'importFiles']);
 		$this->assertResponseCode(302);
 
-		$this->assertFileNotExists(TMP . 'feedback_test' . DS . '1605397242-sid.feedback');
+		$this->assertFileDoesNotExist(TMP . 'feedback_test' . DS . '1605397242-sid.feedback');
 	}
 
 }
