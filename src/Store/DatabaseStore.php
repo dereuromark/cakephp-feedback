@@ -18,7 +18,7 @@ class DatabaseStore implements StoreInterface {
 
 	/**
 	 * @param array $object
-	 * @param array $options
+	 * @param array<string, mixed> $options
 	 *
 	 * @return array
 	 */
@@ -54,7 +54,7 @@ class DatabaseStore implements StoreInterface {
 	 * Auxiliary function that saves the file
 	 *
 	 * @param array $object
-	 * @param array $options
+	 * @param array<string, mixed> $options
 	 * @return bool
 	 */
 	protected function saveToDatabase(array $object, array $options) {

@@ -8,7 +8,7 @@ use InvalidArgumentException;
 class StoreCollection {
 
 	/**
-	 * @var array
+	 * @var array<string, string>
 	 */
 	protected $defaultStores = [
 		FilesystemStore::class => FilesystemStore::class,
