@@ -22,10 +22,10 @@ use Cake\Validation\Validator;
  * @method array<\Feedback\Model\Entity\FeedbackItem> patchEntities(iterable $entities, array $data, array $options = [])
  * @method \Feedback\Model\Entity\FeedbackItem|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \Feedback\Model\Entity\FeedbackItem saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \Feedback\Model\Entity\FeedbackItem[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \Feedback\Model\Entity\FeedbackItem[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \Feedback\Model\Entity\FeedbackItem[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \Feedback\Model\Entity\FeedbackItem[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \Cake\Datasource\ResultSetInterface<\Feedback\Model\Entity\FeedbackItem>|false saveMany(iterable $entities, $options = [])
+ * @method \Cake\Datasource\ResultSetInterface<\Feedback\Model\Entity\FeedbackItem> saveManyOrFail(iterable $entities, $options = [])
+ * @method \Cake\Datasource\ResultSetInterface<\Feedback\Model\Entity\FeedbackItem>|false deleteMany(iterable $entities, $options = [])
+ * @method \Cake\Datasource\ResultSetInterface<\Feedback\Model\Entity\FeedbackItem> deleteManyOrFail(iterable $entities, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */

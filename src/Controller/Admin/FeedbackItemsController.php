@@ -13,7 +13,7 @@ use RuntimeException;
 
 /**
  * @property \Feedback\Model\Table\FeedbackItemsTable $FeedbackItems
- * @method \Feedback\Model\Entity\FeedbackItem[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \Cake\Datasource\ResultSetInterface<\Feedback\Model\Entity\FeedbackItem> paginate($object = null, array $settings = [])
  */
 class FeedbackItemsController extends AppController {
 
