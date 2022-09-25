@@ -63,7 +63,9 @@ class FeedbackController extends AppController {
 			$feedbackItemsTable = $this->getTableLocator()->get(Configure::read('Feedback.configuration.Database.table') ?? 'Feedback.FeedbackItems');
 			/** @var \Feedback\Model\Entity\FeedbackItem $entityClass */
 			$entityClass = $feedbackItemsTable->getEntityClass();
-			$feedbackItems = $feedbackItemsTable->find()->where(['status' => $entityClass::STATUS_NEW])->all()->toArray();
+			$feedbackItems = $feedbackItemsTable->find()
+				->select(['id', 'status', 'created', 'name', 'subject', 'priority'])
+				->where(['status' => $entityClass::STATUS_NEW])->all()->toArray();
 			$this->set(compact('feedbackItems'));
 		}
 
