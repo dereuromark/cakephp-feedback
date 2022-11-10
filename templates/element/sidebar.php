@@ -54,10 +54,10 @@ if (isset($this->AuthUser)) {
 	$name = $this->AuthUser->user($map['username']) ?: $this->AuthUser->user($map['username']) ?: '';
 	$email = $this->AuthUser->user($map['email']) ?: $this->AuthUser->user($map['email']) ?: '';
 } else {
-	$username = '';
+	$name = '';
 	$email = '';
 	if (!empty($map['username'])) {
-		$username = $this->request->getSession()->read($map['username']);
+		$name = $this->request->getSession()->read($map['username']);
 	}
 	if (!empty($map['email'])) {
 		$email = $this->request->getSession()->read($map['email']);
