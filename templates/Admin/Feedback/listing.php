@@ -7,6 +7,8 @@
 use Cake\Core\Configure;
 ?>
 
+<div class="feedback index content large-9 medium-8 columns col-sm-8 col-12">
+
 <h1><?php echo count($feedbacks); ?> Feedback records</h1>
 
 <?php
@@ -51,3 +53,5 @@ foreach ($feedbacks as $feedback) {
   <?php
 }
 ?>
+
+</div>

@@ -11,6 +11,14 @@
     bin/cake plugin load Feedback
     ```
 
+    Make sure to disable routing if you do not have authentication set up:
+    ```php
+    $this->addPlugin('Feedback', ['routes' => false]);
+    ```
+    You do not want visitors to be able to browse to the feedback backend.
+
+    This backend is also optional, you can always replace it with your own.
+
 3. Copy the default feedback config file into your applications config folder:
 
     Copy `vendor/dereuromark/cakephpfeedback/config/config.dist.php` to `config/app_feedback.php`
@@ -88,10 +96,23 @@ If you are using AuthComponent, you need to make sure at least `save()` method i
 If you want your visitor to see the posted feedback using `'returnlink'` key, you might also want to allow the index and viewimage actions.
 You can do that e.g. in your AppController.
 
-Tip: Use [TinyAuth](https://github.com/dereuromark/cakephp-tinyauth) and just set it in the auth_allow.ini file:
+Tip: Use [TinyAuth](https://github.com/dereuromark/cakephp-tinyauth) and just set it in the `auth_allow.ini` file:
 ```
 Feedback.Feedback = save, index, viewimage
 ```
+
+Also make sure that the admin backend is only available to respective roles.
+With TinyAuth it would look like this in `auth_acl.ini` file:
+```
+[Feedback.Admin/Feedback]
+* = admin
+
+[Feedback.Admin/FeedbackItems]
+* = admin
+```
+
+WARNING: Do not expose the controller actions without any proper auth in place.
+You do not want to make the uploaded content accessible publicly.
 
 ### Writing your own store
 

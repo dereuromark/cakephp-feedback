@@ -6,6 +6,8 @@
  */
 ?>
 
+<div class="feedback index content large-9 medium-8 columns col-sm-8 col-12">
+
 <h1>Feedback</h1>
 
 <?php
@@ -15,7 +17,7 @@ $map = [
 ];
 ?>
 
-<h1>Active Stores</h1>
+<h2>Active Stores</h2>
 <ul>
 <?php
 foreach ($stores as $store => $storeName) {
@@ -35,7 +37,7 @@ foreach ($stores as $store => $storeName) {
 </ul>
 
 <?php if (!empty($feedbackItems)) { ?>
-	<h3>New feedback</h3>
+	<h2>New feedback</h2>
 	<ul>
 		<?php foreach ($feedbackItems as $feedbackItem) { ?>
 		<li>
@@ -55,3 +57,5 @@ foreach ($stores as $store => $storeName) {
 	</ul>
 
 <?php } ?>
+
+</div>
