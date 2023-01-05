@@ -2,7 +2,7 @@
 
 namespace Feedback\Store;
 
-use Cake\I18n\FrozenTime;
+use Cake\I18n\DateTime;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 
@@ -61,7 +61,7 @@ class DatabaseStore implements StoreInterface {
 		$feedbackItemsTable = TableRegistry::getTableLocator()->get($options['table'] ?? 'Feedback.FeedbackItems');
 
 		$itemArray = [];
-		$itemArray['created'] = new FrozenTime($object['time']);
+		$itemArray['created'] = new DateTime($object['time']);
 		unset($object['time']);
 
 		$columns = $feedbackItemsTable->getSchema()->columns();

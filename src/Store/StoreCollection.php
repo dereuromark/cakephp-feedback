@@ -10,7 +10,7 @@ class StoreCollection {
 	/**
 	 * @var array<string, string>
 	 */
-	protected $defaultStores = [
+	protected array $defaultStores = [
 		FilesystemStore::class => FilesystemStore::class,
 	];
 

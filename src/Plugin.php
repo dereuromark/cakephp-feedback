@@ -10,17 +10,17 @@ class Plugin extends BasePlugin {
 	/**
 	 * @var bool
 	 */
-	protected $middlewareEnabled = false;
+	protected bool $middlewareEnabled = false;
 
 	/**
 	 * @var bool
 	 */
-	protected $consoleEnabled = false;
+	protected bool $consoleEnabled = false;
 
 	/**
 	 * @var bool
 	 */
-	protected $bootstrapEnabled = false;
+	protected bool $bootstrapEnabled = false;
 
 	/**
 	 * @param \Cake\Routing\RouteBuilder $routes The route builder to update.
@@ -29,15 +29,15 @@ class Plugin extends BasePlugin {
 	public function routes(RouteBuilder $routes): void {
 		$routes->plugin(
 			'Feedback',
-			function (RouteBuilder $routes) {
+			function (RouteBuilder $routes): void {
 				$routes->connect('/', ['controller' => 'Feedback', 'action' => 'index']);
 
 				$routes->fallbacks();
 			},
 		);
 
-		$routes->prefix('Admin', function (RouteBuilder $routes) {
-			$routes->plugin('Feedback', function (RouteBuilder $routes) {
+		$routes->prefix('Admin', function (RouteBuilder $routes): void {
+			$routes->plugin('Feedback', function (RouteBuilder $routes): void {
 				$routes->connect('/', ['controller' => 'Feedback', 'action' => 'index']);
 
 				$routes->fallbacks();

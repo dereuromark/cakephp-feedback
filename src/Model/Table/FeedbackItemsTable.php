@@ -6,7 +6,7 @@ namespace Feedback\Model\Table;
 use ArrayObject;
 use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\EventInterface;
-use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -32,18 +32,17 @@ use Cake\Validation\Validator;
 class FeedbackItemsTable extends Table {
 
 	/**
-	 * @var mixed|array|string|false
+	 * @var array<mixed>
 	 */
-	protected $order = [
+	protected array $order = [
 		'created' => 'DESC',
 	];
 
 	/**
-	 * @param \Cake\Database\Schema\TableSchema $schema
-	 *
 	 * @return \Cake\Database\Schema\TableSchema
 	 */
-	protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface {
+	public function getSchema(): TableSchemaInterface {
+		$schema = parent::getSchema();
 		$schema->setColumnType('data', 'json');
 
 		return $schema;
@@ -125,12 +124,12 @@ class FeedbackItemsTable extends Table {
 	 * If you don't want that, don't call parent when overwriting it in extending classes.
 	 *
 	 * @param \Cake\Event\EventInterface $event
-	 * @param \Cake\ORM\Query $query
+	 * @param \Cake\ORM\Query\SelectQuery $query
 	 * @param \ArrayObject $options
 	 * @param bool $primary
-	 * @return \Cake\ORM\Query
+	 * @return \Cake\ORM\Query\SelectQuery
 	 */
-	public function beforeFind(EventInterface $event, Query $query, ArrayObject $options, bool $primary) {
+	public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options, bool $primary): SelectQuery {
 		$order = $query->clause('order');
 		if (($order === null || !count($order)) && !empty($this->order)) {
 			$query->order($this->order);
@@ -148,19 +147,14 @@ class FeedbackItemsTable extends Table {
 	 * @return void
 	 */
 	protected function _prefixOrderProperty(): void {
-		if (is_string($this->order)) {
-			$this->order = $this->_prefixAlias($this->order);
-		}
-		if (is_array($this->order)) {
-			foreach ($this->order as $key => $value) {
-				if (is_numeric($key)) {
-					$this->order[$key] = $this->_prefixAlias($value);
-				} else {
-					$newKey = $this->_prefixAlias($key);
-					$this->order[$newKey] = $value;
-					if ($newKey !== $key) {
-						unset($this->order[$key]);
-					}
+		foreach ($this->order as $key => $value) {
+			if (is_numeric($key)) {
+				$this->order[$key] = $this->_prefixAlias($value);
+			} else {
+				$newKey = $this->_prefixAlias($key);
+				$this->order[$newKey] = $value;
+				if ($newKey !== $key) {
+					unset($this->order[$key]);
 				}
 			}
 		}

@@ -41,7 +41,7 @@ class FeedbackItemsControllerTest extends TestCase {
 	/**
 	 * @var array<string>
 	 */
-	protected $fixtures = [
+	protected array $fixtures = [
 		'plugin.Feedback.FeedbackItems',
 	];
 

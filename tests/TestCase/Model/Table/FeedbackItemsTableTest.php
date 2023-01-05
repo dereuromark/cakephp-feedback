@@ -23,7 +23,7 @@ class FeedbackItemsTableTest extends TestCase {
 	 *
 	 * @var array
 	 */
-	protected $fixtures = [
+	protected array $fixtures = [
 		'plugin.Feedback.FeedbackItems',
 	];
 

@@ -62,6 +62,10 @@ $cache = [
 
 Cake\Cache\Cache::setConfig($cache);
 
+Cake\Utility\Security::setSalt('123');
+
+Cake\Database\TypeFactory::map('json', \Cake\Database\Type\JsonType::class);
+
 class_alias(TestApp\Application::class, 'App\Application');
 class_alias(TestApp\Controller\AppController::class, 'App\Controller\AppController');
 class_alias(Cake\ORM\Table::class, 'App\Model\Table\Table');
@@ -83,3 +87,8 @@ Cake\Datasource\ConnectionManager::setConfig('test', [
 	'quoteIdentifiers' => true,
 	'cacheMetadata' => true,
 ]);
+
+if (env('FIXTURE_SCHEMA_METADATA')) {
+	$loader = new Cake\TestSuite\Fixture\SchemaLoader();
+	$loader->loadInternalFile(env('FIXTURE_SCHEMA_METADATA'));
+}

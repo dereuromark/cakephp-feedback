@@ -16,7 +16,7 @@ class FeedbackItemsFixture extends TestFixture {
 	 * @var array
 	 */
 	// phpcs:disable
-	public $fields = [
+	public array $fields = [
 		'id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
 		'sid' => ['type' => 'string', 'length' => 120, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null],
 		'url' => ['type' => 'string', 'length' => 190, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null],
