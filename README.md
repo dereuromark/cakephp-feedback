@@ -23,7 +23,7 @@ This branch is for **CakePHP 4.2+**. For details see [version map](https://githu
 * Browser and browser version
 * User OS flavor
 
-Name and E-Mail can be auto-retreived from TinyAuth.AuthUser or plain session Auth.
+Name and E-Mail can be auto-retrieved from TinyAuth.AuthUser or plain session Auth.
 
 ### Save options (configurable and extendable)
 
@@ -58,7 +58,7 @@ They can also be stacked (multiple stores at once).
 
 ## Installation and Usage
 
-See **[Documentation](docs/)**.
+See **[Documentation](docs/README.md)**.
 
 ## Demo
 https://sandbox.dereuromark.de/
