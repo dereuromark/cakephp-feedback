@@ -50,9 +50,9 @@ use Cake\Core\Plugin;
 					</td>
 					<td><?= $this->Time->nice($feedbackItem->created) ?></td>
 					<td class="actions">
-						<?php echo $this->Html->link(isset($this->Format) ? $this->Format->icon('view') : __('View'), ['action' => 'view', $feedbackItem->id], ['escapeTitle' => false]); ?>
-						<?php echo $this->Html->link(isset($this->Format) ? $this->Format->icon('edit') : __('Edit'), ['action' => 'edit', $feedbackItem->id], ['escapeTitle' => false]); ?>
-						<?php echo $this->Form->postLink(isset($this->Format) ? $this->Format->icon('delete') : __('Delete'), ['action' => 'delete', $feedbackItem->id], ['escapeTitle' => false, 'confirm' => __('Are you sure you want to delete # {0}?', $feedbackItem->id)]); ?>
+						<?php echo $this->Html->link(isset($this->Icon) ? $this->Icon->render('view') : __('View'), ['action' => 'view', $feedbackItem->id], ['escapeTitle' => false]); ?>
+						<?php echo $this->Html->link(isset($this->Icon) ? $this->Icon->render('edit') : __('Edit'), ['action' => 'edit', $feedbackItem->id], ['escapeTitle' => false]); ?>
+						<?php echo $this->Form->postLink(isset($this->Icon) ? $this->Icon->render('delete') : __('Delete'), ['action' => 'delete', $feedbackItem->id], ['escapeTitle' => false, 'confirm' => __('Are you sure you want to delete # {0}?', $feedbackItem->id)]); ?>
 					</td>
 				</tr>
 				<?php endforeach; ?>
