@@ -79,7 +79,9 @@ class FeedbackController extends AppController {
 		$this->viewBuilder()->setLayout('ajax');
 
 		//Save screenshot:
-		$data['screenshot'] = str_replace('data:image/png;base64,', '', $this->request->getData('screenshot'));
+		if ($this->request->getData('screenshot')) {
+			$data['screenshot'] = str_replace('data:image/png;base64,', '', $this->request->getData('screenshot'));
+		}
 
 		//Add current time to data
 		$data['time'] = time();
