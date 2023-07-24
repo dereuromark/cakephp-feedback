@@ -1,5 +1,14 @@
 <?php
 
+use Cake\Cache\Cache;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\Datasource\ConnectionManager;
+use Cake\ORM\Table;
+use Cake\View\View;
+use TestApp\Application;
+use TestApp\Controller\AppController;
+
 if (!defined('DS')) {
 	define('DS', DIRECTORY_SEPARATOR);
 }
@@ -29,7 +38,7 @@ define('CAKE', CORE_PATH . APP_DIR . DS);
 require dirname(__DIR__) . '/vendor/autoload.php';
 require CORE_PATH . 'config/bootstrap.php';
 
-Cake\Core\Configure::write('App', [
+Configure::write('App', [
 	'encoding' => 'utf-8',
 	'namespace' => 'App',
 	'paths' => [
@@ -38,7 +47,7 @@ Cake\Core\Configure::write('App', [
 	'fullBaseUrl' => 'http://localhost',
 ]);
 
-Cake\Core\Configure::write('debug', true);
+Configure::write('debug', true);
 
 $cache = [
 	'default' => [
@@ -60,14 +69,14 @@ $cache = [
 	],
 ];
 
-Cake\Cache\Cache::setConfig($cache);
+Cache::setConfig($cache);
 
-class_alias(TestApp\Application::class, 'App\Application');
-class_alias(TestApp\Controller\AppController::class, 'App\Controller\AppController');
-class_alias(Cake\ORM\Table::class, 'App\Model\Table\Table');
-class_alias(Cake\View\View::class, 'App\View\AppView');
+class_alias(Application::class, 'App\Application');
+class_alias(AppController::class, 'App\Controller\AppController');
+class_alias(Table::class, 'App\Model\Table\Table');
+class_alias(View::class, 'App\View\AppView');
 
-Cake\Core\Plugin::getCollection()->add(new Feedback\Plugin());
+Plugin::getCollection()->add(new Feedback\Plugin());
 
 // Ensure default test connection is defined
 if (!getenv('db_class')) {
@@ -75,7 +84,7 @@ if (!getenv('db_class')) {
 	putenv('db_dsn=sqlite::memory:');
 }
 
-Cake\Datasource\ConnectionManager::setConfig('test', [
+ConnectionManager::setConfig('test', [
 	'className' => 'Cake\Database\Connection',
 	'driver' => getenv('db_class') ?: null,
 	'dsn' => getenv('db_dsn') ?: null,
