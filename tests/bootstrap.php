@@ -6,6 +6,7 @@ use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Table;
 use Cake\View\View;
+use Feedback\Plugin as FeedbackPlugin;
 use TestApp\Application;
 use TestApp\Controller\AppController;
 
@@ -76,7 +77,7 @@ class_alias(AppController::class, 'App\Controller\AppController');
 class_alias(Table::class, 'App\Model\Table\Table');
 class_alias(View::class, 'App\View\AppView');
 
-Plugin::getCollection()->add(new Feedback\Plugin());
+Plugin::getCollection()->add(new FeedbackPlugin());
 
 // Ensure default test connection is defined
 if (!getenv('db_class')) {
