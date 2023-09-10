@@ -39,7 +39,7 @@ class FeedbackItemsTable extends Table {
 	];
 
 	/**
-	 * @return \Cake\Database\Schema\TableSchema
+	 * @return \Cake\Database\Schema\TableSchemaInterface
 	 */
 	public function getSchema(): TableSchemaInterface {
 		$schema = parent::getSchema();
