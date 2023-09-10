@@ -19,17 +19,16 @@
 
 	<!-- Setup a listener for fixtures -->
 	<extensions>
-		<extension class="\Cake\TestSuite\Fixture\PHPUnitExtension"/>
+		<bootstrap class="\Cake\TestSuite\Fixture\Extension\PHPUnitExtension"/>
 	</extensions>
 
-	<!-- Prevent coverage reports from looking in tests and vendors -->
-	<filter>
-		<whitelist>
+	<source>
+		<include>
 			<directory suffix=".php">src/</directory>
-			<exclude>
-				<file>src/Model/Table/FeedbackstoreTable.php</file>
-			</exclude>
-		</whitelist>
-	</filter>
+		</include>
+		<exclude>
+			<file>src/Model/Table/FeedbackstoreTable.php</file>
+		</exclude>
+	</source>
 
 </phpunit>
