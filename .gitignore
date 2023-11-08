@@ -8,4 +8,5 @@ composer.lock
 composer.phar
 phpunit.phar
 .phpunit.result.cache
+/.phpunit.cache/
 /config/Migrations/schema-dump-default.lock
