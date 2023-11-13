@@ -45,7 +45,6 @@ class FeedbackItemsFixture extends TestFixture {
 	public function init(): void {
 		$this->records = [
 			[
-				'id' => 1,
 				'sid' => 'Lorem ipsum dolor sit amet',
 				'url' => 'Lorem ipsum dolor sit amet',
 				'name' => 'Lorem ipsum dolor sit amet',
