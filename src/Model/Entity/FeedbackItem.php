@@ -17,10 +17,10 @@ use Feedback\Store\Priorities;
  * @property string|null $email
  * @property string|null $subject
  * @property string|null $feedback
- * @property string|int|null $priority
- * @property array $data
+ * @property string|null $priority
+ * @property array|null $data
  * @property int $status
- * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\DateTime $created
  * @property string|null $url_short
  */
 class FeedbackItem extends Entity {
