@@ -2,7 +2,6 @@
 	"name": "dereuromark/cakephp-feedback",
 	"description": "Feedback or bugreport (with screenshot!) tab option in your CakePHP application. Data can be posted directly to Mantis, E-mail, Github issues, filesystem, etc.",
 	"license": "MIT",
-	"homepage": "https://github.com/dereuromark/cakephp-feedback",
 	"type": "cakephp-plugin",
 	"authors": [
 		{
@@ -14,6 +13,7 @@
 			"homepage": "https://www.dereuromark.de"
 		}
 	],
+	"homepage": "https://github.com/dereuromark/cakephp-feedback",
 	"require": {
 		"php": ">=8.1",
 		"cakephp/cakephp": "^5.0.0"
@@ -23,6 +23,8 @@
 		"fig-r/psr2r-sniffer": "dev-next",
 		"phpunit/phpunit": "^10.2"
 	},
+	"minimum-stability": "stable",
+	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
 			"Feedback\\": "src/"
@@ -34,19 +36,17 @@
 			"TestApp\\": "tests/test_app/src/"
 		}
 	},
-	"scripts": {
-		"test": "phpunit",
-		"test-coverage": "phpunit --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage --coverage-clover tmp/coverage/coverage.xml",
-		"stan": "phpstan analyse",
-		"stan-setup": "cp composer.json composer.backup && composer require --dev phpstan/phpstan:^1.0.0 && mv composer.backup composer.json",
-		"cs-check": "phpcs --extensions=php",
-		"cs-fix": "phpcbf --extensions=php"
-	},
 	"config": {
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
 	},
-	"minimum-stability": "stable",
-	"prefer-stable": true
+	"scripts": {
+		"cs-check": "phpcs --extensions=php",
+		"cs-fix": "phpcbf --extensions=php",
+		"stan": "phpstan analyse",
+		"stan-setup": "cp composer.json composer.backup && composer require --dev phpstan/phpstan:^1.0.0 && mv composer.backup composer.json",
+		"test": "phpunit",
+		"test-coverage": "phpunit --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage --coverage-clover tmp/coverage/coverage.xml"
+	}
 }
