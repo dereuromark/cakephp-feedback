@@ -14,9 +14,9 @@ use Feedback\Store\Filesystem;
 class FeedbackController extends AppController {
 
 	/**
-	 * @var string
+	 * @var string|null
 	 */
-	public $modelClass = 'Feedback.Feedbackstore';
+	public ?string $defaultTable = 'Feedback.Feedbackstore';
 
 	/**
 	 * @return void
