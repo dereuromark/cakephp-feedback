@@ -60,7 +60,7 @@ class FeedbackController extends AppController {
 	 * @return \Cake\Http\Response|null|void
 	 */
 	public function save() {
-	    $this->request->allowMethod(['post', 'ajax']);
+	    $this->request->allowMethod(['put', 'post', 'ajax']);
 
 		if (isset($this->AuthUser)) {
 			$name = $this->AuthUser->user('name') ?: $this->AuthUser->user('username') ?: $this->AuthUser->user('account') ?: '';
