@@ -10,7 +10,7 @@
 				Loading...
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo __d('feedback', 'Close');?></button>
+				<button type="button" class="btn btn-default btn-secondary" data-dismiss="modal"><?php echo __d('feedback', 'Close');?></button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
