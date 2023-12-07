@@ -36,14 +36,10 @@ class FeedbackController extends AppController {
 	 * @return \Cake\Http\Response|null
 	 */
 	public function beforeFilter(EventInterface $event) {
-		// Check security component loaded and disable it for this plugin:
-		if (isset($this->Security)) {
-			$this->Security->setConfig('validatePost', false);
-			$this->Security->setConfig('unlockedActions', ['save']);
-		}
-
-		if (isset($this->Csrf) && $this->request->getAttribute('params')['action'] === 'save') {
-			$this->getEventManager()->off($this->Csrf);
+		// Check FormProtection component loaded and disable it for this plugin:
+		if (isset($this->FormProtection)) {
+			$this->FormProtection->setConfig('validatePost', false);
+			$this->FormProtection->setConfig('unlockedActions', ['save']);
 		}
 
 		if (Configure::read('Feedback')) {

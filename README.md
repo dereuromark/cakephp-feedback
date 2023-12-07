@@ -45,14 +45,14 @@ Easily extendable to:
 They can also be stacked (multiple stores at once).
 
 ### Furthermore
-* This plugin is CakePHP Security and Csrf component compatible.
+* This plugin is CakePHP FormProtection component compatible.
 * Fully localizable to your language.
 
 ## Requirements
 
 **Required:** [jQuery](http://jquery.com/)
 
-**Optional:** [Bootstrap](http://getbootstrap.com) (Bootstrap 3/4 compatible)
+**Optional:** [Bootstrap](http://getbootstrap.com) (Bootstrap 4/5 compatible)
 
 **Includes:** [html2canvas.js by niklasvh](https://github.com/niklasvh/html2canvas)
 
