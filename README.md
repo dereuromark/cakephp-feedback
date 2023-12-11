@@ -4,7 +4,7 @@
 [![Coverage](https://img.shields.io/codecov/c/github/dereuromark/cakephp-feedback/master.svg)](https://codecov.io/gh/dereuromark/cakephp-feedback)
 [![Latest Stable Version](https://poser.pugx.org/dereuromark/cakephp-feedback/v/stable.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
-[![License](https://poser.pugx.org/dereuromark/cakephp-feedback/license.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
+[![License](https://poser.pugx.org/dereuromark/cakephp-feedback/license.svg)](LICENSE)
 [![Total Downloads](https://poser.pugx.org/dereuromark/cakephp-feedback/d/total.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
 
 This plugin provides a static feedback tab on the side of the screen that enables website visitor to submit feedback or bugreports.
