@@ -10,7 +10,7 @@ use Cake\ORM\Table;
 use Cake\TestSuite\Fixture\SchemaLoader;
 use Cake\Utility\Security;
 use Cake\View\View;
-use Feedback\Plugin as FeedbackPlugin;
+use Feedback\FeedbackPlugin;
 use TestApp\Application;
 use TestApp\Controller\AppController;
 
