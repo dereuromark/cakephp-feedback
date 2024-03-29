@@ -20,7 +20,7 @@
 	},
 	"require-dev": {
 		"cakephp/migrations": "^3.0",
-		"fig-r/psr2r-sniffer": "dev-master",
+		"fig-r/psr2r-sniffer": "^1.5.1",
 		"phpunit/phpunit": "^9.5"
 	},
 	"autoload": {
