@@ -1,6 +1,6 @@
 <?php
 
-namespace IdeHelper\Test\TestCase\Generator;
+namespace Feedback\Test\TestCase\Generator;
 
 use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;

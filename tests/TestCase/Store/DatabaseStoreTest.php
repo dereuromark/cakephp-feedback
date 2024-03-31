@@ -1,6 +1,6 @@
 <?php
 
-namespace IdeHelper\Test\TestCase\Store;
+namespace Feedback\Test\TestCase\Store;
 
 use Cake\TestSuite\TestCase;
 use Feedback\Store\DatabaseStore;
