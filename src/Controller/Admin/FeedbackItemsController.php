@@ -62,9 +62,7 @@ class FeedbackItemsController extends AppController {
 	 * @return \Cake\Http\Response|null|void Renders view
 	 */
 	public function view($id = null) {
-		$feedbackItem = $this->FeedbackItems->get($id, [
-			'contain' => [],
-		]);
+		$feedbackItem = $this->FeedbackItems->get($id);
 
 		$this->set(compact('feedbackItem'));
 	}
@@ -93,9 +91,7 @@ class FeedbackItemsController extends AppController {
 	 * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
 	 */
 	public function edit($id = null) {
-		$feedbackItem = $this->FeedbackItems->get($id, [
-			'contain' => [],
-		]);
+		$feedbackItem = $this->FeedbackItems->get($id);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$feedbackItem = $this->FeedbackItems->patchEntity($feedbackItem, $this->request->getData());
 			if ($this->FeedbackItems->save($feedbackItem)) {
