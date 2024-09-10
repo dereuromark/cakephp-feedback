@@ -50,7 +50,7 @@ $map = (array)Configure::read('Feedback.authMap') + [
 	'username' => 'username',
 	'email' => 'email',
 ];
-if (isset($this->AuthUser)) {
+if ($this->helpers()->has('AuthUser')) {
 	$name = $this->AuthUser->user($map['username']) ?: $this->AuthUser->user($map['username']) ?: '';
 	$email = $this->AuthUser->user($map['email']) ?: $this->AuthUser->user($map['email']) ?: '';
 } else {

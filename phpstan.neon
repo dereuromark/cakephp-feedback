@@ -9,3 +9,4 @@ parameters:
 	checkGenericClassInNonGenericObjectType: false
 	ignoreErrors:
 		- '#Access to undefined constant Feedback\\Store\\StoreInterface::NAME.#'
+		- '#Access to an undefined property Feedback\\Controller\\FeedbackController::\$AuthUser.#'

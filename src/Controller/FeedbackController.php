@@ -58,7 +58,7 @@ class FeedbackController extends AppController {
 	public function save() {
 	    $this->request->allowMethod(['put', 'post', 'ajax']);
 
-		if (isset($this->AuthUser)) {
+		if ($this->components()->has('AuthUser')) {
 			$name = $this->AuthUser->user('name') ?: $this->AuthUser->user('username') ?: $this->AuthUser->user('account') ?: '';
 			$email = $this->AuthUser->user('mail') ?: $this->AuthUser->user('email') ?: '';
 		} else {
