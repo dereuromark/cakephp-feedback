@@ -20,6 +20,8 @@ class FeedbackItemsControllerTest extends TestCase {
 	public function setUp(): void {
 		parent::setUp();
 
+		$this->loadPlugins(['Feedback']);
+
 		Configure::write('Feedback', [
 			'configuration' => [
 				'Filesystem' => [
