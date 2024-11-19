@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace Feedback\Model\Table;
 
 use ArrayObject;
-use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\EventInterface;
 use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\Table;
