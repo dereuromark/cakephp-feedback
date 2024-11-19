@@ -39,16 +39,6 @@ class FeedbackItemsTable extends Table {
 	];
 
 	/**
-	 * @return \Cake\Database\Schema\TableSchemaInterface
-	 */
-	public function getSchema(): TableSchemaInterface {
-		$schema = parent::getSchema();
-		$schema->setColumnType('data', 'json');
-
-		return $schema;
-	}
-
-	/**
 	 * Initialize method
 	 *
 	 * @param array $config The configuration for the Table.
@@ -62,6 +52,8 @@ class FeedbackItemsTable extends Table {
 		$this->setPrimaryKey('id');
 
 		$this->addBehavior('Timestamp');
+
+		$this->getSchema()->setColumnType('data', 'json');
 
 		$this->_prefixOrderProperty();
 	}
