@@ -123,7 +123,7 @@ class FeedbackItemsTable extends Table {
 	public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options, bool $primary): SelectQuery {
 		$order = $query->clause('order');
 		if (($order === null || !count($order)) && !empty($this->order)) {
-			$query->order($this->order);
+			$query->orderBy($this->order);
 		}
 
 		return $query;
