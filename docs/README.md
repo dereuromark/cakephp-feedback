@@ -12,8 +12,8 @@
     ```
 
     Make sure to disable routing if you do not have authentication set up:
-    ```php
-    $this->addPlugin('Feedback', ['routes' => false]);
+    ```
+    bin/cake plugin load Feedback --no-routes
     ```
     You do not want visitors to be able to browse to the feedback backend.
 
