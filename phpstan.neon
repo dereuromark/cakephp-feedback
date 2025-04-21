@@ -5,8 +5,8 @@ parameters:
 	bootstrapFiles:
 		- %rootDir%/../../../tests/bootstrap.php
 		- %rootDir%/../../../tests/shim.php
-	checkMissingIterableValueType: false
-	checkGenericClassInNonGenericObjectType: false
 	ignoreErrors:
+		- identifier: missingType.iterableValue
+		- identifier: missingType.generics
 		- '#Access to undefined constant Feedback\\Store\\StoreInterface::NAME.#'
 		- '#Access to an undefined property Feedback\\Controller\\FeedbackController::\$AuthUser.#'
