@@ -61,7 +61,7 @@ class DatabaseStoreTest extends TestCase {
 		];
 		$this->assertSame($expected, $result);
 
-		$feedbackItem = $this->getTableLocator()->get('Feedback.FeedbackItems')->find()->orderDesc('id')->firstOrFail();
+		$feedbackItem = $this->getTableLocator()->get('Feedback.FeedbackItems')->find()->orderByDesc('id')->firstOrFail();
 
 		$expected = [
 			'screenshot' => $data['screenshot'],
