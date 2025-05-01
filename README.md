@@ -10,7 +10,7 @@
 This plugin provides a static feedback tab on the side of the screen that enables website visitor to submit feedback or bugreports.
 Features pure client-side screenshot function including user-placed highlight / accent.
 
-This branch is for **CakePHP 5.0+**. For details see [version map](https://github.com/dereuromark/cakephp-feedback/wiki#cakephp-version-map).
+This branch is for **CakePHP 5.1+**. For details see [version map](https://github.com/dereuromark/cakephp-feedback/wiki#cakephp-version-map).
 
 ### Currently saves the following on form submit
 
