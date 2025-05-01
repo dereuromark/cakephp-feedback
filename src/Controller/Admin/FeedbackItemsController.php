@@ -35,11 +35,11 @@ class FeedbackItemsController extends AppController {
 	/**
 	 * @param \Cake\Event\EventInterface $event
 	 *
-	 * @return \Cake\Http\Response|bool|null
+	 * @return void
 	 */
-	public function beforeFilter(EventInterface $event) {
+	public function beforeFilter(EventInterface $event): void {
 		if (Configure::read('Feedback')) {
-			return null;
+			return;
 		}
 
 		//Throw error, config file required

@@ -33,9 +33,9 @@ class FeedbackController extends AppController {
 	/**
 	 * @param \Cake\Event\EventInterface $event
 	 *
-	 * @return \Cake\Http\Response|null
+	 * @return void
 	 */
-	public function beforeFilter(EventInterface $event) {
+	public function beforeFilter(EventInterface $event): void {
 		// Check FormProtection component loaded and disable it for this plugin:
 		if (isset($this->FormProtection)) {
 			$this->FormProtection->setConfig('validatePost', false);
@@ -43,7 +43,7 @@ class FeedbackController extends AppController {
 		}
 
 		if (Configure::read('Feedback')) {
-			return null;
+			return;
 		}
 
 		// Throw error, config file required
