@@ -118,19 +118,19 @@ class FeedbackItemsTable extends Table {
 	 * @param \Cake\ORM\Query\SelectQuery $query
 	 * @param \ArrayObject $options
 	 * @param bool $primary
-	 * @return \Cake\ORM\Query\SelectQuery
+	 * @return void
 	 */
-	public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options, bool $primary): SelectQuery {
+	public function beforeFind(EventInterface $event, SelectQuery $query, ArrayObject $options, bool $primary): void {
 		$order = $query->clause('order');
 		if (($order === null || !count($order)) && !empty($this->order)) {
 			$query->orderBy($this->order);
-		}
 
-		return $query;
+			$event->setResult($query);
+		}
 	}
 
 	/**
-	 * Prefixes the order property with the actual alias if its a string or array.
+	 * Prefixes the order property with the actual alias if it's a string or array.
 	 *
 	 * The core fails on using the proper prefix when building the query with two
 	 * different tables.
@@ -157,8 +157,8 @@ class FeedbackItemsTable extends Table {
 	 * @param string $string
 	 * @return string
 	 */
-	protected function _prefixAlias($string) {
-		if (strpos($string, '.') === false) {
+	protected function _prefixAlias(string $string): string {
+		if (!str_contains($string, '.')) {
 			return $this->getAlias() . '.' . $string;
 		}
 
