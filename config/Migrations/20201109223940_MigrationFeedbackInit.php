@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use Migrations\AbstractMigration;
+use Migrations\BaseMigration;
 use Phinx\Db\Adapter\MysqlAdapter;
 
 /**
@@ -9,7 +9,7 @@ use Phinx\Db\Adapter\MysqlAdapter;
  */
 // phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 // phpcs:disable PSR2R.Classes.ClassFileName.NoMatch
-class MigrationFeedbackInit extends AbstractMigration {
+class MigrationFeedbackInit extends BaseMigration {
 
 	/**
 	 * Change Method.
