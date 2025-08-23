@@ -57,10 +57,10 @@ class MigrationFeedbackInit extends BaseMigration {
 				'null' => true,
 			])
 		   ->addColumn('priority', 'string', [
-				'default' => null,
-				'limit' => 20,
-				'null' => true,
-			])
+			   'default' => null,
+			   'limit' => 20,
+			   'null' => true,
+		   ])
 			->addColumn('status', 'integer', [
 				'default' => 0,
 				'limit' => 2,

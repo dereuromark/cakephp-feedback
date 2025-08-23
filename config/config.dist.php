@@ -5,8 +5,7 @@ use Feedback\Store\FilesystemStore;
 return [
 	'Feedback' => [
 
-		'stores' => [
-		], // FQCN. Only the first method will be checked and reported back to user
+		'stores' => [], // FQCN. Only the first method will be checked and reported back to user
 
 		'returnlink' => true, // Return a link (if any) to the created ticket or report.
 		'skipCss' => false, // For manually including stylesheet

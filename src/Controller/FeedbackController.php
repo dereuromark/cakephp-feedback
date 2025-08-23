@@ -95,9 +95,9 @@ class FeedbackController extends AppController {
 		$data['sid'] = $this->request->getSession()->id();
 
 		$map = (array)Configure::read('Feedback.authMap') + [
-				'username' => 'username',
-				'email' => 'email',
-			];
+			'username' => 'username',
+			'email' => 'email',
+		];
 		if ($this->components()->has('AuthUser')) {
 			$username = $this->AuthUser->user($userField) ?: $this->AuthUser->user('account') ?: '';
 			if (empty($data['name']) || Configure::read('Feedback.forceauthusername')) {
