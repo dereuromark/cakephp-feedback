@@ -56,7 +56,7 @@ class FeedbackController extends AppController {
 	 * @return \Cake\Http\Response|null|void
 	 */
 	public function save() {
-	    $this->request->allowMethod(['put', 'post', 'ajax']);
+		$this->request->allowMethod(['put', 'post', 'ajax']);
 
 		$map = (array)Configure::read('Feedback.authMap') + [
 			'username' => 'username',
