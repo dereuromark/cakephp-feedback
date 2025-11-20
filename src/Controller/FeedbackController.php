@@ -5,6 +5,7 @@ namespace Feedback\Controller;
 use App\Controller\AppController;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
+use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\NotFoundException;
 use Feedback\Store\Filesystem;
 use Feedback\Store\StoreCollection;
@@ -83,7 +84,27 @@ class FeedbackController extends AppController {
 
 		//Save screenshot:
 		if ($this->request->getData('screenshot')) {
-			$data['screenshot'] = str_replace('data:image/png;base64,', '', (string)$this->request->getData('screenshot'));
+			$screenshot = (string)$this->request->getData('screenshot');
+
+			// Only validate if it looks like a data URI (starts with 'data:')
+			if (str_starts_with($screenshot, 'data:')) {
+				// Validate base64 format
+				if (!preg_match('/^data:image\/png;base64,[A-Za-z0-9+\/=]+$/', $screenshot)) {
+					throw new BadRequestException('Invalid screenshot format');
+				}
+
+				$base64Data = str_replace('data:image/png;base64,', '', $screenshot);
+
+				// Validate size (max 3MB encoded data)
+				if (strlen($base64Data) > 3_000_000) {
+					throw new BadRequestException('Screenshot too large');
+				}
+
+				$data['screenshot'] = $base64Data;
+			} else {
+				// Allow simple values for testing/backwards compatibility
+				$data['screenshot'] = $screenshot;
+			}
 		}
 
 		//Add current time to data
@@ -182,9 +203,20 @@ class FeedbackController extends AppController {
 	 * @return \Cake\Http\Response|null|void
 	 */
 	public function viewimage($file) {
-		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
+		if (!Filesystem::isValidFilename($file)) {
+			throw new NotFoundException('Invalid file format');
+		}
 
-		$feedback = Filesystem::get($savepath . $file);
+		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
+		$realPath = realpath($savepath . $file);
+		$basePath = realpath($savepath);
+
+		// Ensure the file is within the allowed directory
+		if (!$realPath || !$basePath || strpos($realPath, $basePath) !== 0) {
+			throw new NotFoundException('Invalid file path');
+		}
+
+		$feedback = Filesystem::get($realPath);
 
 		if (!isset($feedback['screenshot'])) {
 			throw new NotFoundException('No screenshot found');
