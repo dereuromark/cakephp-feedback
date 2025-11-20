@@ -93,8 +93,20 @@ class FeedbackController extends AppController {
 	 * @return \Cake\Http\Response|null|void
 	 */
 	public function viewimage($file) {
+		if (!Filesystem::isValidFilename($file)) {
+			throw new NotFoundException('Invalid file format');
+		}
+
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
-		$feedback = Filesystem::get($savepath . $file);
+		$realPath = realpath($savepath . $file);
+		$basePath = realpath($savepath);
+
+		// Ensure the file is within the allowed directory
+		if (!$realPath || !$basePath || strpos($realPath, $basePath) !== 0) {
+			throw new NotFoundException('Invalid file path');
+		}
+
+		$feedback = Filesystem::get($realPath);
 
 		if (!isset($feedback['screenshot'])) {
 			throw new NotFoundException('No screenshot found');
@@ -113,13 +125,24 @@ class FeedbackController extends AppController {
 	public function remove($file = null) {
 		$this->request->allowMethod('post');
 
-		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
-
-		if (!$file || !file_exists($savepath . $file)) {
-			throw new NotFoundException('Could not find that file: ' . $savepath . $file);
+		if (!$file || !Filesystem::isValidFilename($file)) {
+			throw new NotFoundException('Invalid file format');
 		}
 
-		unlink($savepath . $file);
+		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
+		$realPath = realpath($savepath . $file);
+		$basePath = realpath($savepath);
+
+		// Ensure the file is within the allowed directory
+		if (!$realPath || !$basePath || strpos($realPath, $basePath) !== 0) {
+			throw new NotFoundException('Invalid file path');
+		}
+
+		if (!file_exists($realPath)) {
+			throw new NotFoundException('Could not find that file');
+		}
+
+		unlink($realPath);
 
 		$this->Flash->success('Removed');
 

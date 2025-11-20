@@ -10,6 +10,20 @@ use Cake\Http\Exception\NotFoundException;
 class Filesystem {
 
 	/**
+	 * Validate filename to prevent path traversal attacks
+	 *
+	 * @param string $filename
+	 * @return bool
+	 */
+	public static function isValidFilename(string $filename): bool {
+		return str_ends_with($filename, '.feedback') &&
+			!str_contains($filename, '/') &&
+			!str_contains($filename, '\\') &&
+			!str_contains($filename, '..') &&
+			!str_contains($filename, "\0");
+	}
+
+	/**
 	 * Open a specific file.
 	 *
 	 * @param string $path
@@ -26,7 +40,9 @@ class Filesystem {
 			throw new NotFoundException('Cannot read file: ' . $path);
 		}
 
-		$feedback = unserialize($content);
+		// Unserialize with allowed_classes => false for security (allows arrays/stdClass but no custom objects)
+		// This maintains BC with existing serialized array files while preventing RCE via object injection
+		$feedback = unserialize($content, ['allowed_classes' => false]);
 
 		return $feedback;
 	}
@@ -59,7 +75,8 @@ class Filesystem {
 			if ($content === false) {
 				continue;
 			}
-			$feedbackObject = unserialize($content);
+			// Unserialize with allowed_classes => false for security
+			$feedbackObject = unserialize($content, ['allowed_classes' => false]);
 			$result[$feedbackObject['time']] = $feedbackObject;
 		}
 
