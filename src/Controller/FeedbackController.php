@@ -65,12 +65,14 @@ class FeedbackController extends AppController {
 		$userField = $map['username'];
 		$emailField = $map['email'];
 
+		$sessionKey = Configure::read('Feedback.sessionKey') ?? 'Auth.User';
+
 		if ($this->components()->has('AuthUser')) {
 			$name = $this->AuthUser->user($userField) ?: $this->AuthUser->user('account') ?: '';
 			$email = $this->AuthUser->user($emailField) ?: $this->AuthUser->user('email') ?: '';
 		} else {
-			$name = $this->request->getSession()->read($userField) ?: $this->request->getSession()->read('Auth.User.username') ?: '';
-			$email = $this->request->getSession()->read($emailField) ?: $this->request->getSession()->read('Auth.User.email') ?: '';
+			$name = $this->request->getSession()->read($userField) ?: $this->request->getSession()->read($sessionKey . '.username') ?: '';
+			$email = $this->request->getSession()->read($emailField) ?: $this->request->getSession()->read($sessionKey . '.email') ?: '';
 		}
 
 		$data = (array)$this->request->getData() + [
