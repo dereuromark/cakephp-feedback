@@ -30,7 +30,7 @@ class Priorities {
 
 		$array = [
 			'' => __d('feedback', ' - no priority - '),
- 		];
+		];
 		foreach ($priorities as $priority => $label) {
 			$array[$priority] = __d('feedback', $label);
 		}

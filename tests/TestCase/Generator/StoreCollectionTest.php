@@ -26,8 +26,7 @@ class StoreCollectionTest extends TestCase {
 	 * @return void
 	 */
 	public function testCollectInvalid() {
-		$data = [
-		];
+		$data = [];
 		$result = $this->storeCollection->save($data);
 
 		$expected = [

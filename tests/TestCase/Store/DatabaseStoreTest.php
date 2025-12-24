@@ -32,8 +32,7 @@ class DatabaseStoreTest extends TestCase {
 	 * @return void
 	 */
 	public function testSaveInvalid() {
-		$data = [
-		];
+		$data = [];
 		$result = $this->store->save($data);
 
 		$expected = [
