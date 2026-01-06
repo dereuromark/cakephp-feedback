@@ -2,7 +2,6 @@
 declare(strict_types=1);
 
 use Migrations\BaseMigration;
-use Phinx\Db\Adapter\MysqlAdapter;
 
 /**
  * This is only an example/default table. You can use your own on app level.
@@ -48,12 +47,12 @@ class MigrationFeedbackInit extends BaseMigration {
 			])
 			->addColumn('feedback', 'text', [
 				'default' => null,
-				'limit' => MysqlAdapter::TEXT_REGULAR,
+				'limit' => 65535, // MysqlAdapter::TEXT_REGULAR,
 				'null' => true,
 			])
 			->addColumn('data', 'text', [
 				'default' => null,
-				'limit' => MysqlAdapter::TEXT_MEDIUM, // Only needed for MySQL to store more than 65k
+				'limit' => 16777215, // MysqlAdapter::TEXT_MEDIUM, // Only needed for MySQL to store more than 65k
 				'null' => true,
 			])
 		->addColumn('priority', 'string', [
