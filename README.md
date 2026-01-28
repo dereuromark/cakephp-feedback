@@ -3,7 +3,7 @@
 [![CI](https://github.com/dereuromark/cakephp-feedback/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/dereuromark/cakephp-feedback/actions/workflows/ci.yml?query=branch%3Amaster)
 [![Coverage](https://img.shields.io/codecov/c/github/dereuromark/cakephp-feedback/master.svg)](https://codecov.io/gh/dereuromark/cakephp-feedback)
 [![Latest Stable Version](https://poser.pugx.org/dereuromark/cakephp-feedback/v/stable.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/dereuromark/cakephp-feedback/license.svg)](LICENSE)
 [![Total Downloads](https://poser.pugx.org/dereuromark/cakephp-feedback/d/total.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
 
@@ -12,7 +12,7 @@ Features pure client-side screenshot function including user-placed highlight / 
 
 This branch is for **CakePHP 5.1+**. For details see [version map](https://github.com/dereuromark/cakephp-feedback/wiki#cakephp-version-map).
 
-### Currently saves the following on form submit
+### Saves the following on form submit
 
 * Name of sender (optional)
 * E-mail of sender (optional)
