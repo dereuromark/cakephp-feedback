@@ -3,6 +3,12 @@
 	"description": "Feedback or bugreport (with screenshot!) tab option in your CakePHP application. Data can be posted directly to Mantis, E-mail, Github issues, filesystem, etc.",
 	"license": "MIT",
 	"type": "cakephp-plugin",
+	"keywords": [
+		"cakephp",
+		"plugin",
+		"feedback",
+		"admin-panel"
+	],
 	"authors": [
 		{
 			"name": "Stefan van Gastel",
