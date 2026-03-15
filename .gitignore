@@ -9,3 +9,4 @@ composer.phar
 phpunit.phar
 .phpunit.result.cache
 /config/Migrations/schema-dump-default.lock
+.phpcs.cache
