@@ -37,6 +37,7 @@ class FeedbackItemsFixture extends TestFixture {
 		],
 	];
 	// phpcs:enable
+
 	/**
 	 * Init method
 	 *
