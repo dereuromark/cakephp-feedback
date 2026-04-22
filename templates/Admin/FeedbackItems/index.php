@@ -7,6 +7,7 @@
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 
+$cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 ?>
 <nav class="actions large-3 medium-4 columns col-sm-4 col-xs-12" id="actions-sidebar">
 	<ul class="side-nav nav nav-pills flex-column">
@@ -14,7 +15,13 @@ use Cake\Core\Plugin;
 		<li class="nav-item">
 			<?= $this->Html->link(__('Back'), ['controller' => 'Feedback', 'action' => 'index'], ['class' => 'nav-link']) ?>
 			<?php if (Configure::read('Feedback.configuration.Filesystem.location')) {
-			echo $this->Form->postLink(__('Import Files'), ['action' => 'importFiles'], ['class' => 'nav-link', 'confirm' => 'Sure?']);
+			echo $this->Form->postButton(__('Import Files'), ['action' => 'importFiles'], [
+				'class' => 'nav-link btn btn-link text-start w-100',
+				'form' => [
+					'class' => 'd-inline',
+					'data-confirm-message' => 'Sure?',
+				],
+			]);
 			} ?>
 		</li>
 	</ul>
@@ -52,7 +59,14 @@ use Cake\Core\Plugin;
 					<td class="actions">
 						<?php echo $this->Html->link(isset($this->Icon) ? $this->Icon->render('view') : __('View'), ['action' => 'view', $feedbackItem->id], ['escapeTitle' => false]); ?>
 						<?php echo $this->Html->link(isset($this->Icon) ? $this->Icon->render('edit') : __('Edit'), ['action' => 'edit', $feedbackItem->id], ['escapeTitle' => false]); ?>
-						<?php echo $this->Form->postLink(isset($this->Icon) ? $this->Icon->render('delete') : __('Delete'), ['action' => 'delete', $feedbackItem->id], ['escapeTitle' => false, 'confirm' => __('Are you sure you want to delete # {0}?', $feedbackItem->id)]); ?>
+						<?php echo $this->Form->postButton(isset($this->Icon) ? $this->Icon->render('delete') : __('Delete'), ['action' => 'delete', $feedbackItem->id], [
+							'escapeTitle' => false,
+							'class' => 'btn btn-link p-0 align-baseline',
+							'form' => [
+								'class' => 'd-inline',
+								'data-confirm-message' => __('Are you sure you want to delete # {0}?', $feedbackItem->id),
+							],
+						]); ?>
 					</td>
 				</tr>
 				<?php endforeach; ?>
@@ -68,3 +82,12 @@ use Cake\Core\Plugin;
 	}
 	?>
 </div>
+<script<?= $cspNonce !== '' ? ' nonce="' . h($cspNonce) . '"' : '' ?>>
+document.querySelectorAll('form[data-confirm-message]').forEach(function(form) {
+	form.addEventListener('submit', function(e) {
+		if (!confirm(this.dataset.confirmMessage)) {
+			e.preventDefault();
+		}
+	});
+});
+</script>

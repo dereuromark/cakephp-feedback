@@ -3,13 +3,20 @@
  * @var \App\View\AppView $this
  * @var \Feedback\Model\Entity\FeedbackItem $feedbackItem
  */
+$cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 ?>
 <div class="row">
 	<aside class="column actions large-3 medium-4 col-sm-4 col-xs-12">
 		<ul class="side-nav nav nav-pills flex-column">
 			<li class="nav-item heading"><?= __('Actions') ?></li>
 			<li class="nav-item"><?= $this->Html->link(__('Edit {0}', __('Feedback Item')), ['action' => 'edit', $feedbackItem->id], ['class' => 'side-nav-item']) ?></li>
-			<li class="nav-item"><?= $this->Form->postLink(__('Delete {0}', __('Feedback Item')), ['action' => 'delete', $feedbackItem->id], ['confirm' => __('Are you sure you want to delete # {0}?', $feedbackItem->id), 'class' => 'side-nav-item']) ?></li>
+			<li class="nav-item"><?= $this->Form->postButton(__('Delete {0}', __('Feedback Item')), ['action' => 'delete', $feedbackItem->id], [
+				'class' => 'side-nav-item btn btn-link text-start w-100',
+				'form' => [
+					'class' => 'd-inline',
+					'data-confirm-message' => __('Are you sure you want to delete # {0}?', $feedbackItem->id),
+				],
+			]) ?></li>
 			<li class="nav-item"><?= $this->Html->link(__('List {0}', __('Feedback Items')), ['action' => 'index'], ['class' => 'side-nav-item']) ?></li>
 		</ul>
 	</aside>
@@ -30,7 +37,14 @@
 					}
 					$class = array_shift($classes) ?: 'default';
 
-					echo $this->Form->postLink($value, ['action' => 'edit', $feedbackItem->id], ['data' => ['status' => $key], 'class' => 'btn btn-' . $class, 'confirm' => 'Sure?']);
+					echo $this->Form->postButton($value, ['action' => 'edit', $feedbackItem->id], [
+						'data' => ['status' => $key],
+						'class' => 'btn btn-' . $class,
+						'form' => [
+							'class' => 'd-inline',
+							'data-confirm-message' => 'Sure?',
+						],
+					]);
 					?>
 				<?php } ?>
 			<?php } ?>
@@ -98,3 +112,12 @@
 		</div>
 	</div>
 </div>
+<script<?= $cspNonce !== '' ? ' nonce="' . h($cspNonce) . '"' : '' ?>>
+document.querySelectorAll('form[data-confirm-message]').forEach(function(form) {
+	form.addEventListener('submit', function(e) {
+		if (!confirm(this.dataset.confirmMessage)) {
+			e.preventDefault();
+		}
+	});
+});
+</script>
