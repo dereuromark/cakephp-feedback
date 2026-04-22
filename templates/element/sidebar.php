@@ -63,12 +63,23 @@ if ($this->helpers()->has('AuthUser')) {
 		$email = $this->request->getSession()->read($map['email']);
 	}
 }
+$cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 ?>
 
-<script>
+<script<?= $cspNonce !== '' ? ' nonce="' . h($cspNonce) . '"' : '' ?>>
 	//Create URL using cake's url helper, this is used in feedbackit-functions.js
 	<?php $formUrl = $this->Url->build(['prefix' => false, 'plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'save'], ['fullBase' => true]); ?>
 	window.formURL = '<?php echo $formUrl; ?>';
+	// Neutralize clicks on the feedback widget's inert link/buttons (CSP-safe
+	// replacement for inline onclick="return false;"). These elements are
+	// managed by feedbackit-functions.js; here we just prevent default
+	// navigation/submission when they are clicked.
+	document.addEventListener('click', function(e) {
+		var target = e.target.closest('[data-feedback-nop]');
+		if (target) {
+			e.preventDefault();
+		}
+	});
 </script>
 
 <div id="feedbackit-slideout">
@@ -138,10 +149,10 @@ if ($this->helpers()->has('AuthUser')) {
 			<div class="form-group">
 				<p>
 					<button
+						type="button"
 						class="btn btn-info"
 						data-loading-text="<?php echo __d('feedback','Click anywhere on website'); ?>"
-						id="feedbackit-highlight"
-						onclick="return false;">
+						id="feedbackit-highlight">
 						<i class="icon-screenshot icon-white"></i><span class="icon <?php echo $icons['screenshot']; ?>"></span> <?php echo __d('feedback','Highlight something'); ?>
 					</button>
 				</p>
@@ -159,7 +170,7 @@ if ($this->helpers()->has('AuthUser')) {
 								?>
 							>
 						<?php
-						$confirmation = '<b><a id="feedbackit-okay-message" href="#" onclick="return false;" data-toggle="tooltip" title="' . h($termstext) . '">'. __d('feedback','this'). '</a></b>';
+						$confirmation = '<b><a id="feedbackit-okay-message" href="#" data-feedback-nop="1" data-toggle="tooltip" title="' . h($termstext) . '">'. __d('feedback','this'). '</a></b>';
 						?>
 						<?php echo __d('feedback','I am okay with {0}.', $confirmation); ?>
 					</label>
@@ -179,7 +190,7 @@ if ($this->helpers()->has('AuthUser')) {
 
 				<div class="btn-group">
 					<button class="btn btn-success" id="feedbackit-submit" disabled="disabled" type="submit"><i class="icon-envelope icon-white"></i><span class="icon <?php echo $icons['submit']; ?>"></span> <?php echo __d('feedback','Submit'); ?></button>
-					<button class="btn btn-danger" id="feedbackit-cancel" onclick="return false;"><i class="icon-remove icon-white"></i><span class="icon <?php echo $icons['cancel']; ?>"></span> <?php echo __d('feedback','Cancel'); ?></button>
+					<button type="button" class="btn btn-danger" id="feedbackit-cancel"><i class="icon-remove icon-white"></i><span class="icon <?php echo $icons['cancel']; ?>"></span> <?php echo __d('feedback','Cancel'); ?></button>
 				</div>
 			</div>
 		</form>

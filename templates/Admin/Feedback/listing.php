@@ -5,6 +5,8 @@
  */
 
 use Cake\Core\Configure;
+
+$cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 ?>
 
 <div class="feedback index content large-9 medium-8 columns col-sm-8 col-12">
@@ -21,7 +23,13 @@ foreach ($feedbacks as $feedback) {
 	</a>
 	<div class="media-body">
 		<div class="pull-right float-right">
-			<?php echo $this->Form->postLink('Remove', ['action' => 'remove', $feedback['filename']], ['confirm' => 'Sure?']); ?>
+			<?php echo $this->Form->postButton('Remove', ['action' => 'remove', $feedback['filename']], [
+				'class' => 'btn btn-link p-0 align-baseline',
+				'form' => [
+					'class' => 'd-inline',
+					'data-confirm-message' => 'Sure?',
+				],
+			]); ?>
 		</div>
 
 		<h4 class="media-heading"><?php echo $feedback['subject'] . ' <i>(' . date('d-m-Y H:i:s',$feedback['time']) . ')</i>';?></h4>
@@ -55,3 +63,12 @@ foreach ($feedbacks as $feedback) {
 ?>
 
 </div>
+<script<?= $cspNonce !== '' ? ' nonce="' . h($cspNonce) . '"' : '' ?>>
+document.querySelectorAll('form[data-confirm-message]').forEach(function(form) {
+	form.addEventListener('submit', function(e) {
+		if (!confirm(this.dataset.confirmMessage)) {
+			e.preventDefault();
+		}
+	});
+});
+</script>
