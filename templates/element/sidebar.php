@@ -156,7 +156,7 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 						<i class="icon-screenshot icon-white"></i><span class="icon <?php echo $icons['screenshot']; ?>"></span> <?php echo __d('feedback','Highlight something'); ?>
 					</button>
 				</p>
-				<div <?php if (!$enableacceptterms) echo 'style="display:none;"'; ?>>
+				<div<?php if (!$enableacceptterms) echo ' class="feedbackit-hidden"'; ?>>
 					<label class="checkbox checkbox-inline">
 						<input type="checkbox"
 							   required id="feedbackit-okay"

@@ -97,3 +97,8 @@
 .tab-hide {
 	cursor: pointer;
 }
+
+/* Visibility utility used when accept-terms is disabled */
+.feedbackit-hidden {
+	display: none;
+}
