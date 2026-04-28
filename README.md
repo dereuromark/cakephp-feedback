@@ -7,6 +7,7 @@
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/dereuromark/cakephp-feedback/license.svg)](LICENSE)
 [![Total Downloads](https://poser.pugx.org/dereuromark/cakephp-feedback/d/total.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
+[![Coding Standards](https://img.shields.io/badge/cs-PSR--2--R-purple.svg?style=flat-square)](https://github.com/php-fig-rectified/fig-rectified-standards)
 
 This plugin provides a static feedback tab on the side of the screen that enables website visitor to submit feedback or bugreports.
 Features pure client-side screenshot function including user-placed highlight / accent.
