@@ -102,7 +102,7 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 					id="feedbackit-name"
 					maxlength="150"
 					class="<?php if (!empty($name)) echo 'feedbackit-input'; ?> form-control"
-					value="<?php echo $name; ?>"
+					value="<?php echo h($name); ?>"
 					placeholder="<?php echo __d('feedback','Your name '); if( !$forceauthusername ) echo ' (optional)'; ?>"
 					<?php if ($forceauthusername) echo 'required="required"'; ?>
 					>
@@ -117,7 +117,7 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 					id="feedbackit-email"
 					maxlength="150"
 					class="<?php if (!empty($email)) echo 'feedbackit-input'; ?> form-control"
-					value="<?php echo $email; ?>"
+					value="<?php echo h($email); ?>"
 					placeholder="<?php echo __d('feedback','Your e-mail'); if( !$forceemail) echo ' (optional)'; ?>"
 					<?php if ($forceemail) echo 'required="required"'; ?>
 					>
