@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-01-16 14:00+0000\n"
+"POT-Creation-Date: 2026-05-04 04:19+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,104 +14,171 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/FeedbackController.php:59
+msgid "The feedback item has been saved."
+msgstr ""
+
+msgid "The feedback item could not be saved. Please, try again."
+msgstr ""
+
+msgid "The feedback item has been deleted."
+msgstr ""
+
+msgid "The feedback item could not be deleted. Please, try again."
+msgstr ""
+
 msgid "Anonymous"
 msgstr ""
 
-#: Controller/FeedbackController.php:81
 msgid "Error saving feedback."
 msgstr ""
 
-#: Controller/FeedbackController.php:85
 msgid "Your feedback was saved successfully."
 msgstr ""
 
-#: Model/Table/FeedbackstoreTable.php:90;179;261;340;442;531
-#: Store/FilesystemStore.php:31
-msgid "Thank you. Your feedback was saved."
-msgstr ""
-
-#: Model/Table/FeedbackstoreTable.php:94;265;344;446;535
-#: Store/FilesystemStore.php:35
-msgid "View your feedback on:"
-msgstr ""
-
-#: Model/Table/FeedbackstoreTable.php:166
 msgid "A copy of your submitted feedback:"
 msgstr ""
 
-#: Template/Element/sidebar.ctp:35
-msgid "When you submit, a screenshot (of only this website) will be taken to aid us in processing your feedback or bugreport."
+msgid "Thank you. Your feedback was saved."
 msgstr ""
 
-#: Template/Element/sidebar.ctp:59
-msgid "Hide this tab completely."
+msgid "View your feedback on:"
 msgstr ""
 
-#: Template/Element/sidebar.ctp:61
-msgid "Send your feedback or bugreport!"
-msgstr ""
-
-#: Template/Element/sidebar.ctp:71
-msgid "Your name"
-msgstr ""
-
-#: Template/Element/sidebar.ctp:82
-msgid "Your e-mail"
-msgstr ""
-
-#: Template/Element/sidebar.ctp:93
-msgid "Subject"
-msgstr ""
-
-#: Template/Element/sidebar.ctp:97
-msgid "Feedback or suggestion"
-msgstr ""
-
-#: Template/Element/sidebar.ctp:103
-msgid "Click anywhere on website"
-msgstr ""
-
-#: Template/Element/sidebar.ctp:106
-msgid "Highlight something"
-msgstr ""
-
-#: Template/Element/sidebar.ctp:123
-msgid "this"
-msgstr ""
-
-#: Template/Element/sidebar.ctp:125
-msgid "I am okay with {0}."
-msgstr ""
-
-#: Template/Element/sidebar.ctp:134
-msgid "E-mail me a copy"
-msgstr ""
-
-#: Template/Element/sidebar.ctp:142
-msgid "Submit"
-msgstr ""
-
-#: Template/Element/sidebar.ctp:143
-msgid "Cancel"
-msgstr ""
-
-#: Template/Element/sidebar.ctp:158
-msgid "Feedback submitted"
-msgstr ""
-
-#: Template/Element/sidebar.ctp:164
-msgid "Close"
+msgid "View your feedback on: "
 msgstr ""
 
 msgid " - no priority - "
 msgstr ""
 
-msgid "low"
+msgid "Screenshot"
 msgstr ""
 
-msgid "medium"
+msgid "Actions"
 msgstr ""
 
-msgid "high"
+msgid "Delete"
 msgstr ""
+
+msgid "Are you sure you want to delete # {0}?"
+msgstr ""
+
+msgid "List Feedback Items"
+msgstr ""
+
+msgid "Feedback Items"
+msgstr ""
+
+msgid "Edit Feedback Item"
+msgstr ""
+
+msgid "Submit"
+msgstr ""
+
+msgid "Back"
+msgstr ""
+
+msgid "Import Files"
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Edit {0}"
+msgstr ""
+
+msgid "Feedback Item"
+msgstr ""
+
+msgid "Delete {0}"
+msgstr ""
+
+msgid "List {0}"
+msgstr ""
+
+msgid "Feedback"
+msgstr ""
+
+msgid "Sid"
+msgstr ""
+
+msgid "Url"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Subject"
+msgstr ""
+
+msgid "Data"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Created"
+msgstr ""
+
+msgid "first"
+msgstr ""
+
+msgid "previous"
+msgstr ""
+
+msgid "next"
+msgstr ""
+
+msgid "last"
+msgstr ""
+
+msgid "When you submit, a screenshot (of only this website) will be taken to aid us in processing your feedback or bugreport."
+msgstr ""
+
+msgid "Hide this tab completely."
+msgstr ""
+
+msgid "Send your feedback or bugreport!"
+msgstr ""
+
+msgid "Your name "
+msgstr ""
+
+msgid "Your e-mail"
+msgstr ""
+
+msgid "Feedback or suggestion"
+msgstr ""
+
+msgid "Click anywhere on website"
+msgstr ""
+
+msgid "Highlight something"
+msgstr ""
+
+msgid "this"
+msgstr ""
+
+msgid "I am okay with {0}."
+msgstr ""
+
+msgid "E-mail me a copy"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Feedback submitted"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
