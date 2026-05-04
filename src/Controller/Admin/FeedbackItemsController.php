@@ -95,11 +95,11 @@ class FeedbackItemsController extends AppController {
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$feedbackItem = $this->FeedbackItems->patchEntity($feedbackItem, $this->request->getData());
 			if ($this->FeedbackItems->save($feedbackItem)) {
-				$this->Flash->success(__('The feedback item has been saved.'));
+				$this->Flash->success(__d('feedback', 'The feedback item has been saved.'));
 
 				return $this->redirect(['action' => 'index']);
 			}
-			$this->Flash->error(__('The feedback item could not be saved. Please, try again.'));
+			$this->Flash->error(__d('feedback', 'The feedback item could not be saved. Please, try again.'));
 		}
 		$this->set(compact('feedbackItem'));
 	}
@@ -112,9 +112,9 @@ class FeedbackItemsController extends AppController {
 		$this->request->allowMethod(['post', 'delete']);
 		$feedbackItem = $this->FeedbackItems->get($id);
 		if ($this->FeedbackItems->delete($feedbackItem)) {
-			$this->Flash->success(__('The feedback item has been deleted.'));
+			$this->Flash->success(__d('feedback', 'The feedback item has been deleted.'));
 		} else {
-			$this->Flash->error(__('The feedback item could not be deleted. Please, try again.'));
+			$this->Flash->error(__d('feedback', 'The feedback item could not be deleted. Please, try again.'));
 		}
 
 		return $this->redirect(['action' => 'index']);

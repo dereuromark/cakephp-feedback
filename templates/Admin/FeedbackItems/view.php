@@ -8,16 +8,16 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 <div class="row">
 	<aside class="column actions large-3 medium-4 col-sm-4 col-xs-12">
 		<ul class="side-nav nav nav-pills flex-column">
-			<li class="nav-item heading"><?= __('Actions') ?></li>
-			<li class="nav-item"><?= $this->Html->link(__('Edit {0}', __('Feedback Item')), ['action' => 'edit', $feedbackItem->id], ['class' => 'side-nav-item']) ?></li>
-			<li class="nav-item"><?= $this->Form->postButton(__('Delete {0}', __('Feedback Item')), ['action' => 'delete', $feedbackItem->id], [
+			<li class="nav-item heading"><?= __d('feedback', 'Actions') ?></li>
+			<li class="nav-item"><?= $this->Html->link(__d('feedback', 'Edit {0}', __d('feedback', 'Feedback Item')), ['action' => 'edit', $feedbackItem->id], ['class' => 'side-nav-item']) ?></li>
+			<li class="nav-item"><?= $this->Form->postButton(__d('feedback', 'Delete {0}', __d('feedback', 'Feedback Item')), ['action' => 'delete', $feedbackItem->id], [
 				'class' => 'side-nav-item btn btn-link text-start w-100',
 				'form' => [
 					'class' => 'd-inline',
-					'data-confirm-message' => __('Are you sure you want to delete # {0}?', $feedbackItem->id),
+					'data-confirm-message' => __d('feedback', 'Are you sure you want to delete # {0}?', $feedbackItem->id),
 				],
 			]) ?></li>
-			<li class="nav-item"><?= $this->Html->link(__('List {0}', __('Feedback Items')), ['action' => 'index'], ['class' => 'side-nav-item']) ?></li>
+			<li class="nav-item"><?= $this->Html->link(__d('feedback', 'List {0}', __d('feedback', 'Feedback Items')), ['action' => 'index'], ['class' => 'side-nav-item']) ?></li>
 		</ul>
 	</aside>
 	<div class="column-responsive column-80 content large-9 medium-8 col-sm-8 col-xs-12">
@@ -55,7 +55,7 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 			?>
 
 			<div class="text">
-				<strong><?= __('Feedback') ?></strong>
+				<strong><?= __d('feedback', 'Feedback') ?></strong>
 				<blockquote>
 					<?= $this->Text->autoParagraph(h($feedbackItem->feedback)); ?>
 				</blockquote>
@@ -63,39 +63,39 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 
 			<table class="table table-striped">
 				<tr>
-					<th><?= __('Sid') ?></th>
+					<th><?= __d('feedback', 'Sid') ?></th>
 					<td><?= h($feedbackItem->sid) ?></td>
 				</tr>
 				<tr>
-					<th><?= __('Url') ?></th>
+					<th><?= __d('feedback', 'Url') ?></th>
 					<td><?= $this->Html->link($feedbackItem->url_short, $feedbackItem->url) ?></td>
 				</tr>
 				<tr>
-					<th><?= __('Name') ?></th>
+					<th><?= __d('feedback', 'Name') ?></th>
 					<td><?= h($feedbackItem->name) ?></td>
 				</tr>
 				<tr>
-					<th><?= __('Email') ?></th>
+					<th><?= __d('feedback', 'Email') ?></th>
 					<td><?= h($feedbackItem->email) ?></td>
 				</tr>
 				<tr>
-					<th><?= __('Subject') ?></th>
+					<th><?= __d('feedback', 'Subject') ?></th>
 					<td><?= h($feedbackItem->subject) ?></td>
 				</tr>
 				<tr>
-					<th><?= __('Data') ?></th>
+					<th><?= __d('feedback', 'Data') ?></th>
 					<td><pre><?= print_r(h($feedbackItem->data), true); ?></pre></td>
 				</tr>
 				<tr>
-					<th><?= __('Priority') ?></th>
+					<th><?= __d('feedback', 'Priority') ?></th>
 					<td><?= $feedbackItem->priority ? $feedbackItem::priorities($feedbackItem->priority) : '' ?></td>
 				</tr>
 				<tr>
-					<th><?= __('Status') ?></th>
+					<th><?= __d('feedback', 'Status') ?></th>
 					<td><?= $feedbackItem->status !== null ? $feedbackItem::statuses($feedbackItem->status) : '' ?></td>
 				</tr>
 				<tr>
-					<th><?= __('Created') ?></th>
+					<th><?= __d('feedback', 'Created') ?></th>
 					<td><?= $this->Time->nice($feedbackItem->created) ?></td>
 				</tr>
 			</table>
