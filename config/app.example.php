@@ -1,11 +1,24 @@
 <?php
 
+/**
+ * Feedback Example Configuration
+ *
+ * Merge the keys below into your application's config/app.php (or
+ * config/app_local.php) — do not replace the whole file, since this snippet
+ * only contains this plugin's configuration. When copying entries that
+ * reference imported classes, use fully-qualified class names or move the
+ * `use` imports to the top of the target file. Customize the values as needed.
+ */
 use Feedback\Store\FilesystemStore;
 
 return [
 	'Feedback' => [
 
 		'stores' => [], // FQCN. Only the first method will be checked and reported back to user
+
+		// Session key prefix used to read the logged-in user's name/email when no AuthUser component is present.
+		// FeedbackController::save() reads "<sessionKey>.username" and "<sessionKey>.email".
+		'sessionKey' => 'Auth.User', // Defaults to 'Auth.User' when not set
 
 		'returnlink' => true, // Return a link (if any) to the created ticket or report.
 		'skipCss' => false, // For manually including stylesheet
@@ -32,6 +45,12 @@ return [
 		 * Configure the different methods
 		 */
 		'configuration' => [
+
+			// DatabaseStore: which table the admin backend reads pending items from.
+			// Read by Admin\FeedbackController::index(); defaults to 'Feedback.FeedbackItems' when not set.
+			'Database' => [
+				'table' => 'Feedback.FeedbackItems',
+			],
 
 			FilesystemStore::NAME => [
 				'location' => ROOT . DS . 'tmp' . DS . 'feedback' . DS,

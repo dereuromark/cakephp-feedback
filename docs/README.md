@@ -21,7 +21,7 @@
 
 3. Copy the default feedback config file into your applications config folder:
 
-    Copy `vendor/dereuromark/cakephpfeedback/config/config.dist.php` to `config/app_feedback.php`
+    Copy `vendor/dereuromark/cakephpfeedback/config/app.example.php` to `config/app_feedback.php`
     and adjust it to your needs. Then include it as `Configure::load('app_feedback')`.
 
     You can also just copy-and-paste the config array into your existing app.php file.
@@ -89,7 +89,7 @@ paginate and display those items.
 
 ### Other options
 
-See `config.php` file.
+See `config/app.example.php` file.
 
 ### Authentication
 If you are using AuthComponent, you need to make sure at least `save()` method is publicly accessible.
