@@ -190,14 +190,12 @@ class FeedbackstoreTable extends Table {
 			$email->deliver($feedbackObject['feedback']);
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
-
-			return $returnobject;
 		} catch (Exception $e) {
 			// Something went wrong, lets try to log it
 			Log::write('error', 'Feedback could not be stored (' . $e->getMessage() . '): ' . json_encode($feedbackObject));
+		} finally {
+			unlink($tmpfile);
 		}
-
-		unlink($tmpfile);
 
 		return $returnobject;
 	}

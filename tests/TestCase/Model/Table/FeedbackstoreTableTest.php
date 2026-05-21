@@ -128,6 +128,27 @@ class FeedbackstoreTableTest extends TestCase {
 	}
 
 	/**
+	 * The temporary screenshot attachment written to ROOT/tmp must be removed after mail()
+	 * runs, including on the success path (which previously returned before unlink()).
+	 *
+	 * @return void
+	 */
+	public function testMailRemovesTempAttachmentFile(): void {
+		Configure::write('Feedback.configuration.mail', [
+			'to' => 'target@example.com',
+			'from' => ['noreply@example.com' => 'FeedbackIt mailer'],
+		]);
+
+		$pattern = ROOT . DS . 'tmp' . DS . '*.png';
+		$before = count(glob($pattern) ?: []);
+
+		$result = $this->Feedbackstore->mail($this->feedbackObject());
+
+		$this->assertTrue($result['result']);
+		$this->assertCount($before, glob($pattern) ?: [], 'mail() leaked the temporary screenshot attachment file');
+	}
+
+	/**
 	 * @return array<string, mixed>
 	 */
 	protected function feedbackObject(): array {
