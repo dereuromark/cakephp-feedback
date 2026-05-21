@@ -187,7 +187,7 @@ class FeedbackstoreTable extends Table {
 		$feedbackObject['feedback'] .= '<img src="cid:id-screenshot">'; //Add inline screenshot
 
 		try {
-			$email->send($feedbackObject['feedback']);
+			$email->deliver($feedbackObject['feedback']);
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
