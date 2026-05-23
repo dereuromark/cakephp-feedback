@@ -1,0 +1,25 @@
+// cakephp-feedback — database schema snapshot (DBML)
+//
+// A merged snapshot of all plugin migrations under config/Migrations/.
+// Hand-maintained: update it when you add a migration that changes these tables.
+// Paste into https://dbdiagram.io (or any DBML tool) to view/diagram.
+// DBML reference: https://dbml.dbdiagram.io/docs
+
+Project cakephp_feedback {
+  database_type: 'Generic'
+  Note: 'Feedback plugin tables only.'
+}
+
+Table feedback_items {
+  id integer [pk, increment]
+  sid varchar(128) [not null]
+  url varchar(190) [not null]
+  name varchar(120) [null]
+  email varchar(120) [null]
+  subject varchar(150) [null]
+  feedback text [null]
+  data text [null]
+  priority varchar(20) [null]
+  status int [not null, default: 0]
+  created datetime [not null]
+}
