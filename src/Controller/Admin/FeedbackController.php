@@ -24,7 +24,7 @@ class FeedbackController extends AppController {
 	public function initialize(): void {
 		parent::initialize();
 
-		if (!isset($this->Flash)) {
+		if (!property_exists($this, 'Flash') || $this->Flash === null) {
 			$this->loadComponent('Flash');
 		}
 	}
@@ -55,7 +55,7 @@ class FeedbackController extends AppController {
 				continue;
 			}
 
-			$storeName = substr($store, strrpos($store, '\\') + 1);
+			$storeName = substr((string) $store, strrpos((string) $store, '\\') + 1);
 			$stores[$store] = $storeName;
 		}
 
@@ -66,10 +66,10 @@ class FeedbackController extends AppController {
 			$feedbackItems = $feedbackItemsTable->find()
 				->select(['id', 'status', 'created', 'name', 'subject', 'priority'])
 				->where(['status' => $entityClass::STATUS_NEW])->all()->toArray();
-			$this->set(compact('feedbackItems'));
+			$this->set(['feedbackItems' => $feedbackItems]);
 		}
 
-		$this->set(compact('stores'));
+		$this->set(['stores' => $stores]);
 	}
 
 	/**
@@ -102,7 +102,7 @@ class FeedbackController extends AppController {
 		$basePath = realpath($savepath);
 
 		// Ensure the file is within the allowed directory
-		if (!$realPath || !$basePath || strpos($realPath, $basePath) !== 0) {
+		if (!$realPath || !$basePath || !str_starts_with($realPath, $basePath)) {
 			throw new NotFoundException('Invalid file path');
 		}
 
@@ -134,7 +134,7 @@ class FeedbackController extends AppController {
 		$basePath = realpath($savepath);
 
 		// Ensure the file is within the allowed directory
-		if (!$realPath || !$basePath || strpos($realPath, $basePath) !== 0) {
+		if (!$realPath || !$basePath || !str_starts_with($realPath, $basePath)) {
 			throw new NotFoundException('Invalid file path');
 		}
 

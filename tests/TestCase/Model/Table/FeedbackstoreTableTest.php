@@ -82,7 +82,7 @@ class FeedbackstoreTableTest extends TestCase {
 		$threw = false;
 		try {
 			$this->Feedbackstore->mail($feedbackObject);
-		} catch (TypeError $e) {
+		} catch (TypeError) {
 			$threw = true;
 		}
 

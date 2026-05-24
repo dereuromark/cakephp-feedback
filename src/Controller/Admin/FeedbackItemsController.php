@@ -27,7 +27,7 @@ class FeedbackItemsController extends AppController {
 			'created' => 'DESC',
 		];
 
-		if (!isset($this->Flash)) {
+		if (!property_exists($this, 'Flash') || $this->Flash === null) {
 			$this->loadComponent('Flash');
 		}
 	}
@@ -52,7 +52,7 @@ class FeedbackItemsController extends AppController {
 	public function index() {
 		$feedbackItems = $this->paginate($this->FeedbackItems);
 
-		$this->set(compact('feedbackItems'));
+		$this->set(['feedbackItems' => $feedbackItems]);
 	}
 
 	/**
@@ -64,7 +64,7 @@ class FeedbackItemsController extends AppController {
 	public function view($id = null) {
 		$feedbackItem = $this->FeedbackItems->get($id);
 
-		$this->set(compact('feedbackItem'));
+		$this->set(['feedbackItem' => $feedbackItem]);
 	}
 
 	/**
@@ -101,7 +101,7 @@ class FeedbackItemsController extends AppController {
 			}
 			$this->Flash->error(__d('feedback', 'The feedback item could not be saved. Please, try again.'));
 		}
-		$this->set(compact('feedbackItem'));
+		$this->set(['feedbackItem' => $feedbackItem]);
 	}
 
 	/**

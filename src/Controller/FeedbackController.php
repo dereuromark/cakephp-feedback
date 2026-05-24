@@ -26,7 +26,7 @@ class FeedbackController extends AppController {
 	public function initialize(): void {
 		parent::initialize();
 
-		if (!isset($this->Flash)) {
+		if (!property_exists($this, 'Flash') || $this->Flash === null) {
 			$this->loadComponent('Flash');
 		}
 	}
@@ -38,7 +38,7 @@ class FeedbackController extends AppController {
 	 */
 	public function beforeFilter(EventInterface $event): void {
 		// Check FormProtection component loaded and disable it for this plugin:
-		if (isset($this->FormProtection)) {
+		if (property_exists($this, 'FormProtection') && $this->FormProtection !== null) {
 			$this->FormProtection->setConfig('validatePost', false);
 			$this->FormProtection->setConfig('unlockedActions', ['save']);
 		}
@@ -161,16 +161,13 @@ class FeedbackController extends AppController {
 
 		//Prepare result
 		if (!$result['result']) {
-			$this->response = $this->response->withStatus(500);
-
-			if (empty($result['msg'])) {
+            $this->response = $this->response->withStatus(500);
+            if (empty($result['msg'])) {
 				$result['msg'] = __d('feedback', 'Error saving feedback.');
 			}
-		} else {
-			if (empty($result['msg'])) {
-				$result['msg'] = __d('feedback', 'Your feedback was saved successfully.');
-			}
-		}
+        } elseif (empty($result['msg'])) {
+            $result['msg'] = __d('feedback', 'Your feedback was saved successfully.');
+        }
 
 		$this->set('msg', $result['msg']);
 
@@ -214,7 +211,7 @@ class FeedbackController extends AppController {
 		$basePath = realpath($savepath);
 
 		// Ensure the file is within the allowed directory
-		if (!$realPath || !$basePath || strpos($realPath, $basePath) !== 0) {
+		if (!$realPath || !$basePath || !str_starts_with($realPath, $basePath)) {
 			throw new NotFoundException('Invalid file path');
 		}
 
