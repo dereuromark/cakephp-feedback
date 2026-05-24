@@ -231,12 +231,12 @@ class FeedbackstoreTable extends Table {
 		$feedbackObject['feedback'] .= sprintf("**By**: %s\n\n", $feedbackObject['name']);
 
 		// WARNING: This may not work for sites with different domains (or dev environments)
-        //          If the given URL is not public, Github won't display the screenshot
-        //Create filename based on timestamp and random number (to prevent collisions)
-        if ($localimagestore && $imagename = $this->saveScreenshot($feedbackObject)) {
-            $viewimageUrl = Router::url("/img/screenshots/$imagename", true);
-            $feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
-        }
+		//          If the given URL is not public, Github won't display the screenshot
+		//Create filename based on timestamp and random number (to prevent collisions)
+		if ($localimagestore && $imagename = $this->saveScreenshot($feedbackObject)) {
+			$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
+			$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
+		}
 		// Github still doesn't support this kind of image format in Markup Language
 		// $content = '[screenshot]: data:image/png;base64,'. $feedbackObject['screenshot'] . " \n\n";
 
@@ -325,12 +325,12 @@ class FeedbackstoreTable extends Table {
 		$feedbackObject['feedback'] .= sprintf("**Url**: %s\n\n", $feedbackObject['url']);
 
 		// WARNING: This may not work for sites with different domains (or dev environments)
-        //          If the given URL is not public, Bitbucket won't display the screenshot
-        //Create filename based on timestamp and random number (to prevent collisions)
-        if ($localimagestore && $imagename = $this->saveScreenshot($feedbackObject)) {
-            $viewimageUrl = Router::url("/img/screenshots/$imagename", true);
-            $feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
-        }
+		//          If the given URL is not public, Bitbucket won't display the screenshot
+		//Create filename based on timestamp and random number (to prevent collisions)
+		if ($localimagestore && $imagename = $this->saveScreenshot($feedbackObject)) {
+			$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
+			$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
+		}
 		// Bitbucket still doesn't support this kind of image format in Markup Language
 		// $content = '[screenshot]: data:image/png;base64,'. $feedbackObject['screenshot'] . " \n\n";
 
@@ -347,12 +347,12 @@ class FeedbackstoreTable extends Table {
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
-		if (Configure::read('Feedback.returnlink')) {
+			if (Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
 				$returnobject['msg'] .= __d('feedback', 'View your feedback on:');
 
 				//Get response from github api
-				$answer = json_decode((string) $result->getBody());
+				$answer = json_decode((string)$result->getBody());
 
 				//Create new url:
 				//Replace api prefix with bitbucket public domain:
@@ -403,12 +403,12 @@ class FeedbackstoreTable extends Table {
 		$feedbackObject['feedback'] .= sprintf("**By**: %s\n\n", $feedbackObject['name']);
 
 		// WARNING: This may not work for sites with different domains (or dev environments)
-        //          If the given URL is not public, Jira won't display the screenshot
-        //Create filename based on timestamp and random number (to prevent collisions)
-        if ($localimagestore && $imagename = $this->saveScreenshot($feedbackObject)) {
-            $viewimageUrl = Router::url("/img/screenshots/$imagename", true);
-            $feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
-        }
+		//          If the given URL is not public, Jira won't display the screenshot
+		//Create filename based on timestamp and random number (to prevent collisions)
+		if ($localimagestore && $imagename = $this->saveScreenshot($feedbackObject)) {
+			$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
+			$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
+		}
 		// Jira still doesn't support this kind of image format in Markup Language
 		// $content = '[screenshot]: data:image/png;base64,'. $feedbackObject['screenshot'] . " \n\n";
 
@@ -575,12 +575,12 @@ class FeedbackstoreTable extends Table {
 		//Serialize and save the object to a store in the Cake's tmp dir.
 		if (!file_exists($savepath) && !mkdir($savepath)) {
 			//Throw error, directory is requird
-            throw new NotFoundException('Could not create directory to save screenshots in. Please provide write rights to webserver user on directory: ' . $savepath);
+			throw new NotFoundException('Could not create directory to save screenshots in. Please provide write rights to webserver user on directory: ' . $savepath);
 		}
 
 		$screenshotname = $this->generateScreenshotName();
 
-		if (file_put_contents($savepath . $screenshotname, base64_decode((string) $feedbackObject['screenshot']))) {
+		if (file_put_contents($savepath . $screenshotname, base64_decode((string)$feedbackObject['screenshot']))) {
 			//Return the screenshotname
 			return $screenshotname;
 		}
@@ -596,7 +596,7 @@ class FeedbackstoreTable extends Table {
 	 * @return string
 	 */
 	private function generateScreenshotName() {
-		return time() . '-' . random_int(1000, 9999) . '.png';
+		return time() . '-' . mt_rand(1000, 9999) . '.png';
 	}
 
 }

@@ -27,7 +27,7 @@ class FeedbackItemsController extends AppController {
 			'created' => 'DESC',
 		];
 
-		if (!property_exists($this, 'Flash') || $this->Flash === null) {
+		if (!$this->components()->has('Flash')) {
 			$this->loadComponent('Flash');
 		}
 	}
