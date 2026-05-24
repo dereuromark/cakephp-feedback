@@ -24,7 +24,7 @@ class FeedbackController extends AppController {
 	public function initialize(): void {
 		parent::initialize();
 
-		if (!property_exists($this, 'Flash') || $this->Flash === null) {
+		if (!$this->components()->has('Flash')) {
 			$this->loadComponent('Flash');
 		}
 	}
@@ -100,6 +100,9 @@ class FeedbackController extends AppController {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 		$realPath = realpath($savepath . $file);
 		$basePath = realpath($savepath);
+		if ($basePath) {
+			$basePath = rtrim($basePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		}
 
 		// Ensure the file is within the allowed directory
 		if (!$realPath || !$basePath || !str_starts_with($realPath, $basePath)) {
@@ -132,6 +135,9 @@ class FeedbackController extends AppController {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 		$realPath = realpath($savepath . $file);
 		$basePath = realpath($savepath);
+		if ($basePath) {
+			$basePath = rtrim($basePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		}
 
 		// Ensure the file is within the allowed directory
 		if (!$realPath || !$basePath || !str_starts_with($realPath, $basePath)) {

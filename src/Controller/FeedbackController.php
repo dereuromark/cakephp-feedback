@@ -26,7 +26,7 @@ class FeedbackController extends AppController {
 	public function initialize(): void {
 		parent::initialize();
 
-		if (!property_exists($this, 'Flash') || $this->Flash === null) {
+		if (!$this->components()->has('Flash')) {
 			$this->loadComponent('Flash');
 		}
 	}
@@ -38,9 +38,11 @@ class FeedbackController extends AppController {
 	 */
 	public function beforeFilter(EventInterface $event): void {
 		// Check FormProtection component loaded and disable it for this plugin:
-		if (property_exists($this, 'FormProtection') && $this->FormProtection !== null) {
-			$this->FormProtection->setConfig('validatePost', false);
-			$this->FormProtection->setConfig('unlockedActions', ['save']);
+		if ($this->components()->has('FormProtection')) {
+			/** @var \Cake\Controller\Component\FormProtectionComponent $formProtection */
+			$formProtection = $this->components()->get('FormProtection');
+			$formProtection->setConfig('validatePost', false);
+			$formProtection->setConfig('unlockedActions', ['save']);
 		}
 
 		if (Configure::read('Feedback')) {
@@ -209,6 +211,9 @@ class FeedbackController extends AppController {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 		$realPath = realpath($savepath . $file);
 		$basePath = realpath($savepath);
+		if ($basePath) {
+			$basePath = rtrim($basePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		}
 
 		// Ensure the file is within the allowed directory
 		if (!$realPath || !$basePath || !str_starts_with($realPath, $basePath)) {
