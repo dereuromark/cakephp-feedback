@@ -60,10 +60,11 @@ class FilesystemStore implements StoreInterface {
 		//Serialize and save the object to a store in the Cake's tmp dir.
 		if (!file_exists($location) && !mkdir($location, 0770, true)) {
 			//Throw error, directory is requird
-            throw new NotFoundException('Could not create directory to save feedbacks in. Please provide write rights to webserver user on directory: ' . $location);
+			throw new NotFoundException('Could not create directory to save feedbacks in. Please provide write rights to webserver user on directory: ' . $location);
 		}
-        //Add filename to data
-        return (bool) file_put_contents($location . $object['filename'], serialize($object));
+
+		//Add filename to data
+		return (bool)file_put_contents($location . $object['filename'], serialize($object));
 	}
 
 	/**

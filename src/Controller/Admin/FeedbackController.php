@@ -55,7 +55,7 @@ class FeedbackController extends AppController {
 				continue;
 			}
 
-			$storeName = substr((string) $store, strrpos((string) $store, '\\') + 1);
+			$storeName = substr((string)$store, strrpos((string)$store, '\\') + 1);
 			$stores[$store] = $storeName;
 		}
 

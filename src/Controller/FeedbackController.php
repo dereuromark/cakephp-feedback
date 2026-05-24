@@ -161,13 +161,13 @@ class FeedbackController extends AppController {
 
 		//Prepare result
 		if (!$result['result']) {
-            $this->response = $this->response->withStatus(500);
-            if (empty($result['msg'])) {
+			$this->response = $this->response->withStatus(500);
+			if (empty($result['msg'])) {
 				$result['msg'] = __d('feedback', 'Error saving feedback.');
 			}
-        } elseif (empty($result['msg'])) {
-            $result['msg'] = __d('feedback', 'Your feedback was saved successfully.');
-        }
+		} elseif (empty($result['msg'])) {
+			$result['msg'] = __d('feedback', 'Your feedback was saved successfully.');
+		}
 
 		$this->set('msg', $result['msg']);
 
