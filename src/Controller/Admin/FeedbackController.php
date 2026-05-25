@@ -66,10 +66,10 @@ class FeedbackController extends AppController {
 			$feedbackItems = $feedbackItemsTable->find()
 				->select(['id', 'status', 'created', 'name', 'subject', 'priority'])
 				->where(['status' => $entityClass::STATUS_NEW])->all()->toArray();
-			$this->set(['feedbackItems' => $feedbackItems]);
+			$this->set(compact('feedbackItems'));
 		}
 
-		$this->set(['stores' => $stores]);
+		$this->set(compact('stores'));
 	}
 
 	/**
