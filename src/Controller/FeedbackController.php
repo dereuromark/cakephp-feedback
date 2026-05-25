@@ -26,7 +26,7 @@ class FeedbackController extends AppController {
 	public function initialize(): void {
 		parent::initialize();
 
-		if (!isset($this->Flash)) {
+		if (!$this->components()->has('Flash')) {
 			$this->loadComponent('Flash');
 		}
 	}
@@ -38,9 +38,11 @@ class FeedbackController extends AppController {
 	 */
 	public function beforeFilter(EventInterface $event): void {
 		// Check FormProtection component loaded and disable it for this plugin:
-		if (isset($this->FormProtection)) {
-			$this->FormProtection->setConfig('validatePost', false);
-			$this->FormProtection->setConfig('unlockedActions', ['save']);
+		if ($this->components()->has('FormProtection')) {
+			/** @var \Cake\Controller\Component\FormProtectionComponent $formProtection */
+			$formProtection = $this->components()->get('FormProtection');
+			$formProtection->setConfig('validatePost', false);
+			$formProtection->setConfig('unlockedActions', ['save']);
 		}
 
 		if (Configure::read('Feedback')) {
@@ -162,14 +164,11 @@ class FeedbackController extends AppController {
 		//Prepare result
 		if (!$result['result']) {
 			$this->response = $this->response->withStatus(500);
-
 			if (empty($result['msg'])) {
 				$result['msg'] = __d('feedback', 'Error saving feedback.');
 			}
-		} else {
-			if (empty($result['msg'])) {
-				$result['msg'] = __d('feedback', 'Your feedback was saved successfully.');
-			}
+		} elseif (empty($result['msg'])) {
+			$result['msg'] = __d('feedback', 'Your feedback was saved successfully.');
 		}
 
 		$this->set('msg', $result['msg']);
@@ -212,9 +211,12 @@ class FeedbackController extends AppController {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 		$realPath = realpath($savepath . $file);
 		$basePath = realpath($savepath);
+		if ($basePath) {
+			$basePath = rtrim($basePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		}
 
 		// Ensure the file is within the allowed directory
-		if (!$realPath || !$basePath || strpos($realPath, $basePath) !== 0) {
+		if (!$realPath || !$basePath || !str_starts_with($realPath, $basePath)) {
 			throw new NotFoundException('Invalid file path');
 		}
 

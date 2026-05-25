@@ -24,7 +24,7 @@ class FeedbackController extends AppController {
 	public function initialize(): void {
 		parent::initialize();
 
-		if (!isset($this->Flash)) {
+		if (!$this->components()->has('Flash')) {
 			$this->loadComponent('Flash');
 		}
 	}
@@ -55,7 +55,7 @@ class FeedbackController extends AppController {
 				continue;
 			}
 
-			$storeName = substr($store, strrpos($store, '\\') + 1);
+			$storeName = substr((string)$store, strrpos((string)$store, '\\') + 1);
 			$stores[$store] = $storeName;
 		}
 
@@ -100,9 +100,12 @@ class FeedbackController extends AppController {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 		$realPath = realpath($savepath . $file);
 		$basePath = realpath($savepath);
+		if ($basePath) {
+			$basePath = rtrim($basePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		}
 
 		// Ensure the file is within the allowed directory
-		if (!$realPath || !$basePath || strpos($realPath, $basePath) !== 0) {
+		if (!$realPath || !$basePath || !str_starts_with($realPath, $basePath)) {
 			throw new NotFoundException('Invalid file path');
 		}
 
@@ -132,9 +135,12 @@ class FeedbackController extends AppController {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 		$realPath = realpath($savepath . $file);
 		$basePath = realpath($savepath);
+		if ($basePath) {
+			$basePath = rtrim($basePath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		}
 
 		// Ensure the file is within the allowed directory
-		if (!$realPath || !$basePath || strpos($realPath, $basePath) !== 0) {
+		if (!$realPath || !$basePath || !str_starts_with($realPath, $basePath)) {
 			throw new NotFoundException('Invalid file path');
 		}
 
