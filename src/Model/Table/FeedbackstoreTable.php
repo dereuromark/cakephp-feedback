@@ -1,12 +1,12 @@
 <?php
+
 namespace Feedback\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\Http\Client;
+use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Exception\NotImplementedException;
 use Cake\Log\Log;
-use Cake\Mailer\Email;
-use Cake\Http\Exception\NotFoundException;
 use Cake\Mailer\Mailer;
 use Cake\ORM\Table;
 use Cake\Routing\Router;
@@ -25,13 +25,10 @@ class FeedbackstoreTable extends Table {
 	/**
 	 * Mantis store function
 	 *
-	 * @deprecated Make a Store class
-	 *
-	 * @param array|null $feedbackObject
-	 *
-	 * @return array
-	 *
-	 * @throws \Cake\Http\Exception\NotImplementedException
+     * @deprecated Make a Store class
+     * @param array|null $feedbackObject
+     * @throws \Cake\Http\Exception\NotImplementedException
+     * @return array
 	 */
 	public function mantis($feedbackObject = null) {
 		$returnobject = [];
@@ -43,11 +40,11 @@ class FeedbackstoreTable extends Table {
 		}
 
 		//Mandatory
-		$api_url	= Configure::read('Feedback.configuration.mantis.api_url');
-		$username	= Configure::read('Feedback.configuration.mantis.username');
-		$password	= Configure::read('Feedback.configuration.mantis.password');
+		$api_url = Configure::read('Feedback.configuration.mantis.api_url');
+		$username = Configure::read('Feedback.configuration.mantis.username');
+		$password = Configure::read('Feedback.configuration.mantis.password');
 		$project_id	= Configure::read('Feedback.configuration.mantis.project_id');
-		$category	= Configure::read('Feedback.configuration.mantis.category');
+		$category = Configure::read('Feedback.configuration.mantis.category');
 		$decodeimage = Configure::read('Feedback.configuration.mantis.decodeimage');
 
 		//Optional HTTP credentials for bypassing Basic Auth or Kerberos
@@ -60,7 +57,7 @@ class FeedbackstoreTable extends Table {
 			$soap_options = [
 				'login' => $http_username,
 				'password' => $http_password,
-				];
+			];
 		}
 
 		throw new NotImplementedException('TODO');
@@ -155,7 +152,7 @@ class FeedbackstoreTable extends Table {
 
 		//Tmp store the screenshot:
 		$tmpfile = ROOT . DS . 'tmp' . DS . time() . '_' . mt_rand(1000, 9999) . '.png';
-		if (!file_put_contents($tmpfile, base64_decode((string) $feedbackObject['screenshot']))) {
+		if (!file_put_contents($tmpfile, base64_decode((string)$feedbackObject['screenshot']))) {
 			//Need to save tmp file
 			throw new NotFoundException('Could not save tmp file for attachment in mail');
 		}
@@ -166,11 +163,11 @@ class FeedbackstoreTable extends Table {
 		$email->setSubject($feedbackObject['subject']);
 		$email->setEmailFormat('html');
 		$email->setAttachments([
-		    'screenshot.png' => [
-		        'file' => $tmpfile,
-		        'mimetype' => 'image/png',
-		        'contentId' => 'id-screenshot'
-		    ]
+			'screenshot.png' => [
+				'file' => $tmpfile,
+				'mimetype' => 'image/png',
+				'contentId' => 'id-screenshot',
+			],
 		]);
 
 		//Mail specific: append browser, browser version, URL, etc to feedback :
@@ -218,9 +215,9 @@ class FeedbackstoreTable extends Table {
 		}
 
 		//Read settings
-		$api_url			= Configure::read('Feedback.configuration.github.api_url');
-		$username			= Configure::read('Feedback.configuration.github.username');
-		$password			= Configure::read('Feedback.configuration.github.password');
+		$api_url = Configure::read('Feedback.configuration.github.api_url');
+		$username = Configure::read('Feedback.configuration.github.username');
+		$password = Configure::read('Feedback.configuration.github.password');
 		$localimagestore = Configure::read('Feedback.configuration.github.localimagestore');
 
 		//Github specific: append browser, browser version and URL to feedback:
@@ -233,9 +230,12 @@ class FeedbackstoreTable extends Table {
 		// WARNING: This may not work for sites with different domains (or dev environments)
 		//          If the given URL is not public, Github won't display the screenshot
 		//Create filename based on timestamp and random number (to prevent collisions)
-		if ($localimagestore && ($imagename = $this->saveScreenshot($feedbackObject))) {
-			$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
-			$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
+		if ($localimagestore) {
+			$imagename = $this->saveScreenshot($feedbackObject);
+			if ($imagename) {
+				$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
+				$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
+			}
 		}
 		// Github still doesn't support this kind of image format in Markup Language
 		// $content = '[screenshot]: data:image/png;base64,'. $feedbackObject['screenshot'] . " \n\n";
@@ -265,7 +265,7 @@ class FeedbackstoreTable extends Table {
 		} elseif ($curlstatuscode >= 400) {
 			//Return http error and message
 			$message = json_decode($result);
-			$returnobject['msg'] = trim((string) $message->message); //Can contain linebreaks
+			$returnobject['msg'] = trim((string)$message->message); //Can contain linebreaks
 
 		} else {
 			//Set return value to true and return message
@@ -313,7 +313,7 @@ class FeedbackstoreTable extends Table {
 		}
 
 		//Read settings
-		$api_url			= Configure::read('Feedback.configuration.bitbucket.api_url');
+		$api_url = Configure::read('Feedback.configuration.bitbucket.api_url');
 		$username = Configure::read('Feedback.configuration.bitbucket.username');
 		$password = Configure::read('Feedback.configuration.bitbucket.password');
 		$localimagestore = Configure::read('Feedback.configuration.bitbucket.localimagestore');
@@ -327,9 +327,12 @@ class FeedbackstoreTable extends Table {
 		// WARNING: This may not work for sites with different domains (or dev environments)
 		//          If the given URL is not public, Bitbucket won't display the screenshot
 		//Create filename based on timestamp and random number (to prevent collisions)
-		if ($localimagestore && ($imagename = $this->saveScreenshot($feedbackObject))) {
-			$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
-			$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
+		if ($localimagestore) {
+			$imagename = $this->saveScreenshot($feedbackObject);
+			if ($imagename) {
+				$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
+				$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
+			}
 		}
 		// Bitbucket still doesn't support this kind of image format in Markup Language
 		// $content = '[screenshot]: data:image/png;base64,'. $feedbackObject['screenshot'] . " \n\n";
@@ -388,11 +391,11 @@ class FeedbackstoreTable extends Table {
 		}
 
 		//Read settings
-		$api_url			= Configure::read('Feedback.configuration.jira.api_url');
-		$username			= Configure::read('Feedback.configuration.jira.username');
-		$password			= Configure::read('Feedback.configuration.jira.password');
-		$project_id			= Configure::read('Feedback.configuration.jira.project_id');
-		$issuetype			= Configure::read('Feedback.configuration.jira.issuetype');
+		$api_url = Configure::read('Feedback.configuration.jira.api_url');
+		$username = Configure::read('Feedback.configuration.jira.username');
+		$password = Configure::read('Feedback.configuration.jira.password');
+		$project_id = Configure::read('Feedback.configuration.jira.project_id');
+		$issuetype = Configure::read('Feedback.configuration.jira.issuetype');
 		$localimagestore = Configure::read('Feedback.configuration.jira.localimagestore');
 
 		//Mantis specific: append browser, browser version and URL to feedback:
@@ -405,9 +408,12 @@ class FeedbackstoreTable extends Table {
 		// WARNING: This may not work for sites with different domains (or dev environments)
 		//          If the given URL is not public, Jira won't display the screenshot
 		//Create filename based on timestamp and random number (to prevent collisions)
-		if ($localimagestore && ($imagename = $this->saveScreenshot($feedbackObject))) {
-			$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
-			$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
+		if ($localimagestore) {
+			$imagename = $this->saveScreenshot($feedbackObject);
+			if ($imagename) {
+				$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
+				$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
+			}
 		}
 		// Jira still doesn't support this kind of image format in Markup Language
 		// $content = '[screenshot]: data:image/png;base64,'. $feedbackObject['screenshot'] . " \n\n";
@@ -447,7 +453,7 @@ class FeedbackstoreTable extends Table {
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
-		if (Configure::read('Feedback.returnlink')) {
+			if (Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
 				$returnobject['msg'] .= __d('feedback', 'View your feedback on:');
 
@@ -487,11 +493,11 @@ class FeedbackstoreTable extends Table {
 		}
 
 		//Read settings
-		$api_url			= Configure::read('Feedback.configuration.redmine.api_url');
-		$username			= Configure::read('Feedback.configuration.redmine.username');
-		$password			= Configure::read('Feedback.configuration.redmine.password');
-		$project_id			= Configure::read('Feedback.configuration.redmine.project_id');
-		$tracker_id			= Configure::read('Feedback.configuration.redmine.tracker_id');
+		$api_url = Configure::read('Feedback.configuration.redmine.api_url');
+		$username = Configure::read('Feedback.configuration.redmine.username');
+		$password = Configure::read('Feedback.configuration.redmine.password');
+		$project_id = Configure::read('Feedback.configuration.redmine.project_id');
+		$tracker_id = Configure::read('Feedback.configuration.redmine.tracker_id');
 
 		//Redmine specific: append browser, browser version and URL to feedback:
 		$feedbackObject['feedback'] .= "\n\n";
@@ -537,7 +543,7 @@ class FeedbackstoreTable extends Table {
 			$returnobject['result'] = true;
 			$returnobject['msg'] = __d('feedback', 'Thank you. Your feedback was saved.');
 
-		if (Configure::read('Feedback.returnlink')) {
+			if (Configure::read('Feedback.returnlink')) {
 				$returnobject['msg'] .= '<br/>';
 				$returnobject['msg'] .= __d('feedback', 'View your feedback on:');
 
