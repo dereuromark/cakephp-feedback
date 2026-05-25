@@ -233,7 +233,7 @@ class FeedbackstoreTable extends Table {
 		// WARNING: This may not work for sites with different domains (or dev environments)
 		//          If the given URL is not public, Github won't display the screenshot
 		//Create filename based on timestamp and random number (to prevent collisions)
-		if ($localimagestore && $imagename = $this->saveScreenshot($feedbackObject)) {
+		if ($localimagestore && ($imagename = $this->saveScreenshot($feedbackObject))) {
 			$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
 			$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
 		}
@@ -327,7 +327,7 @@ class FeedbackstoreTable extends Table {
 		// WARNING: This may not work for sites with different domains (or dev environments)
 		//          If the given URL is not public, Bitbucket won't display the screenshot
 		//Create filename based on timestamp and random number (to prevent collisions)
-		if ($localimagestore && $imagename = $this->saveScreenshot($feedbackObject)) {
+		if ($localimagestore && ($imagename = $this->saveScreenshot($feedbackObject))) {
 			$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
 			$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
 		}
@@ -405,7 +405,7 @@ class FeedbackstoreTable extends Table {
 		// WARNING: This may not work for sites with different domains (or dev environments)
 		//          If the given URL is not public, Jira won't display the screenshot
 		//Create filename based on timestamp and random number (to prevent collisions)
-		if ($localimagestore && $imagename = $this->saveScreenshot($feedbackObject)) {
+		if ($localimagestore && ($imagename = $this->saveScreenshot($feedbackObject))) {
 			$viewimageUrl = Router::url("/img/screenshots/$imagename", true);
 			$feedbackObject['feedback'] .= sprintf("**Screenshot**:\n![screenshot](%s)", $viewimageUrl);
 		}
