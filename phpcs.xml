@@ -7,7 +7,6 @@
 	<file>config/</file>
 	<file>tests/</file>
 
-	<exclude-pattern>/src/Model/Table/FeedbackstoreTable.php</exclude-pattern>
 	<exclude-pattern>/test_app/src/Dto/</exclude-pattern>
 	<exclude-pattern>/test_app/templates/</exclude-pattern>
 	<exclude-pattern>/plugins/Sandbox/src/Dto/</exclude-pattern>
