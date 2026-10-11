@@ -198,6 +198,9 @@ class FeedbackstoreTableTest extends TestCase {
 		$this->assertNull($read->invoke($this->Feedbackstore, 'mantis', 'http_password'));
 		Configure::write('Feedback.configuration.mantis.http_password', null);
 		$this->assertNull($read->invoke($this->Feedbackstore, 'mantis', 'http_password'));
+		Configure::write('Feedback.configuration.mantis', null);
+		$this->assertNull($read->invoke($this->Feedbackstore, 'mantis', 'api_url'));
+		$this->assertNull($read->invoke($this->Feedbackstore, 'mantis', 'http_password'));
 	}
 
 }
