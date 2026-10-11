@@ -15,7 +15,7 @@ The return link is disabled because this setup does not expose report browsing. 
 
 ## Add the submission route
 
-In your application's existing route scope, add this before its fallback routes:
+At the top level of `config/routes.php`, outside its scope closures, add this before those scopes and fallback routes. Here `$routes` is the file's root `RouteBuilder`:
 
 ```php
 $routes->plugin('Feedback', ['path' => '/feedback'], function (\Cake\Routing\RouteBuilder $routes): void {

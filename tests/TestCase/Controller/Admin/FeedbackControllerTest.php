@@ -137,4 +137,15 @@ class FeedbackControllerTest extends TestCase {
 		}
 	}
 
+	public function testApplicationRedirectIsPreserved(): void {
+		Configure::write('Test.redirectFeedback', true);
+		try {
+			$this->get(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'index']);
+			$this->assertRedirect('/login');
+			$this->assertResponseCode(302);
+		} finally {
+			Configure::delete('Test.redirectFeedback');
+		}
+	}
+
 }

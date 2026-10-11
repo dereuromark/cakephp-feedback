@@ -18,7 +18,7 @@ When your application protects all admin actions, you can enable the plugin rout
 $this->addPlugin('Feedback');
 ```
 
-Replace the earlier plugin registration; do not register the plugin twice. Full routes include `/feedback`, `/feedback/viewimage/...`, `/admin/feedback`, and the `Admin/FeedbackItems` actions. Restrict the admin prefix and report actions before enabling these routes.
+Replace the earlier plugin registration; do not register the plugin twice. Full routes include `/feedback`, `/feedback/feedback/viewimage/...`, `/admin/feedback`, and the `Admin/FeedbackItems` actions. Restrict the admin prefix and report actions before enabling these routes.
 
 ## Storage and screenshots
 

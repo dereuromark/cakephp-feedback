@@ -18,7 +18,7 @@ $(document).ready(function() {
 	/*
 	Submit button click
 	 */
-	$('#feedbackit-form').submit(function(e) {
+	$('#feedbackit-form').on('submit', function(e) {
 
 		//Hide feedback slider
 		slider.hide();
@@ -64,24 +64,24 @@ $(document).ready(function() {
 								confirmMessage = e.responseText;
 							}
 							// Only use modal if TwitterBootstrap Javascript is loaded
-							if ($.isFunction($.fn.modal)) {
+							if (typeof $.fn.modal === 'function') {
 								modaltitle.html('Feedback submitted'); //FIXME: Localize
 								modalbody.html(confirmMessage);
 								$('#feedbackit-modal').modal('show');
 							} else {
-								alert(confirmMessage);
+								alert(new DOMParser().parseFromString(confirmMessage, 'text/html').body.textContent);
 							}
 						} else {
 							if (e.responseText) {
 								errorMessage = e.responseText;
 							}
 							// Only use modal if TwitterBootstrap Javascript is loaded
-							if ($.isFunction($.fn.modal)) {
+							if (typeof $.fn.modal === 'function') {
 								modaltitle.html('Error'); //FIXME: Localize
 								modalbody.html(errorMessage);
 								$('#feedbackit-modal').modal('show');
 							} else {
-								alert(errorMessage);
+								alert(new DOMParser().parseFromString(errorMessage, 'text/html').body.textContent);
 							}
 						}
 					},
@@ -165,7 +165,7 @@ $(document).ready(function() {
 	/*
 	Confirm terms checkbox changed
 	 */
-	$('#feedbackit-okay').change(function() {
+	$('#feedbackit-okay').on('change', function() {
 		//Run the update submit button code
 		updateSubmitButton();
 	});
@@ -173,7 +173,7 @@ $(document).ready(function() {
 	/*
  	Confirm send copy checkbox changed
  	*/
-	$('#feedbackit-copyme').change(function() {
+	$('#feedbackit-copyme').on('change', function() {
 
 		var emailfield = $("#feedbackit-email");
 		var namefield = $("#feedbackit-name");
@@ -236,7 +236,7 @@ $(document).ready(function() {
 	/*
 	 * Click on closed feedback tab
 	 */
-	$("#feedbackit-slideout").click(function() {
+	$("#feedbackit-slideout").on('click', function() {
 		//Open menu
 		$("#feedbackit-slideout").addClass("feedbackit-slideout_outer");
 		$("#feedbackit-slideout_inner").addClass("feedbackit-slideout_inner");
@@ -245,14 +245,14 @@ $(document).ready(function() {
 	/*
 	 * Click on cancel button
 	 */
-	$("#feedbackit-cancel").click(function() {
+	$("#feedbackit-cancel").on('click', function() {
 		closeandreset();
 	});
 
 	/*
 	 * Click on hide button
 	 */
-	$("#feedbackit-slideout_inner .tab-hide").click(function() {
+	$("#feedbackit-slideout_inner .tab-hide").on('click', function() {
 		closeandreset();
 		$('#feedbackit-slideout').fadeOut();
 	});
@@ -293,14 +293,14 @@ $(document).ready(function() {
 	/*
 	Activate tooltip for screenshot approval
 	 */
-	if ($.isFunction($.fn.modal)) { //This is still quite dirty. For some reason the tooltip function is always loaded, even if not the TB tooltip. So we check for modal which is TB only
+	if (typeof $.fn.tooltip === 'function') {
 		$('#feedbackit-okay-message').tooltip();
 	}
 
 	//Run update submit button to set starting state (Based on terms checkbox state)
 	updateSubmitButton();
 
-	$(document).keydown(function(event) {
+	$(document).on('keydown', function(event) {
 		if (event.keyCode === 27) {
 			closeandreset();
 		}

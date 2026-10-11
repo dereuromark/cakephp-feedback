@@ -9,11 +9,20 @@ use Cake\Http\Exception\ForbiddenException;
 
 class AppController extends Controller {
 
-	public function beforeFilter(EventInterface $event): void {
+	/**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @return mixed
+	 */
+	public function beforeFilter(EventInterface $event) {
 		parent::beforeFilter($event);
+		if (Configure::read('Test.redirectFeedback')) {
+			return $this->redirect('/login');
+		}
 		if (Configure::read('Test.denyFeedback')) {
 			throw new ForbiddenException('Feedback access denied by application.');
 		}
+
+		return null;
 	}
 
 }

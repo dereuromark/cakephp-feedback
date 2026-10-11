@@ -55,4 +55,6 @@ class SupportStore implements StoreInterface {
 }
 ```
 
+A store's `msg` is rendered as HTML in the optional modal. Escape any user-supplied text with `h()` before including it, and emit only trusted markup. The alert fallback extracts plain text from the message.
+
 Register `App\Store\SupportStore::class` in `Feedback.stores`, and place its options in `Feedback.configuration.Support`. The controller adds `time` and `sid` before invoking stores. Protect credentials in application configuration and handle delivery errors in your implementation.

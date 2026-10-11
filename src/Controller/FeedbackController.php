@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\NotFoundException;
+use Cake\Http\Response;
 use Feedback\Store\Filesystem;
 use Feedback\Store\StoreCollection;
 
@@ -37,7 +38,13 @@ class FeedbackController extends AppController {
 	 * @return void
 	 */
 	public function beforeFilter(EventInterface $event): void {
-		parent::beforeFilter($event);
+		$result = parent::beforeFilter($event);
+		if ($result instanceof Response) {
+			$event->setResult($result);
+			$event->stopPropagation();
+
+			return;
+		}
 		// Check FormProtection component loaded and disable it for this plugin:
 		if ($this->components()->has('FormProtection')) {
 			/** @var \Cake\Controller\Component\FormProtectionComponent $formProtection */
