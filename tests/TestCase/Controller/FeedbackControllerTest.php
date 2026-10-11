@@ -158,10 +158,61 @@ class FeedbackControllerTest extends TestCase {
 		$this->assertSame('session@example.com', $data['email']);
 	}
 
+	public function testForcedAuthUserMappedFields(): void {
+		$this->assertAuthUserSubmission([
+			'display_name' => 'Mapped user',
+			'contact' => 'mapped@example.com',
+			'account' => 'Fallback user',
+			'email' => 'fallback@example.com',
+		], true, 'Mapped user', 'mapped@example.com');
+	}
+
+	public function testForcedAuthUserFallbackFields(): void {
+		$this->assertAuthUserSubmission([
+			'display_name' => '',
+			'contact' => '',
+			'account' => 'Fallback user',
+			'email' => 'fallback@example.com',
+		], true, 'Fallback user', 'fallback@example.com');
+	}
+
+	public function testAuthUserDoesNotReplaceSubmittedFieldsWithoutForce(): void {
+		$this->assertAuthUserSubmission([
+			'display_name' => 'Mapped user',
+			'contact' => 'mapped@example.com',
+		], false, 'Submitted user', 'submitted@example.com');
+	}
+
+	/**
+	 * @param array<string, string> $user
+	 * @param bool $force
+	 * @param string $expectedName
+	 * @param string $expectedEmail
+	 * @return void
+	 */
+	protected function assertAuthUserSubmission(array $user, bool $force, string $expectedName, string $expectedEmail): void {
+		Configure::write('Test.authUserData', $user);
+		Configure::write('Feedback.authMap', ['username' => 'display_name', 'email' => 'contact']);
+		Configure::write('Feedback.forceauthusername', $force);
+		Configure::write('Feedback.forceemail', $force);
+		$this->post(['plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'save'], [
+			'name' => 'Submitted user',
+			'email' => 'submitted@example.com',
+		]);
+
+		$this->assertResponseOk();
+		$files = glob(TMP . '*-' . session_id() . '.feedback');
+		$this->assertCount(1, $files);
+		$data = unserialize(file_get_contents($files[0]), ['allowed_classes' => false]);
+		$this->assertSame($expectedName, $data['name']);
+		$this->assertSame($expectedEmail, $data['email']);
+	}
+
 	/**
 	 * @return void
 	 */
 	public function tearDown(): void {
+		Configure::delete('Test.authUserData');
 		parent::tearDown();
 
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
