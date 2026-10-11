@@ -7,6 +7,7 @@ use App\Controller\AppController;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
+use Cake\Http\Response;
 use Feedback\Store\DatabaseStore;
 use Feedback\Store\Filesystem;
 use RuntimeException;
@@ -38,6 +39,14 @@ class FeedbackItemsController extends AppController {
 	 * @return void
 	 */
 	public function beforeFilter(EventInterface $event): void {
+		$result = parent::beforeFilter($event);
+		if ($result instanceof Response) {
+			$event->setResult($result);
+			$event->stopPropagation();
+
+			return;
+		}
+
 		if (Configure::read('Feedback')) {
 			return;
 		}

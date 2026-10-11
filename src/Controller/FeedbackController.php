@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\NotFoundException;
+use Cake\Http\Response;
 use Feedback\Store\Filesystem;
 use Feedback\Store\StoreCollection;
 
@@ -37,6 +38,13 @@ class FeedbackController extends AppController {
 	 * @return void
 	 */
 	public function beforeFilter(EventInterface $event): void {
+		$result = parent::beforeFilter($event);
+		if ($result instanceof Response) {
+			$event->setResult($result);
+			$event->stopPropagation();
+
+			return;
+		}
 		// Check FormProtection component loaded and disable it for this plugin:
 		if ($this->components()->has('FormProtection')) {
 			/** @var \Cake\Controller\Component\FormProtectionComponent $formProtection */
@@ -59,7 +67,7 @@ class FeedbackController extends AppController {
 	 * @return \Cake\Http\Response|null|void
 	 */
 	public function save() {
-		$this->request->allowMethod(['put', 'post', 'ajax']);
+		$this->request->allowMethod(['put', 'post']);
 
 		$map = (array)Configure::read('Feedback.authMap') + [
 			'username' => 'username',
@@ -119,28 +127,11 @@ class FeedbackController extends AppController {
 		}
 		$data['sid'] = $this->request->getSession()->id();
 
-		$map = (array)Configure::read('Feedback.authMap') + [
-			'username' => 'username',
-			'email' => 'email',
-		];
-		if ($this->components()->has('AuthUser')) {
-			$username = $this->AuthUser->user($userField) ?: $this->AuthUser->user('account') ?: '';
-			if (empty($data['name']) || Configure::read('Feedback.forceauthusername')) {
-				$data['name'] = $username;
-			}
-			$email = $this->AuthUser->user($emailField) ?: $this->AuthUser->user('email') ?: '';
-			if (empty($data['email']) || Configure::read('Feedback.forceemail')) {
-				$data['email'] = $email;
-			}
-		} else {
-			$username = $this->request->getSession()->read($map['username']);
-			if (empty($data['name']) || Configure::read('Feedback.forceauthusername')) {
-				$data['name'] = $username;
-			}
-			$email = $this->request->getSession()->read($map['email']);
-			if (empty($data['email']) || Configure::read('Feedback.forceemail')) {
-				$data['email'] = $email;
-			}
+		if (empty($data['name']) || Configure::read('Feedback.forceauthusername')) {
+			$data['name'] = $name;
+		}
+		if (empty($data['email']) || Configure::read('Feedback.forceemail')) {
+			$data['email'] = $email;
 		}
 
 		if (empty($data['name'])) {

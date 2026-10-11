@@ -17,7 +17,7 @@ class StoreCollection {
 	/**
 	 * @var array<\Feedback\Store\StoreInterface>
 	 */
-	protected $stores;
+	protected array $stores = [];
 
 	/**
 	 * @param array $stores
