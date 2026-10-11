@@ -15,14 +15,6 @@ msgstr ""
 "X-Generator: Poedit 1.6.4\n"
 "Language: de_DE\n"
 
-#: Plugin/FeedbackIt/Controller/FeedbackController.php:138
-msgid "Could not find that file"
-msgstr "Datei nicht gefunden"
-
-#: Plugin/FeedbackIt/Controller/FeedbackController.php:144
-msgid "No screenshot found"
-msgstr "Kein Screenshot gefunden"
-
 #: Plugin/FeedbackIt/Model/Feedbackstore.php:30;112;196;274;332
 msgid "Thank you. Your feedback was saved."
 msgstr "Vielen Dank. Dein Feedback wurde gespeichert."
@@ -38,10 +30,6 @@ msgstr "Eine Kopie deines übermittelten Feedbacks:"
 #: Plugin/FeedbackIt/View/Elements/feedbackbar.ctp:70
 msgid "Send your feedback or bugreport!"
 msgstr "Sende uns dein Feedback oder Fehlerbericht!"
-
-#: Plugin/FeedbackIt/View/Elements/feedbackbar.ctp:80
-msgid "Your name"
-msgstr "Dein Name"
 
 #: Plugin/FeedbackIt/View/Elements/feedbackbar.ctp:91
 msgid "Your e-mail"
@@ -106,3 +94,123 @@ msgstr "Mittel"
 
 msgid "high"
 msgstr "Hoch"
+
+msgid "new"
+msgstr ""
+
+msgid "in progress"
+msgstr ""
+
+msgid "archived"
+msgstr ""
+
+msgid "The feedback item has been saved."
+msgstr ""
+
+msgid "The feedback item could not be saved. Please, try again."
+msgstr ""
+
+msgid "The feedback item has been deleted."
+msgstr ""
+
+msgid "The feedback item could not be deleted. Please, try again."
+msgstr ""
+
+msgid "Anonymous"
+msgstr ""
+
+msgid "Error saving feedback."
+msgstr ""
+
+msgid "Your feedback was saved successfully."
+msgstr ""
+
+msgid "View your feedback on: "
+msgstr ""
+
+msgid "Screenshot"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Are you sure you want to delete # {0}?"
+msgstr ""
+
+msgid "List Feedback Items"
+msgstr ""
+
+msgid "Feedback Items"
+msgstr ""
+
+msgid "Edit Feedback Item"
+msgstr ""
+
+msgid "Back"
+msgstr ""
+
+msgid "Import Files"
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Edit {0}"
+msgstr ""
+
+msgid "Feedback Item"
+msgstr ""
+
+msgid "Delete {0}"
+msgstr ""
+
+msgid "List {0}"
+msgstr ""
+
+msgid "Feedback"
+msgstr ""
+
+msgid "Sid"
+msgstr ""
+
+msgid "Url"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Data"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Created"
+msgstr ""
+
+msgid "first"
+msgstr ""
+
+msgid "previous"
+msgstr ""
+
+msgid "next"
+msgstr ""
+
+msgid "last"
+msgstr ""
+
+msgid "Your name "
+msgstr "Dein Name "
