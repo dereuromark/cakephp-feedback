@@ -57,10 +57,10 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 					</td>
 					<td><?= $this->Time->nice($feedbackItem->created) ?></td>
 					<td class="actions">
-						<?php echo $this->Html->link(isset($this->Icon) ? $this->Icon->render('view') : __d('feedback', 'View'), ['action' => 'view', $feedbackItem->id], ['escapeTitle' => false]); ?>
-						<?php echo $this->Html->link(isset($this->Icon) ? $this->Icon->render('edit') : __d('feedback', 'Edit'), ['action' => 'edit', $feedbackItem->id], ['escapeTitle' => false]); ?>
+						<?php echo $this->Html->link(isset($this->Icon) ? $this->Icon->render('view') : __d('feedback', 'View'), ['action' => 'view', $feedbackItem->id], ['escape' => false, 'escapeAttributes' => true]); ?>
+						<?php echo $this->Html->link(isset($this->Icon) ? $this->Icon->render('edit') : __d('feedback', 'Edit'), ['action' => 'edit', $feedbackItem->id], ['escape' => false, 'escapeAttributes' => true]); ?>
 						<?php echo $this->Form->postButton(isset($this->Icon) ? $this->Icon->render('delete') : __d('feedback', 'Delete'), ['action' => 'delete', $feedbackItem->id], [
-							'escapeTitle' => false,
+							'escape' => false, 'escapeAttributes' => true,
 							'class' => 'btn btn-link p-0 align-baseline',
 							'form' => [
 								'class' => 'd-inline',

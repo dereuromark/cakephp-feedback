@@ -1,6 +1,6 @@
 # Upgrading
 
-Composer defines the supported runtime and CakePHP versions. This code targets CakePHP 5; these changes do not claim CakePHP 6 compatibility.
+This development branch uses CakePHP 6 and PHP 8.5. Follow [Installation](../guide/installation.md) for development dependencies. Entity field permissions use `patchable` rather than `_accessible`.
 
 ## Current controller behavior
 

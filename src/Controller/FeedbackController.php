@@ -38,18 +38,17 @@ class FeedbackController extends AppController {
 	 * @return void
 	 */
 	public function beforeFilter(EventInterface $event): void {
-		$result = parent::beforeFilter($event);
+		parent::beforeFilter($event);
+		$result = $event->getResult();
 		if ($result instanceof Response) {
-			$event->setResult($result);
 			$event->stopPropagation();
 
 			return;
 		}
-		// Check FormProtection component loaded and disable it for this plugin:
+		// Allow the submission action through FormProtection:
 		if ($this->components()->has('FormProtection')) {
 			/** @var \Cake\Controller\Component\FormProtectionComponent $formProtection */
 			$formProtection = $this->components()->get('FormProtection');
-			$formProtection->setConfig('validatePost', false);
 			$formProtection->setConfig('unlockedActions', ['save']);
 		}
 
