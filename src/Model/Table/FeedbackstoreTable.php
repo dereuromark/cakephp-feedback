@@ -611,8 +611,9 @@ class FeedbackstoreTable extends Table {
 	 * @return mixed
 	 */
 	private function readStoreConfig(string $store, string $key): mixed {
-		return Configure::read('Feedback.configuration.' . $store . '.' . $key)
-			?? Configure::read('Feedback.methods.' . $store . '.' . $key);
+		$path = Configure::check('Feedback.configuration.' . $store) ? 'configuration' : 'methods';
+
+		return Configure::read('Feedback.' . $path . '.' . $store . '.' . $key);
 	}
 
 }
