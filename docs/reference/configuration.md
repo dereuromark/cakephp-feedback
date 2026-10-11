@@ -1,6 +1,6 @@
 # Configuration
 
-Settings live under `Feedback`. See [the example configuration](https://github.com/dereuromark/cakephp-feedback/blob/master/config/app.example.php) for the full array.
+Settings live under `Feedback`. See [the example configuration](https://github.com/dereuromark/cakephp-feedback/blob/cake6/config/app.example.php) for the full array.
 
 | Setting | Behavior |
 | --- | --- |

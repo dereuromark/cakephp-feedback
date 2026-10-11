@@ -21,8 +21,7 @@ class AppController extends Controller {
 	}
 
 	/**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
-     * @return void
+	 * @return void
 	 */
 	public function beforeFilter(EventInterface $event): void {
 		parent::beforeFilter($event);
@@ -34,7 +33,6 @@ class AppController extends Controller {
 		if (Configure::read('Test.denyFeedback')) {
 			throw new ForbiddenException('Feedback access denied by application.');
 		}
-
 	}
 
 }

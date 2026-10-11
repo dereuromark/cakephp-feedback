@@ -8,10 +8,10 @@ Install the package in your application:
 ```sh
 composer config minimum-stability dev
 composer config prefer-stable true
-composer require cakephp/cakephp:^6.0@dev dereuromark/cakephp-feedback:dev-cake6
+composer require cakephp/cakephp:^6.0@dev dereuromark/cakephp-feedback:dev-cake6 cakephp/migrations:dev-fix/6.x-cakephp-compatibility
 ```
 
-[Composer constraints](https://github.com/dereuromark/cakephp-feedback/blob/master/composer.json) define the supported PHP and CakePHP versions.
+[Composer constraints](https://github.com/dereuromark/cakephp-feedback/blob/cake6/composer.json) define the supported PHP and CakePHP versions.
 
 ## Load the plugin
 

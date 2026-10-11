@@ -39,7 +39,6 @@ class FeedbackController extends AppController {
 		parent::beforeFilter($event);
 		$result = $event->getResult();
 		if ($result instanceof Response) {
-			$event->setResult($result);
 			$event->stopPropagation();
 
 			return;

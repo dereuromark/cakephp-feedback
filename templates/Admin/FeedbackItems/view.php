@@ -104,7 +104,7 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 				<?php
 				if ($screenshot) {
 					$img = '<img class="screenshot responsive img-fluid" src="data:image/png;base64,' . h($screenshot) . '"/>';
-					echo $this->Html->link($img, ['plugin'=>'Feedback','controller'=>'FeedbackItems','action'=>'viewimage', $feedbackItem->id], ['escapeTitle' => false, 'target' => '_blank']);
+					echo $this->Html->link($img, ['plugin'=>'Feedback','controller'=>'FeedbackItems','action'=>'viewimage', $feedbackItem->id], ['escape' => false, 'escapeAttributes' => true, 'target' => '_blank']);
 				}
 				?>
 			</div>
