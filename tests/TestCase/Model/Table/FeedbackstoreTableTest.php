@@ -165,4 +165,24 @@ class FeedbackstoreTableTest extends TestCase {
 		];
 	}
 
+	/**
+	 * @return void
+	 */
+	public function testMailRetainsReleasedMethodsConfiguration(): void {
+		Configure::write('Feedback.methods.mail', [
+			'to' => 'legacy@example.com',
+			'from' => 'sender@example.com',
+		]);
+		$this->assertTrue($this->Feedbackstore->mail($this->feedbackObject())['result']);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testModernMailSettingsTakePrecedenceOverLegacySettings(): void {
+		Configure::write('Feedback.methods.mail', ['to' => 'invalid legacy recipient', 'from' => 'invalid legacy sender']);
+		Configure::write('Feedback.configuration.mail', ['to' => 'modern@example.com', 'from' => 'sender@example.com']);
+		$this->assertTrue($this->Feedbackstore->mail($this->feedbackObject())['result']);
+	}
+
 }

@@ -15,3 +15,5 @@ Keep storage outside webroot and disable return links unless your application ex
 Legacy integration configuration does not install an active store. Migrate custom integrations to `StoreInterface`; do not copy old Bitbucket API or password-based GitHub examples into new applications.
 
 The bundled screenshot library uses the html2canvas 0.4.1 callback API. Replacing it with a newer library requires updating the widget code too. Bootstrap's jQuery modal API is optional; without it, the widget uses alerts.
+
+Direct callers of the deprecated `FeedbackstoreTable` methods can retain settings under `Feedback.methods.<store>`. Settings under `Feedback.configuration.<store>` take precedence, with the old path used as a fallback. This compatibility path does not register a store or modernize the legacy integrations.

@@ -40,18 +40,18 @@ class FeedbackstoreTable extends Table {
 		}
 
 		//Mandatory
-		$api_url = Configure::read('Feedback.configuration.mantis.api_url');
-		$username = Configure::read('Feedback.configuration.mantis.username');
-		$password = Configure::read('Feedback.configuration.mantis.password');
-		$project_id	= Configure::read('Feedback.configuration.mantis.project_id');
-		$category = Configure::read('Feedback.configuration.mantis.category');
-		$decodeimage = Configure::read('Feedback.configuration.mantis.decodeimage');
+		$api_url = $this->readStoreConfig('mantis', 'api_url');
+		$username = $this->readStoreConfig('mantis', 'username');
+		$password = $this->readStoreConfig('mantis', 'password');
+		$project_id	= $this->readStoreConfig('mantis', 'project_id');
+		$category = $this->readStoreConfig('mantis', 'category');
+		$decodeimage = $this->readStoreConfig('mantis', 'decodeimage');
 
 		//Optional HTTP credentials for bypassing Basic Auth or Kerberos
 		$soap_options = [];
 
-		$http_username = Configure::read('Feedback.configuration.mantis.http_username');
-		$http_password = Configure::read('Feedback.configuration.mantis.http_password');
+		$http_username = $this->readStoreConfig('mantis', 'http_username');
+		$http_password = $this->readStoreConfig('mantis', 'http_password');
 
 		if ($http_username && $http_password) {
 			$soap_options = [
@@ -137,8 +137,8 @@ class FeedbackstoreTable extends Table {
 		}
 
 		//Read settings from config if not in copy mode
-		$to = Configure::read('Feedback.configuration.mail.to');
-		$from = Configure::read('Feedback.configuration.mail.from');
+		$to = $this->readStoreConfig('mail', 'to');
+		$from = $this->readStoreConfig('mail', 'from');
 
 		// Change recipient if sending a copy
 		if ($copyreporter) {
@@ -215,10 +215,10 @@ class FeedbackstoreTable extends Table {
 		}
 
 		//Read settings
-		$api_url = Configure::read('Feedback.configuration.github.api_url');
-		$username = Configure::read('Feedback.configuration.github.username');
-		$password = Configure::read('Feedback.configuration.github.password');
-		$localimagestore = Configure::read('Feedback.configuration.github.localimagestore');
+		$api_url = $this->readStoreConfig('github', 'api_url');
+		$username = $this->readStoreConfig('github', 'username');
+		$password = $this->readStoreConfig('github', 'password');
+		$localimagestore = $this->readStoreConfig('github', 'localimagestore');
 
 		//Github specific: append browser, browser version and URL to feedback:
 		$feedbackObject['feedback'] .= "\n\n";
@@ -313,10 +313,10 @@ class FeedbackstoreTable extends Table {
 		}
 
 		//Read settings
-		$api_url = Configure::read('Feedback.configuration.bitbucket.api_url');
-		$username = Configure::read('Feedback.configuration.bitbucket.username');
-		$password = Configure::read('Feedback.configuration.bitbucket.password');
-		$localimagestore = Configure::read('Feedback.configuration.bitbucket.localimagestore');
+		$api_url = $this->readStoreConfig('bitbucket', 'api_url');
+		$username = $this->readStoreConfig('bitbucket', 'username');
+		$password = $this->readStoreConfig('bitbucket', 'password');
+		$localimagestore = $this->readStoreConfig('bitbucket', 'localimagestore');
 
 		//Append browser, browser version and URL to feedback:
 		$feedbackObject['feedback'] .= sprintf("**By**: %s\n\n", $feedbackObject['name']);
@@ -391,12 +391,12 @@ class FeedbackstoreTable extends Table {
 		}
 
 		//Read settings
-		$api_url = Configure::read('Feedback.configuration.jira.api_url');
-		$username = Configure::read('Feedback.configuration.jira.username');
-		$password = Configure::read('Feedback.configuration.jira.password');
-		$project_id = Configure::read('Feedback.configuration.jira.project_id');
-		$issuetype = Configure::read('Feedback.configuration.jira.issuetype');
-		$localimagestore = Configure::read('Feedback.configuration.jira.localimagestore');
+		$api_url = $this->readStoreConfig('jira', 'api_url');
+		$username = $this->readStoreConfig('jira', 'username');
+		$password = $this->readStoreConfig('jira', 'password');
+		$project_id = $this->readStoreConfig('jira', 'project_id');
+		$issuetype = $this->readStoreConfig('jira', 'issuetype');
+		$localimagestore = $this->readStoreConfig('jira', 'localimagestore');
 
 		//Mantis specific: append browser, browser version and URL to feedback:
 		$feedbackObject['feedback'] .= "\n\n";
@@ -493,11 +493,11 @@ class FeedbackstoreTable extends Table {
 		}
 
 		//Read settings
-		$api_url = Configure::read('Feedback.configuration.redmine.api_url');
-		$username = Configure::read('Feedback.configuration.redmine.username');
-		$password = Configure::read('Feedback.configuration.redmine.password');
-		$project_id = Configure::read('Feedback.configuration.redmine.project_id');
-		$tracker_id = Configure::read('Feedback.configuration.redmine.tracker_id');
+		$api_url = $this->readStoreConfig('redmine', 'api_url');
+		$username = $this->readStoreConfig('redmine', 'username');
+		$password = $this->readStoreConfig('redmine', 'password');
+		$project_id = $this->readStoreConfig('redmine', 'project_id');
+		$tracker_id = $this->readStoreConfig('redmine', 'tracker_id');
 
 		//Redmine specific: append browser, browser version and URL to feedback:
 		$feedbackObject['feedback'] .= "\n\n";
@@ -603,6 +603,16 @@ class FeedbackstoreTable extends Table {
 	 */
 	private function generateScreenshotName() {
 		return time() . '-' . mt_rand(1000, 9999) . '.png';
+	}
+
+	/**
+	 * @param string $store Store name
+	 * @param string $key Configuration key
+	 * @return mixed
+	 */
+	private function readStoreConfig(string $store, string $key): mixed {
+		return Configure::read('Feedback.configuration.' . $store . '.' . $key)
+			?? Configure::read('Feedback.methods.' . $store . '.' . $key);
 	}
 
 }
