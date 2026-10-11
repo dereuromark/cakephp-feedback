@@ -24,14 +24,6 @@ msgstr ""
 "gemaakt worden om ons te helpen in het verwerken van uw feedback of "
 "bugmelding."
 
-#: Controller/FeedbackController.php:28
-msgid "No config file found. Please create one: "
-msgstr "Geen configuratiebestand gevonden. Maak deze aub aan."
-
-#: Controller/FeedbackController.php:62
-msgid "Method not found in Feedbackstore model:"
-msgstr "Methode niet gevonden in Feedbackstore model:"
-
 #: Controller/FeedbackController.php:76
 msgid "Error saving feedback."
 msgstr "Fout tijdens opslaan feedback."
@@ -39,26 +31,6 @@ msgstr "Fout tijdens opslaan feedback."
 #: Controller/FeedbackController.php:80
 msgid "Your feedback was saved successfully."
 msgstr "Uw feedback is succesvol opgeslagen"
-
-#: Controller/FeedbackController.php:95
-msgid "No save method found in config file"
-msgstr "Geen opslag methode gevonden in configuratiebestand"
-
-#: Controller/FeedbackController.php:107
-msgid "This function is only available with filesystem save method"
-msgstr "Deze functie is alleen beschikbaar bij de filesystem methode"
-
-#: Controller/FeedbackController.php:116
-msgid "Feedback location not found: "
-msgstr "Feedback locatie niet gevonden:"
-
-#: Controller/FeedbackController.php:144
-msgid "Could not find that file"
-msgstr "Kan dit bestand niet vinden"
-
-#: Controller/FeedbackController.php:150
-msgid "No screenshot found"
-msgstr "Geen screenshot gevonden"
 
 #: Model/Feedbackstore.php:30;112;196;274;332
 msgid "Thank you. Your feedback was saved."
@@ -68,37 +40,13 @@ msgstr "Dank u. Uw feedback is opgeslagen."
 msgid "View your feedback on:"
 msgstr "Bekijk uw feedback op:"
 
-#: Model/Feedbackstore.php:165
-msgid "Could not save tmp file for attachment in mail"
-msgstr "Kon tijdelijk bestand voor bijlage in email niet opslaan"
-
 #: Model/Feedbackstore.php:183
 msgid "A copy of your submitted feedback:"
 msgstr "Een kopie van de door u verstuurde feedback:"
 
-#: Model/Feedbackstore.php:348
-msgid ""
-"Could not create directory to save feedbacks in. Please provide write rights "
-"to webserver user on directory: "
-msgstr ""
-"Kon geen directory aanmaken om de feedback in op te slaan. Geef aub de "
-"webserver gebruiker schrijfrechten op deze directory:"
-
-#: Model/Feedbackstore.php:385
-msgid ""
-"Could not create directory to save screenshots in. Please provide write "
-"rights to webserver user on directory: "
-msgstr ""
-"Kon geen directory aanmaken om de screenshot in op te slaan. Geef aub de "
-"webserver gebruiker schrijfrechten op deze directory:"
-
 #: View/Elements/feedbackbar.ctp:70
 msgid "Send your feedback or bugreport!"
 msgstr "Stuur uw feedback of bugmelding!"
-
-#: View/Elements/feedbackbar.ctp:80
-msgid "Your name"
-msgstr "Uw naam"
 
 #: View/Elements/feedbackbar.ctp:91
 msgid "Your e-mail"
@@ -119,10 +67,6 @@ msgstr "Klik ergens op de website"
 #: View/Elements/feedbackbar.ctp:115
 msgid "Highlight something"
 msgstr "Markeer iets"
-
-#: View/Elements/feedbackbar.ctp:131
-msgid "I am okay with"
-msgstr "Ik ga hiermee"
 
 #: View/Elements/feedbackbar.ctp:131
 msgid "this"
@@ -147,3 +91,135 @@ msgstr "Feedback verstuurd"
 #: View/Elements/feedbackbar.ctp:171
 msgid "Close"
 msgstr "Sluiten"
+
+msgid "low"
+msgstr ""
+
+msgid "medium"
+msgstr ""
+
+msgid "high"
+msgstr ""
+
+msgid "new"
+msgstr ""
+
+msgid "in progress"
+msgstr ""
+
+msgid "archived"
+msgstr ""
+
+msgid "The feedback item has been saved."
+msgstr ""
+
+msgid "The feedback item could not be saved. Please, try again."
+msgstr ""
+
+msgid "The feedback item has been deleted."
+msgstr ""
+
+msgid "The feedback item could not be deleted. Please, try again."
+msgstr ""
+
+msgid "Anonymous"
+msgstr ""
+
+msgid "View your feedback on: "
+msgstr ""
+
+msgid " - no priority - "
+msgstr ""
+
+msgid "Screenshot"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Are you sure you want to delete # {0}?"
+msgstr ""
+
+msgid "List Feedback Items"
+msgstr ""
+
+msgid "Feedback Items"
+msgstr ""
+
+msgid "Edit Feedback Item"
+msgstr ""
+
+msgid "Back"
+msgstr ""
+
+msgid "Import Files"
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Edit {0}"
+msgstr ""
+
+msgid "Feedback Item"
+msgstr ""
+
+msgid "Delete {0}"
+msgstr ""
+
+msgid "List {0}"
+msgstr ""
+
+msgid "Feedback"
+msgstr ""
+
+msgid "Sid"
+msgstr ""
+
+msgid "Url"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Data"
+msgstr ""
+
+msgid "Priority"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Created"
+msgstr ""
+
+msgid "first"
+msgstr ""
+
+msgid "previous"
+msgstr ""
+
+msgid "next"
+msgstr ""
+
+msgid "last"
+msgstr ""
+
+msgid "Hide this tab completely."
+msgstr ""
+
+msgid "Your name "
+msgstr "Uw naam "
+
+msgid "I am okay with {0}."
+msgstr ""
