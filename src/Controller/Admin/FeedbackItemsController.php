@@ -39,7 +39,8 @@ class FeedbackItemsController extends AppController {
 	 * @return void
 	 */
 	public function beforeFilter(EventInterface $event): void {
-		$result = parent::beforeFilter($event);
+		parent::beforeFilter($event);
+		$result = $event->getResult();
 		if ($result instanceof Response) {
 			$event->setResult($result);
 			$event->stopPropagation();

@@ -1,6 +1,6 @@
 # Access and privacy
 
-All plugin controllers extend your application's `AppController` and call its `beforeFilter()`. Configure authentication and authorization in your application; the plugin does not supply an admin role or separate authentication mode.
+All plugin controllers extend your application's `AppController` and call its `beforeFilter()`. That callback returns `void` on CakePHP 6; set a redirect response on the event with `$event->setResult($this->redirect('/login'))`. The plugin preserves that response and stops later listeners. Configure authentication and authorization in your application; the plugin does not supply an admin role or separate authentication mode.
 
 ## Submission and browsing are separate
 

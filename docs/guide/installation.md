@@ -1,9 +1,14 @@
 # Installation
 
+This development branch requires CakePHP 6 and PHP 8.5. Migrations currently
+uses the upstream CakePHP 6 compatibility branch.
+
 Install the package in your application:
 
 ```sh
-composer require dereuromark/cakephp-feedback
+composer config minimum-stability dev
+composer config prefer-stable true
+composer require cakephp/cakephp:^6.0@dev dereuromark/cakephp-feedback:dev-cake6
 ```
 
 [Composer constraints](https://github.com/dereuromark/cakephp-feedback/blob/master/composer.json) define the supported PHP and CakePHP versions.
