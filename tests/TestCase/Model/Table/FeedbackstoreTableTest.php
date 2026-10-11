@@ -8,6 +8,7 @@ use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
 use Cake\TestSuite\TestCase;
 use Feedback\Model\Table\FeedbackstoreTable;
+use ReflectionMethod;
 use TypeError;
 
 /**
@@ -63,7 +64,7 @@ class FeedbackstoreTableTest extends TestCase {
 
 	/**
 	 * The mail provider settings must be read from the documented `Feedback.configuration.mail.*`
-	 * path (the same path StoreCollection and the controllers use), not from `Feedback.methods.mail.*`.
+	 * path (the same path StoreCollection and the controllers use), before legacy settings.
 	 *
 	 * When `to`/`from` are read from the correct path, `Mailer::setTo()`/`setFrom()` receive valid
 	 * values and do not throw. If the values are read from the wrong path they resolve to null and
@@ -163,6 +164,43 @@ class FeedbackstoreTableTest extends TestCase {
 			'name' => 'Reporter',
 			'email' => '',
 		];
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testMailRetainsReleasedMethodsConfiguration(): void {
+		Configure::write('Feedback.methods.mail', [
+			'to' => 'legacy@example.com',
+			'from' => 'sender@example.com',
+		]);
+		$this->assertTrue($this->Feedbackstore->mail($this->feedbackObject())['result']);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testModernMailSettingsTakePrecedenceOverLegacySettings(): void {
+		Configure::write('Feedback.methods.mail', ['to' => 'invalid legacy recipient', 'from' => 'invalid legacy sender']);
+		Configure::write('Feedback.configuration.mail', ['to' => 'modern@example.com', 'from' => 'sender@example.com']);
+		$this->assertTrue($this->Feedbackstore->mail($this->feedbackObject())['result']);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testStoreBlocksDoNotMergeLegacyCredentials(): void {
+		$read = new ReflectionMethod($this->Feedbackstore, 'readStoreConfig');
+		Configure::write('Feedback.methods.mantis', ['api_url' => 'https://old.example.com', 'http_password' => 'old secret']);
+		$this->assertSame('old secret', $read->invoke($this->Feedbackstore, 'mantis', 'http_password'));
+		Configure::write('Feedback.configuration.mantis', ['api_url' => 'https://new.example.com']);
+		$this->assertSame('https://new.example.com', $read->invoke($this->Feedbackstore, 'mantis', 'api_url'));
+		$this->assertNull($read->invoke($this->Feedbackstore, 'mantis', 'http_password'));
+		Configure::write('Feedback.configuration.mantis.http_password', null);
+		$this->assertNull($read->invoke($this->Feedbackstore, 'mantis', 'http_password'));
+		Configure::write('Feedback.configuration.mantis', null);
+		$this->assertNull($read->invoke($this->Feedbackstore, 'mantis', 'api_url'));
+		$this->assertNull($read->invoke($this->Feedbackstore, 'mantis', 'http_password'));
 	}
 
 }
