@@ -3,6 +3,7 @@
 namespace Feedback\Store;
 
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 
 class Priorities {
 
@@ -32,7 +33,12 @@ class Priorities {
 			'' => __d('feedback', ' - no priority - '),
 		];
 		foreach ($priorities as $priority => $label) {
-			$array[$priority] = __d('feedback', $label);
+			$array[$priority] = match ($label) {
+				'low' => __d('feedback', 'low'),
+				'medium' => __d('feedback', 'medium'),
+				'high' => __d('feedback', 'high'),
+				default => I18n::getTranslator('feedback')->translate($label),
+			};
 		}
 
 		return $array;

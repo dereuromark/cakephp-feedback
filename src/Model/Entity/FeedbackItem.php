@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Feedback\Model\Entity;
 
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 use Cake\ORM\Entity;
 use Feedback\Store\Priorities;
 
@@ -103,7 +104,12 @@ class FeedbackItem extends Entity {
 	public static function statuses($value = null) {
 		$statuses = static::$statuses;
 		foreach ($statuses as $key => $name) {
-			$statuses[$key] = __d('feedback', $name);
+			$statuses[$key] = match ($name) {
+				'new' => __d('feedback', 'new'),
+				'in progress' => __d('feedback', 'in progress'),
+				'archived' => __d('feedback', 'archived'),
+				default => I18n::getTranslator('feedback')->translate($name),
+			};
 		}
 
 		if ($value === null) {
