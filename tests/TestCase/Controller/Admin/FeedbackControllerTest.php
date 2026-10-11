@@ -3,6 +3,7 @@
 namespace Feedback\Test\TestCase\Controller\Admin;
 
 use Cake\Core\Configure;
+use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Session;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
@@ -122,6 +123,17 @@ class FeedbackControllerTest extends TestCase {
 		$savepath = Configure::read('Feedback.configuration.Filesystem.location');
 		foreach (glob($savepath . '*-' . session_id() . '.feedback') as $feedbackfile) {
 			unlink($feedbackfile);
+		}
+	}
+
+	public function testApplicationAccessCheck(): void {
+		$this->disableErrorHandlerMiddleware();
+		Configure::write('Test.denyFeedback', true);
+		$this->expectException(ForbiddenException::class);
+		try {
+			$this->get(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'index']);
+		} finally {
+			Configure::delete('Test.denyFeedback');
 		}
 	}
 

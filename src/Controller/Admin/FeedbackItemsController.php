@@ -38,6 +38,8 @@ class FeedbackItemsController extends AppController {
 	 * @return void
 	 */
 	public function beforeFilter(EventInterface $event): void {
+		parent::beforeFilter($event);
+
 		if (Configure::read('Feedback')) {
 			return;
 		}

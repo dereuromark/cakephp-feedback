@@ -56,10 +56,11 @@ $(document).ready(function() {
 					url : window.formURL, //Use url created in Element
 					type: "POST",
 					data : postData,
+					headers: window.feedbackCsrfToken ? {'X-CSRF-Token': window.feedbackCsrfToken} : {},
 					complete: function(e, xhr, settings){
 						if (e.status === 200) {
 							closeandreset();
-							if (e.reponseText) {
+							if (e.responseText) {
 								confirmMessage = e.responseText;
 							}
 							// Only use modal if TwitterBootstrap Javascript is loaded

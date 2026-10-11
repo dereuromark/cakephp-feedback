@@ -9,66 +9,15 @@
 [![Total Downloads](https://poser.pugx.org/dereuromark/cakephp-feedback/d/total.svg)](https://packagist.org/packages/dereuromark/cakephp-feedback)
 [![Coding Standards](https://img.shields.io/badge/cs-PSR--2--R-purple.svg?style=flat-square)](https://github.com/php-fig-rectified/fig-rectified-standards)
 
-This plugin provides a static feedback tab on the side of the screen that enables website visitor to submit feedback or bugreports.
-Features pure client-side screenshot function including user-placed highlight / accent.
+Add a feedback tab to your CakePHP application. Visitors can submit a message and a rendered screenshot of the page. Reports can be saved to private filesystem storage, a database, or your own store implementation.
 
-This branch is for **CakePHP 5.1+**. For details see [version map](https://github.com/dereuromark/cakephp-feedback/wiki#cakephp-version-map).
+The browser widget requires jQuery with AJAX support. Bootstrap's jQuery modal API is optional; the plugin bundles html2canvas for screenshots.
 
-### Saves the following on form submit
+Read the [documentation website](https://dereuromark.github.io/cakephp-feedback/):
 
-* Name of sender (optional)
-* E-mail of sender (optional)
-* Subject
-* Feedback message
-* Current URL
-* Screenshot of body DOM element (with marker as option)
-* Browser and browser version
-* User OS flavor
+- [Installation](https://dereuromark.github.io/cakephp-feedback/guide/installation)
+- [Getting started](https://dereuromark.github.io/cakephp-feedback/guide/getting-started)
+- [Access and privacy](https://dereuromark.github.io/cakephp-feedback/guide/access)
+- [Stores](https://dereuromark.github.io/cakephp-feedback/reference/stores)
 
-Name and E-Mail can be auto-retrieved from TinyAuth.AuthUser or plain session Auth.
-
-### Save options (configurable and extendable)
-
-Out of the box:
-
-* Filesystem
-* Database
-
-Easily extendable to:
-
-* Custom Database
-* Email
-* [Mantis Bugtracker](http://www.mantisbt.org/)
-* [GitHub (repo issues)](https://help.github.com/articles/github-glossary#issue)
-* [Bitbucket (repo issues)](https://confluence.atlassian.com/display/BITBUCKET/Use+the+issue+tracker)
-* [Jira](https://www.atlassian.com/software/jira)
-* [Redmine](http://www.redmine.org)
-
-They can also be stacked (multiple stores at once).
-
-### Furthermore
-* This plugin is CakePHP FormProtection component compatible.
-* Fully localizable to your language.
-
-## Requirements
-
-**Required:** [jQuery](http://jquery.com/)
-
-**Optional:** [Bootstrap](http://getbootstrap.com) (Bootstrap 4/5 compatible)
-
-**Includes:** [html2canvas.js by niklasvh](https://github.com/niklasvh/html2canvas)
-
-## Installation and Usage
-
-See **[Documentation](docs/README.md)**.
-
-## Demo
-https://sandbox.dereuromark.de/
-
-## CakePHP 2.x version
-
-This is the original project:
-
-https://github.com/stefanvangastel/CakePHP-FeedbackIt
-
-Website: [http://stefanvangastel.nl/feedbackitdemo/](http://stefanvangastel.nl/feedbackitdemo/)
+[Composer](composer.json) defines the supported PHP and CakePHP versions. This plugin continues the original [CakePHP-FeedbackIt](https://github.com/stefanvangastel/CakePHP-FeedbackIt) project.

@@ -26,8 +26,9 @@ $icons = (array)Configure::read('Feedback.icons') + [
 echo $this->Html->script(
 	[
 		'Feedback.html2canvas/html2canvas', //html2canvas.js for screenshot function
-		'Feedback.functions'
-	], ['block' => true]
+		'Feedback.functions',
+	],
+	['block' => true],
 );
 
 //Get config vars used in this view
@@ -68,8 +69,9 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 
 <script<?= $cspNonce !== '' ? ' nonce="' . h($cspNonce) . '"' : '' ?>>
 	//Create URL using cake's url helper, this is used in feedbackit-functions.js
-	<?php $formUrl = $this->Url->build(['prefix' => false, 'plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'save'], ['fullBase' => true]); ?>
-	window.formURL = '<?php echo $formUrl; ?>';
+	<?php $formUrl = $this->Url->build(['prefix' => false, 'plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'save', '_method' => 'POST'], ['fullBase' => true]); ?>
+	window.formURL = <?= json_encode($formUrl, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+	window.feedbackCsrfToken = <?= json_encode((string)$this->getRequest()->getAttribute('csrfToken', ''), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
 	// Neutralize clicks on the feedback widget's inert link/buttons (CSP-safe
 	// replacement for inline onclick="return false;"). These elements are
 	// managed by feedbackit-functions.js; here we just prevent default
@@ -91,7 +93,7 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 			<i class="tab-hide <?php echo $icons['close']; ?>" title="<?php echo __d('feedback', 'Hide this tab completely.'); ?>"></i>
 		</div>
 		<p>
-			<?php echo __d('feedback','Send your feedback or bugreport!');?>
+			<?php echo __d('feedback', 'Send your feedback or bugreport!');?>
 		</p>
 		<form id="feedbackit-form" autocomplete="off">
 			<?php if ($displayExisting !== false || empty($name)) { ?>
@@ -101,10 +103,17 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 					name="name"
 					id="feedbackit-name"
 					maxlength="150"
-					class="<?php if (!empty($name)) echo 'feedbackit-input'; ?> form-control"
+					class="<?php if (!empty($name)) {
+						echo 'feedbackit-input';
+						   } ?> form-control"
 					value="<?php echo h($name); ?>"
-					placeholder="<?php echo __d('feedback','Your name '); if( !$forceauthusername ) echo ' (optional)'; ?>"
-					<?php if ($forceauthusername) echo 'required="required"'; ?>
+					placeholder="<?php echo __d('feedback', 'Your name ');
+					if (!$forceauthusername) {
+						echo ' (optional)';
+					} ?>"
+					<?php if ($forceauthusername) {
+						echo 'required="required"';
+					} ?>
 					>
 			</div>
 			<?php } ?>
@@ -116,10 +125,17 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 					name="email"
 					id="feedbackit-email"
 					maxlength="150"
-					class="<?php if (!empty($email)) echo 'feedbackit-input'; ?> form-control"
+					class="<?php if (!empty($email)) {
+						echo 'feedbackit-input';
+						   } ?> form-control"
 					value="<?php echo h($email); ?>"
-					placeholder="<?php echo __d('feedback','Your e-mail'); if( !$forceemail) echo ' (optional)'; ?>"
-					<?php if ($forceemail) echo 'required="required"'; ?>
+					placeholder="<?php echo __d('feedback', 'Your e-mail');
+					if (!$forceemail) {
+						echo ' (optional)';
+					} ?>"
+					<?php if ($forceemail) {
+						echo 'required="required"';
+					} ?>
 					>
 			</div>
 			<?php } ?>
@@ -132,12 +148,12 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 					maxlength="150"
 					class="feedbackit-input form-control"
 					required="required"
-					placeholder="<?php echo __d('feedback','Subject'); ?>"
+					placeholder="<?php echo __d('feedback', 'Subject'); ?>"
 					>
 			</div>
 			<div class="form-group">
 				<textarea name="feedback" id="feedbackit-feedback" class="feedbackit-input form-control" required="required"
-					placeholder="<?php echo __d('feedback','Feedback or suggestion'); ?>" rows="3"></textarea>
+					placeholder="<?php echo __d('feedback', 'Feedback or suggestion'); ?>" rows="3"></textarea>
 			</div>
 
 			<?php if ($priorities) { ?>
@@ -151,46 +167,48 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 					<button
 						type="button"
 						class="btn btn-info"
-						data-loading-text="<?php echo __d('feedback','Click anywhere on website'); ?>"
+						data-loading-text="<?php echo __d('feedback', 'Click anywhere on website'); ?>"
 						id="feedbackit-highlight">
-						<i class="icon-screenshot icon-white"></i><span class="icon <?php echo $icons['screenshot']; ?>"></span> <?php echo __d('feedback','Highlight something'); ?>
+						<i class="icon-screenshot icon-white"></i><span class="icon <?php echo $icons['screenshot']; ?>"></span> <?php echo __d('feedback', 'Highlight something'); ?>
 					</button>
 				</p>
-				<div<?php if (!$enableacceptterms) echo ' class="feedbackit-hidden"'; ?>>
+				<div<?php if (!$enableacceptterms) {
+					echo ' class="feedbackit-hidden"';
+					} ?>>
 					<label class="checkbox checkbox-inline">
 						<input type="checkbox"
 							   required id="feedbackit-okay"
 								<?php
 								if (!$enableacceptterms) {
-								   echo 'class="isinvisible"';
-								   echo 'checked="checked"';
+									echo 'class="isinvisible"';
+									echo 'checked="checked"';
 								} else {
-								   echo 'class="isvisible"';
+									echo 'class="isvisible"';
 								}
 								?>
 							>
 						<?php
-						$confirmation = '<b><a id="feedbackit-okay-message" href="#" data-feedback-nop="1" data-toggle="tooltip" title="' . h($termstext) . '">'. __d('feedback','this'). '</a></b>';
+						$confirmation = '<b><a id="feedbackit-okay-message" href="#" data-feedback-nop="1" data-toggle="tooltip" title="' . h($termstext) . '">' . __d('feedback', 'this') . '</a></b>';
 						?>
-						<?php echo __d('feedback','I am okay with {0}.', $confirmation); ?>
+						<?php echo __d('feedback', 'I am okay with {0}.', $confirmation); ?>
 					</label>
 				</div>
 				<?php
 				if ($enablecopybyemail) {
-				?>
+					?>
 				<div class="form-group">
 					<label class="checkbox checkbox-inline">
 						<input type="checkbox" name="copyme" id="feedbackit-copyme" >
-						<?php echo __d('feedback','E-mail me a copy'); ?>
+						<?php echo __d('feedback', 'E-mail me a copy'); ?>
 					</label>
 				</div>
-				<?php
+					<?php
 				}
 				?>
 
 				<div class="btn-group">
-					<button class="btn btn-success" id="feedbackit-submit" disabled="disabled" type="submit"><i class="icon-envelope icon-white"></i><span class="icon <?php echo $icons['submit']; ?>"></span> <?php echo __d('feedback','Submit'); ?></button>
-					<button type="button" class="btn btn-danger" id="feedbackit-cancel"><i class="icon-remove icon-white"></i><span class="icon <?php echo $icons['cancel']; ?>"></span> <?php echo __d('feedback','Cancel'); ?></button>
+					<button class="btn btn-success" id="feedbackit-submit" disabled="disabled" type="submit"><i class="icon-envelope icon-white"></i><span class="icon <?php echo $icons['submit']; ?>"></span> <?php echo __d('feedback', 'Submit'); ?></button>
+					<button type="button" class="btn btn-danger" id="feedbackit-cancel"><i class="icon-remove icon-white"></i><span class="icon <?php echo $icons['cancel']; ?>"></span> <?php echo __d('feedback', 'Cancel'); ?></button>
 				</div>
 			</div>
 		</form>
@@ -199,4 +217,4 @@ $cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
 
 <div id="feedbackit-highlight-holder"><?php echo $this->Html->image('Feedback.circle.gif');?></div>
 
-<?php echo $this->element('Feedback.sidebar_modal');?>
+<?php echo $this->element('Feedback.sidebar_modal');

@@ -4,6 +4,7 @@ namespace Feedback\Test\TestCase\Generator;
 
 use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
+use Feedback\Store\FilesystemStore;
 use Feedback\Store\StoreCollection;
 
 class StoreCollectionTest extends TestCase {
@@ -68,6 +69,17 @@ class StoreCollectionTest extends TestCase {
 		$file = TMP . $data['time'] . '-' . $data['sid'] . '.feedback';
 		$this->assertFileExists($file);
 		unlink($file);
+	}
+
+	public function testAllStoresDisabled(): void {
+		Configure::write('Feedback.stores', [FilesystemStore::class => null]);
+		try {
+			$collection = new StoreCollection();
+			$this->assertSame([], $collection->stores());
+			$this->assertSame([], $collection->save(['subject' => 'Feedback']));
+		} finally {
+			Configure::delete('Feedback.stores');
+		}
 	}
 
 }

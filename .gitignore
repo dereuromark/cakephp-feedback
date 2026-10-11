@@ -10,3 +10,7 @@ phpunit.phar
 .phpunit.result.cache
 /config/Migrations/schema-dump-default.lock
 .phpcs.cache
+
+docs/node_modules/
+docs/.vitepress/dist/
+docs/.vitepress/cache/

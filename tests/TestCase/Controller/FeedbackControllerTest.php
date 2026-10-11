@@ -3,6 +3,7 @@
 namespace Feedback\Test\TestCase\Controller;
 
 use Cake\Core\Configure;
+use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\MethodNotAllowedException;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
@@ -119,6 +120,42 @@ class FeedbackControllerTest extends TestCase {
 
 		$last = array_shift($feedbacks);
 		$this->assertSame('123', $last['screenshot']);
+	}
+
+	public function testApplicationAccessCheck(): void {
+		$this->disableErrorHandlerMiddleware();
+		Configure::write('Test.denyFeedback', true);
+		$this->expectException(ForbiddenException::class);
+		try {
+			$this->get(['plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'index']);
+		} finally {
+			Configure::delete('Test.denyFeedback');
+		}
+	}
+
+	public function testAjaxGetCannotSave(): void {
+		$this->disableErrorHandlerMiddleware();
+		$this->expectException(MethodNotAllowedException::class);
+		$this->configRequest(['headers' => ['X-Requested-With' => 'XMLHttpRequest']]);
+		$this->get(['plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'save']);
+
+	}
+
+	public function testForcedSessionIdentity(): void {
+		Configure::write('Feedback.forceauthusername', true);
+		Configure::write('Feedback.forceemail', true);
+		$this->session(['Auth' => ['User' => ['username' => 'Session user', 'email' => 'session@example.com']]]);
+		$this->post(['plugin' => 'Feedback', 'controller' => 'Feedback', 'action' => 'save'], [
+			'name' => 'Submitted user',
+			'email' => 'submitted@example.com',
+		]);
+
+		$this->assertResponseOk();
+		$files = glob(TMP . '*-' . session_id() . '.feedback');
+		$this->assertCount(1, $files);
+		$data = unserialize(file_get_contents($files[0]), ['allowed_classes' => false]);
+		$this->assertSame('Session user', $data['name']);
+		$this->assertSame('session@example.com', $data['email']);
 	}
 
 	/**

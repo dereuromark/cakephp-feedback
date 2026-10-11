@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Feedback\Test\TestCase\Controller\Admin;
 
 use Cake\Core\Configure;
+use Cake\Http\Exception\ForbiddenException;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
@@ -127,6 +128,17 @@ class FeedbackItemsControllerTest extends TestCase {
 		$this->assertResponseCode(302);
 
 		$this->assertFileDoesNotExist(TMP . 'feedback_test' . DS . '1605397242-sid.feedback');
+	}
+
+	public function testApplicationAccessCheck(): void {
+		$this->disableErrorHandlerMiddleware();
+		Configure::write('Test.denyFeedback', true);
+		$this->expectException(ForbiddenException::class);
+		try {
+			$this->get(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'FeedbackItems', 'action' => 'index']);
+		} finally {
+			Configure::delete('Test.denyFeedback');
+		}
 	}
 
 }
