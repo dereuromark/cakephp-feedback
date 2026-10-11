@@ -8,8 +8,8 @@ use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
 use Cake\TestSuite\TestCase;
 use Feedback\Model\Table\FeedbackstoreTable;
-use TypeError;
 use ReflectionMethod;
+use TypeError;
 
 /**
  * @uses \Feedback\Model\Table\FeedbackstoreTable
