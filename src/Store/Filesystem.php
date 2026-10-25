@@ -16,11 +16,11 @@ class Filesystem {
 	 * @return bool
 	 */
 	public static function isValidFilename(string $filename): bool {
-		return str_ends_with($filename, '.feedback') &&
-			!str_contains($filename, '/') &&
-			!str_contains($filename, '\\') &&
-			!str_contains($filename, '..') &&
-			!str_contains($filename, "\0");
+		return str_ends_with($filename, '.feedback')
+			&& !str_contains($filename, '/')
+			&& !str_contains($filename, '\\')
+			&& !str_contains($filename, '..')
+			&& !str_contains($filename, "\0");
 	}
 
 	/**
