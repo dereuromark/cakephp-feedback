@@ -10,6 +10,7 @@ use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\MiddlewareQueue;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -65,34 +66,44 @@ class FeedbackItemsControllerTest extends TestCase {
 	}
 
 	/**
-	 * CakePHP's CspMiddleware stores the nonce as `cspScriptNonce`.
-	 *
-	 * @return void
+	 * @return array<string, array{0: string, 1: array<string, string>, 2: string}>
 	 */
-	public function testIndexUsesCspScriptNonce(): void {
-		$this->disableErrorHandlerMiddleware();
-		$this->withRequestAttribute('cspScriptNonce', 'core-nonce');
+	public static function nonceProvider(): array {
+		$cases = [];
+		foreach (['index', 'view', 'edit'] as $action) {
+			$cases[$action . ' cspScriptNonce'] = [$action, ['cspScriptNonce' => 'core-nonce'], 'core-nonce'];
+			$cases[$action . ' cspNonce fallback'] = [$action, ['cspNonce' => 'custom-nonce'], 'custom-nonce'];
+			$cases[$action . ' both set'] = [$action, ['cspScriptNonce' => 'core-nonce', 'cspNonce' => 'custom-nonce'], 'core-nonce'];
+		}
 
-		$this->get(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'FeedbackItems', 'action' => 'index']);
-
-		$this->assertResponseCode(200);
-		$this->assertResponseContains('<script nonce="core-nonce">');
-		$this->assertResponseNotRegExp('/<script(?![^>]*nonce=)/');
+		return $cases;
 	}
 
 	/**
-	 * A custom middleware may still provide the nonce as `cspNonce`.
+	 * CakePHP's CspMiddleware stores the nonce as `cspScriptNonce`, which wins over a custom `cspNonce`.
+	 *
+	 * @param string $action
+	 * @param array<string, string> $attributes
+	 * @param string $expected
 	 *
 	 * @return void
 	 */
-	public function testViewFallsBackToCspNonce(): void {
+	#[DataProvider('nonceProvider')]
+	public function testScriptNonce(string $action, array $attributes, string $expected): void {
 		$this->disableErrorHandlerMiddleware();
-		$this->withRequestAttribute('cspNonce', 'custom-nonce');
+		foreach ($attributes as $name => $value) {
+			$this->withRequestAttribute($name, $value);
+		}
 
-		$this->get(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'FeedbackItems', 'action' => 'view', 1]);
+		$url = ['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'FeedbackItems', 'action' => $action];
+		if ($action !== 'index') {
+			$url[] = 1;
+		}
+		$this->get($url);
 
 		$this->assertResponseCode(200);
-		$this->assertResponseContains('<script nonce="custom-nonce">');
+		$this->assertResponseContains('<script nonce="' . $expected . '">');
+		$this->assertResponseNotRegExp('/<script(?![^>]*nonce="' . $expected . '")/');
 	}
 
 	/**
