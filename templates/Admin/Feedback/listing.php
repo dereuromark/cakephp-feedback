@@ -6,7 +6,7 @@
 
 use Cake\Core\Configure;
 
-$cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
+$cspNonce = (string)($this->getRequest()->getAttribute('cspScriptNonce') ?? $this->getRequest()->getAttribute('cspNonce', ''));
 ?>
 
 <div class="feedback index content large-9 medium-8 columns col-sm-8 col-12">

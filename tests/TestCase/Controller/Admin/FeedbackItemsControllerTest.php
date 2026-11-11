@@ -4,9 +4,15 @@ declare(strict_types = 1);
 namespace Feedback\Test\TestCase\Controller\Admin;
 
 use Cake\Core\Configure;
+use Cake\Event\EventInterface;
+use Cake\Event\EventManager;
 use Cake\Http\Exception\ForbiddenException;
+use Cake\Http\MiddlewareQueue;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * @uses \Feedback\Controller\Admin\FeedbackItemsController
@@ -56,6 +62,37 @@ class FeedbackItemsControllerTest extends TestCase {
 
 		$this->get(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'FeedbackItems', 'action' => 'index']);
 		$this->assertResponseCode(200);
+	}
+
+	/**
+	 * CakePHP's CspMiddleware stores the nonce as `cspScriptNonce`.
+	 *
+	 * @return void
+	 */
+	public function testIndexUsesCspScriptNonce(): void {
+		$this->disableErrorHandlerMiddleware();
+		$this->withRequestAttribute('cspScriptNonce', 'core-nonce');
+
+		$this->get(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'FeedbackItems', 'action' => 'index']);
+
+		$this->assertResponseCode(200);
+		$this->assertResponseContains('<script nonce="core-nonce">');
+		$this->assertResponseNotRegExp('/<script(?![^>]*nonce=)/');
+	}
+
+	/**
+	 * A custom middleware may still provide the nonce as `cspNonce`.
+	 *
+	 * @return void
+	 */
+	public function testViewFallsBackToCspNonce(): void {
+		$this->disableErrorHandlerMiddleware();
+		$this->withRequestAttribute('cspNonce', 'custom-nonce');
+
+		$this->get(['prefix' => 'Admin', 'plugin' => 'Feedback', 'controller' => 'FeedbackItems', 'action' => 'view', 1]);
+
+		$this->assertResponseCode(200);
+		$this->assertResponseContains('<script nonce="custom-nonce">');
 	}
 
 	/**
@@ -150,6 +187,22 @@ class FeedbackItemsControllerTest extends TestCase {
 		} finally {
 			Configure::delete('Test.redirectFeedback');
 		}
+	}
+
+	/**
+	 * Adds a middleware that sets a request attribute, like a CSP middleware would.
+	 *
+	 * @param string $name
+	 * @param string $value
+	 *
+	 * @return void
+	 */
+	protected function withRequestAttribute(string $name, string $value): void {
+		EventManager::instance()->on('Server.buildMiddleware', function (EventInterface $event, MiddlewareQueue $queue) use ($name, $value): void {
+			$queue->prepend(function (ServerRequestInterface $request, RequestHandlerInterface $handler) use ($name, $value): ResponseInterface {
+				return $handler->handle($request->withAttribute($name, $value));
+			});
+		});
 	}
 
 }
