@@ -64,7 +64,7 @@ if ($this->helpers()->has('AuthUser')) {
 		$email = $this->request->getSession()->read($map['email']);
 	}
 }
-$cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
+$cspNonce = (string)($this->getRequest()->getAttribute('cspScriptNonce') ?? $this->getRequest()->getAttribute('cspNonce', ''));
 ?>
 
 <script<?= $cspNonce !== '' ? ' nonce="' . h($cspNonce) . '"' : '' ?>>
